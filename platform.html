@@ -537,10 +537,7 @@
   .dom-page-header{padding:18px 28px 16px}
   .dom-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
   .dom-hero-left{flex:1;min-width:280px;max-width:560px}
-  .dom-hero-titleline{display:flex;align-items:baseline;gap:8px;line-height:1.2;margin:0 0 6px}
-  .dom-hero-titleline h1{font-size:22px;font-weight:700;letter-spacing:-.01em;color:#0f172a;margin:0;line-height:1.2}
-  .dom-hero-pre{font-size:22px;font-weight:600;color:var(--dom-color,#006a4e)}
-  .dom-hero-sep{color:#cbd5e1;font-size:18px;font-weight:300}
+  .dom-hero-left h1{font-size:22px;font-weight:700;letter-spacing:-.01em;color:#0f172a;margin:0 0 6px;line-height:1.2}
   .dom-page-header .ph-subtitle{font-size:13px;color:#475569;line-height:1.6;max-width:680px;margin:0 0 8px}
   .dom-page-header .ph-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
 
@@ -4676,11 +4673,7 @@
   <div class="page-header dom-page-header">
     <div class="dom-hero">
       <div class="dom-hero-left">
-        <div class="dom-hero-titleline">
-          <span class="dom-hero-pre" id="domDomain">—</span>
-          <span class="dom-hero-sep">·</span>
-          <h1 id="domTitle">域驾驶舱</h1>
-        </div>
+        <h1 id="domTitle">域驾驶舱</h1>
         <p class="ph-subtitle" id="domSubtitle">—</p>
         <div class="ph-tags" id="domTags"></div>
       </div>
@@ -5991,17 +5984,21 @@ function renderDomainDashboard(domain) {
   const cfg = DOMAIN_DASHBOARD[domain];
   if (!cfg) return;
 
-  // Header: domain prefix + 「域驾驶舱」, no internal breadcrumb (topbar handles it)
+  // Header: title is just「域驾驶舱」(domain context already in topbar breadcrumb).
+  // 域名走 ph-tags 用品牌色 chip 体现一次即可，不在 h1 重复
   const phEl = document.getElementById('page-domain').querySelector('.dom-page-header');
   if (phEl) phEl.style.setProperty('--dom-color', cfg.color);
-  document.getElementById('domDomain').textContent = DOMAIN_LABEL[domain] || '—';
+  const domLabel = DOMAIN_LABEL[domain] || '';
   document.getElementById('domTitle').textContent = '域驾驶舱';
   document.getElementById('domSubtitle').textContent = cfg.subtitle || '';
+  // 用域品牌色画 chip — 与 sidebar / topbar 视觉呼应；不再重复写 "{域名} · 域驾驶舱"
   document.getElementById('domTags').innerHTML =
+    '<span class="chip" style="background:'+cfg.color+'1a;color:'+cfg.color+';font-weight:600">'+domLabel+'</span>'+
     '<span class="chip" style="background:#f1f5f9;color:#475569">昆明地铁 · 4 号线</span>'+
-    '<span class="chip" style="background:#fef9c3;color:#854d0e">数据更新 2026-04-30 14:25</span>'+
-    '<span class="chip" style="background:#e0f2fe;color:#0369a1">'+_domSubItems(domain).length+' 项子职能</span>';
-  document.getElementById('page-domain').dataset.title = (DOMAIN_LABEL[domain]||'') + ' · 域驾驶舱';
+    '<span class="chip" style="background:#e0f2fe;color:#0369a1">'+_domSubItems(domain).length+' 项子职能</span>'+
+    '<span class="chip" style="background:#fef9c3;color:#854d0e">数据更新 2026-04-30 14:25</span>';
+  // page title metadata (used by some breadcrumb fallbacks) keeps domain to be unambiguous
+  document.getElementById('page-domain').dataset.title = domLabel + ' · 域驾驶舱';
 
   // 6 hero KPIs into the header right slot
   document.getElementById('domHeroKpis').innerHTML = cfg.headerKpis.map(k => {
