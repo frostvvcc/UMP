@@ -23,34 +23,48 @@
   .h-chart-sm{height:260px}
 
   /* ===== Layout shell ===== */
-  .app{display:flex;min-height:100vh}
-  .sidebar{width:236px;flex-shrink:0;background:#0f172a;color:#cbd5e1;height:100vh;position:fixed;left:0;top:0;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
-  .sidebar::-webkit-scrollbar{width:6px}
-  .sidebar::-webkit-scrollbar-thumb{background:#1e293b;border-radius:3px}
-  .sidebar .brand{padding:16px 18px;border-bottom:1px solid rgba(148,163,184,.12);display:flex;align-items:center;gap:10px;flex-shrink:0}
-  .sidebar .brand .logo{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
-  .sidebar .brand .brand-text{line-height:1.25}
-  .sidebar .brand .brand-title{font-size:13.5px;font-weight:600;color:#f1f5f9}
-  .sidebar .brand .brand-sub{font-size:10.5px;color:#64748b;margin-top:2px;letter-spacing:.02em}
-  .sidebar .nav{flex:1;padding:8px 0 16px}
-  .sidebar .nav-group-title{padding:14px 18px 6px;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#475569;font-weight:600}
-  .sidebar .nav-item{display:flex;align-items:center;gap:10px;padding:8px 18px;font-size:13.5px;color:#cbd5e1;cursor:pointer;border-left:3px solid transparent;transition:background .15s,color .15s}
-  .sidebar .nav-item:hover{background:rgba(148,163,184,.08);color:#f8fafc}
-  .sidebar .nav-item.active{background:rgba(59,130,246,.12);color:#fff;border-left-color:var(--item-color,#3b82f6)}
-  .sidebar .nav-item .nav-icon{display:inline-flex;width:18px;justify-content:center;font-size:13px;color:#64748b;flex-shrink:0;line-height:1}
-  .sidebar .nav-item:hover .nav-icon{color:#cbd5e1}
-  .sidebar .nav-item.active .nav-icon{color:var(--item-color,#3b82f6)}
-  .sidebar .sidebar-foot{padding:14px 18px;border-top:1px solid rgba(148,163,184,.12);font-size:11px;color:#475569;line-height:1.5}
+  body{padding-top:54px}
 
-  .main-area{flex:1;margin-left:236px;min-height:100vh;display:flex;flex-direction:column}
-  .topbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-  .topbar .crumbs{font-size:13px;color:#64748b;display:flex;align-items:center;gap:6px}
+  /* Primary top nav (horizontal, fixed) */
+  .topbar-main{position:fixed;top:0;left:0;right:0;height:54px;background:#0f172a;color:#cbd5e1;display:flex;align-items:center;padding:0 18px 0 0;z-index:110;border-bottom:1px solid #1e293b}
+  .topbar-main .brand{display:flex;align-items:center;gap:10px;padding:0 18px;width:236px;flex-shrink:0;height:100%;border-right:1px solid rgba(148,163,184,.10)}
+  .topbar-main .brand .logo{width:32px;height:32px;border-radius:7px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0}
+  .topbar-main .brand .brand-text{line-height:1.25}
+  .topbar-main .brand .brand-title{font-size:13.5px;font-weight:600;color:#f1f5f9}
+  .topbar-main .brand .brand-sub{font-size:10.5px;color:#64748b;margin-top:2px;letter-spacing:.02em}
+  .primary-nav{flex:1;display:flex;align-items:center;gap:2px;padding:0 16px;height:100%;overflow-x:auto;scrollbar-width:none}
+  .primary-nav::-webkit-scrollbar{display:none}
+  .primary-item{display:flex;align-items:center;gap:7px;padding:0 16px;height:100%;font-size:13.5px;color:#94a3b8;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
+  .primary-item:hover{color:#e2e8f0}
+  .primary-item.active{color:#fff;border-bottom-color:#3b82f6;background:rgba(59,130,246,.06)}
+  .primary-item .pn-icon{font-size:14px;line-height:1;color:#64748b}
+  .primary-item.active .pn-icon{color:#3b82f6}
+  .topbar-main .topbar-actions{display:flex;align-items:center;gap:14px;color:#94a3b8;font-size:12.5px;padding-left:16px;border-left:1px solid rgba(148,163,184,.10);height:100%;flex-shrink:0}
+  .topbar-main .topbar-actions .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(148,163,184,.08);border-radius:9999px;font-size:11.5px;color:#cbd5e1}
+  .topbar-main .topbar-actions .pill .live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse 2s infinite}
+  .topbar-main .topbar-actions .user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
+
+  .app{display:flex;min-height:calc(100vh - 54px)}
+  .sidebar{width:212px;flex-shrink:0;background:#fff;color:#475569;height:calc(100vh - 54px);position:fixed;left:0;top:54px;display:flex;flex-direction:column;z-index:100;overflow-y:auto;border-right:1px solid #e2e8f0}
+  .sidebar::-webkit-scrollbar{width:6px}
+  .sidebar::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:3px}
+  .sidebar .nav{flex:1;padding:14px 0 16px}
+  .sidebar .nav-group{display:none}
+  .sidebar .nav-group.active{display:block}
+  .sidebar .nav-group-title{padding:6px 18px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:600}
+  .sidebar .nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:13.5px;color:#475569;cursor:pointer;border-left:3px solid transparent;transition:background .15s,color .15s;position:relative}
+  .sidebar .nav-item:hover{background:#f8fafc;color:#0f172a}
+  .sidebar .nav-item.active{background:var(--accent-soft-bg,#eff6ff);color:var(--accent,#1d4ed8);border-left-color:var(--item-color,#3b82f6);font-weight:600}
+  .sidebar .nav-item .nav-icon{display:inline-flex;width:18px;justify-content:center;font-size:14px;color:#94a3b8;flex-shrink:0;line-height:1}
+  .sidebar .nav-item:hover .nav-icon{color:#475569}
+  .sidebar .nav-item.active .nav-icon{color:var(--item-color,#3b82f6)}
+  .sidebar .sidebar-foot{padding:14px 18px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;line-height:1.5}
+
+  .main-area{flex:1;margin-left:212px;min-height:calc(100vh - 54px);display:flex;flex-direction:column}
+  .topbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:9px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:54px;z-index:50}
+  .topbar .crumbs{font-size:12.5px;color:#64748b;display:flex;align-items:center;gap:6px}
   .topbar .crumbs .crumb-current{color:#0f172a;font-weight:600}
   .topbar .crumbs .crumb-sep{color:#cbd5e1;font-size:11px}
-  .topbar .top-actions{display:flex;align-items:center;gap:14px;font-size:12.5px;color:#64748b}
-  .topbar .top-actions .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:#f1f5f9;border-radius:9999px;font-size:11.5px;color:#475569}
-  .topbar .top-actions .pill .live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse 2s infinite}
-  .topbar .top-actions .user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
   .content{flex:1;padding:0}
@@ -70,7 +84,7 @@
   .page-header .ph-kpi .ph-kpi-label{font-size:11.5px;color:#64748b;margin-top:4px}
 
   /* Sub-navigation (in-page tabs under page header) */
-  .subnav{display:flex;align-items:center;gap:2px;background:#fff;border-bottom:1px solid #e2e8f0;padding:0 28px;position:sticky;top:53px;z-index:40;overflow-x:auto;scrollbar-width:none}
+  .subnav{display:flex;align-items:center;gap:2px;background:#fff;border-bottom:1px solid #e2e8f0;padding:0 28px;position:sticky;top:96px;z-index:40;overflow-x:auto;scrollbar-width:none}
   .subnav::-webkit-scrollbar{display:none}
   .subnav-item{padding:11px 16px;font-size:13.5px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;font-weight:500;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px}
   .subnav-item:hover{color:#0f172a}
@@ -139,10 +153,8 @@
 </head>
 <body>
 
-<div class="app">
-
-<!-- ===== Left Sidebar ===== -->
-<aside class="sidebar" id="sidebar">
+<!-- ===== TOP NAV (primary, horizontal) ===== -->
+<header class="topbar-main">
   <div class="brand">
     <div class="logo">4</div>
     <div class="brand-text">
@@ -150,65 +162,99 @@
       <div class="brand-sub">运营管理系统</div>
     </div>
   </div>
-  <nav class="nav" id="sidebarNav">
-    <div class="nav-group-title">工作台</div>
-    <div class="nav-item active" style="--item-color:#64748b" data-tab="overview" onclick="switchTab('overview')">
-      <span class="nav-icon">▦</span><span>首页</span>
+  <nav class="primary-nav" id="primaryNav">
+    <div class="primary-item active" data-domain="home" onclick="selectDomain('home')">
+      <span class="pn-icon">▦</span><span>工作台</span>
     </div>
-
-    <div class="nav-group-title">运输组织</div>
-    <div class="nav-item" style="--item-color:#2563eb" data-tab="m1" onclick="switchTab('m1')">
-      <span class="nav-icon">◐</span><span>客流预测</span>
+    <div class="primary-item" data-domain="transport" onclick="selectDomain('transport')">
+      <span class="pn-icon">⛟</span><span>运输组织</span>
     </div>
-    <div class="nav-item" style="--item-color:#2563eb" data-tab="m2" onclick="switchTab('m2')">
-      <span class="nav-icon">◑</span><span>运力调度</span>
+    <div class="primary-item" data-domain="equipment" onclick="selectDomain('equipment')">
+      <span class="pn-icon">⚙</span><span>设备运维</span>
     </div>
-
-    <div class="nav-group-title">设备运维</div>
-    <div class="nav-item" style="--item-color:#ea580c" data-tab="m3" onclick="switchTab('m3')">
-      <span class="nav-icon">♥</span><span>设备健康监测</span>
+    <div class="primary-item" data-domain="energy" onclick="selectDomain('energy')">
+      <span class="pn-icon">⚡</span><span>能耗管理</span>
     </div>
-    <div class="nav-item" style="--item-color:#ea580c" data-tab="m4" onclick="switchTab('m4')">
-      <span class="nav-icon">⚒</span><span>故障智能诊断</span>
-    </div>
-
-    <div class="nav-group-title">能耗管理</div>
-    <div class="nav-item" style="--item-color:#16a34a" data-tab="m5" onclick="switchTab('m5')">
-      <span class="nav-icon">▤</span><span>站级能耗</span>
-    </div>
-    <div class="nav-item" style="--item-color:#16a34a" data-tab="m6" onclick="switchTab('m6')">
-      <span class="nav-icon">⚡</span><span>牵引能耗</span>
-    </div>
-
-    <div class="nav-group-title">安全管理</div>
-    <div class="nav-item" style="--item-color:#dc2626" data-tab="m7" onclick="switchTab('m7')">
-      <span class="nav-icon">⚠</span><span>安全风险评估</span>
-    </div>
-    <div class="nav-item" style="--item-color:#dc2626" data-tab="m8" onclick="switchTab('m8')">
-      <span class="nav-icon">●</span><span>大客流预警</span>
+    <div class="primary-item" data-domain="safety" onclick="selectDomain('safety')">
+      <span class="pn-icon">⚠</span><span>安全管理</span>
     </div>
   </nav>
+  <div class="topbar-actions">
+    <span class="pill"><span class="live-dot"></span>实时数据</span>
+    <span class="hidden md:inline">2026-04-30 周四</span>
+    <span class="user-avatar">运</span>
+  </div>
+</header>
+
+<div class="app">
+
+<!-- ===== Left Sidebar (secondary, context-sensitive) ===== -->
+<aside class="sidebar" id="sidebar">
+  <nav class="nav" id="sidebarNav">
+
+    <div class="nav-group active" data-domain="home">
+      <div class="nav-group-title">工作台</div>
+      <div class="nav-item active" style="--item-color:#64748b;--accent:#475569;--accent-soft-bg:#f1f5f9" data-tab="overview" onclick="switchTab('overview')">
+        <span class="nav-icon">▦</span><span>首页</span>
+      </div>
+    </div>
+
+    <div class="nav-group" data-domain="transport">
+      <div class="nav-group-title">运输组织</div>
+      <div class="nav-item" style="--item-color:#2563eb;--accent:#1d4ed8;--accent-soft-bg:#eff6ff" data-tab="m1" onclick="switchTab('m1')">
+        <span class="nav-icon">◐</span><span>客流预测</span>
+      </div>
+      <div class="nav-item" style="--item-color:#2563eb;--accent:#1d4ed8;--accent-soft-bg:#eff6ff" data-tab="m2" onclick="switchTab('m2')">
+        <span class="nav-icon">◑</span><span>运力调度</span>
+      </div>
+    </div>
+
+    <div class="nav-group" data-domain="equipment">
+      <div class="nav-group-title">设备运维</div>
+      <div class="nav-item" style="--item-color:#ea580c;--accent:#9a3412;--accent-soft-bg:#fff7ed" data-tab="m3" onclick="switchTab('m3')">
+        <span class="nav-icon">♥</span><span>设备健康监测</span>
+      </div>
+      <div class="nav-item" style="--item-color:#ea580c;--accent:#9a3412;--accent-soft-bg:#fff7ed" data-tab="m4" onclick="switchTab('m4')">
+        <span class="nav-icon">⚒</span><span>故障智能诊断</span>
+      </div>
+    </div>
+
+    <div class="nav-group" data-domain="energy">
+      <div class="nav-group-title">能耗管理</div>
+      <div class="nav-item" style="--item-color:#16a34a;--accent:#15803d;--accent-soft-bg:#f0fdf4" data-tab="m5" onclick="switchTab('m5')">
+        <span class="nav-icon">▤</span><span>站级能耗</span>
+      </div>
+      <div class="nav-item" style="--item-color:#16a34a;--accent:#15803d;--accent-soft-bg:#f0fdf4" data-tab="m6" onclick="switchTab('m6')">
+        <span class="nav-icon">⚡</span><span>牵引能耗</span>
+      </div>
+    </div>
+
+    <div class="nav-group" data-domain="safety">
+      <div class="nav-group-title">安全管理</div>
+      <div class="nav-item" style="--item-color:#dc2626;--accent:#991b1b;--accent-soft-bg:#fef2f2" data-tab="m7" onclick="switchTab('m7')">
+        <span class="nav-icon">⚠</span><span>安全风险评估</span>
+      </div>
+      <div class="nav-item" style="--item-color:#dc2626;--accent:#991b1b;--accent-soft-bg:#fef2f2" data-tab="m8" onclick="switchTab('m8')">
+        <span class="nav-icon">●</span><span>大客流预警</span>
+      </div>
+    </div>
+
+  </nav>
   <div class="sidebar-foot">
-    <div>运营管理系统 v1.0</div>
-    <div style="margin-top:4px;color:#334155">数据均为模拟示意</div>
+    <div>v1.0</div>
+    <div style="margin-top:2px;color:#cbd5e1">数据均为模拟示意</div>
   </div>
 </aside>
 
 <!-- ===== Main Area ===== -->
 <div class="main-area">
 
-  <!-- Top Bar -->
+  <!-- In-page top bar (breadcrumb) -->
   <header class="topbar">
     <div class="crumbs">
-      <span class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</span>
-      <span>工作台</span>
+      <span class="crumb-current" id="crumbDomain">工作台</span>
       <span class="crumb-sep">›</span>
-      <span class="crumb-current" id="crumbCurrent">首页</span>
-    </div>
-    <div class="top-actions">
-      <span class="pill"><span class="live-dot"></span>实时数据</span>
-      <span class="hidden md:inline">2026-04-30 周四</span>
-      <span class="user-avatar">运</span>
+      <span id="crumbCurrent">首页</span>
     </div>
   </header>
 
@@ -2567,6 +2613,25 @@
 // Tab switching
 const chartInited = {};
 
+// Maps tab → top-nav domain
+const TAB_DOMAIN = {
+  overview: 'home',
+  m1: 'transport', m2: 'transport',
+  m3: 'equipment', m4: 'equipment',
+  m5: 'energy',    m6: 'energy',
+  m7: 'safety',    m8: 'safety'
+};
+const DOMAIN_LABEL = {
+  home: '工作台', transport: '运输组织', equipment: '设备运维',
+  energy: '能耗管理', safety: '安全管理'
+};
+
+// Click a top-nav primary item: switch to first sub-page in that domain
+function selectDomain(domain) {
+  const firstItem = document.querySelector('.sidebar .nav-group[data-domain="'+domain+'"] .nav-item');
+  if (firstItem) switchTab(firstItem.dataset.tab);
+}
+
 function switchTab(tab) {
   document.querySelectorAll('.model-page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sidebar .nav-item').forEach(t => t.classList.remove('active'));
@@ -2575,9 +2640,20 @@ function switchTab(tab) {
   const navEl = document.querySelector('.sidebar .nav-item[data-tab="' + tab + '"]');
   if (navEl) navEl.classList.add('active');
 
-  // Update top breadcrumb
+  // Sync primary top nav + visible sidebar group
+  const domain = TAB_DOMAIN[tab] || 'home';
+  document.querySelectorAll('.primary-item').forEach(p => p.classList.remove('active'));
+  const primary = document.querySelector('.primary-item[data-domain="'+domain+'"]');
+  if (primary) primary.classList.add('active');
+  document.querySelectorAll('.sidebar .nav-group').forEach(g => g.classList.remove('active'));
+  const group = document.querySelector('.sidebar .nav-group[data-domain="'+domain+'"]');
+  if (group) group.classList.add('active');
+
+  // Update breadcrumbs
   const crumb = document.getElementById('crumbCurrent');
-  if (crumb) crumb.textContent = page.dataset.title || '总览';
+  if (crumb) crumb.textContent = page.dataset.title || '首页';
+  const crumbDom = document.getElementById('crumbDomain');
+  if (crumbDom) crumbDom.textContent = DOMAIN_LABEL[domain] || '工作台';
 
   // Close mobile sidebar after nav
   document.getElementById('sidebar').classList.remove('open');
