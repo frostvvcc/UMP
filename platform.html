@@ -5205,9 +5205,11 @@ function renderTemplate(tab, domain) {
   const item = MENU_CONFIG[tab];
   if (!item) return;
 
-  // If item maps to an existing rich page, switch to that instead
+  // If item maps to an existing rich page, show that page but KEEP the
+  // source domain in the top-nav + sidebar (so the user stays in the
+  // menu they clicked from, not jumped to the legacy domain).
   if (item.mapsTo) {
-    setTimeout(() => switchTab(item.mapsTo), 0);
+    setTimeout(() => switchTab(item.mapsTo, {keepDomain: domain, keepSidebarTab: tab}), 0);
     return;
   }
 
@@ -5265,25 +5267,35 @@ function selectDomain(domain) {
   if (firstItem) switchTab(firstItem.dataset.tab);
 }
 
-function switchTab(tab) {
+function switchTab(tab, opts) {
+  opts = opts || {};
   // Hide all model pages
   document.querySelectorAll('.model-page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sidebar .nav-item').forEach(t => t.classList.remove('active'));
 
-  // Determine the domain: from sidebar item if it exists, else from legacy map
+  // Determine the domain + which sidebar item to highlight
+  // - If opts.keepDomain provided (mapsTo redirect): keep source sidebar/topbar
+  // - Else if a sidebar nav-item for `tab` exists: use its group
+  // - Else fall back to LEGACY_TAB_DOMAIN
   const navEl = document.querySelector('.sidebar .nav-item[data-tab="' + tab + '"]');
   let domain;
-  if (navEl) {
-    navEl.classList.add('active');
+  let highlightTab = opts.keepSidebarTab || tab;
+  if (opts.keepDomain) {
+    domain = opts.keepDomain;
+  } else if (navEl) {
     domain = navEl.closest('.nav-group').dataset.domain;
   } else {
     domain = LEGACY_TAB_DOMAIN[tab] || 'safety';
   }
 
-  // Find or render page
+  // Always re-set sidebar item highlight
+  document.querySelectorAll('.sidebar .nav-item').forEach(t => t.classList.remove('active'));
+  const highlightEl = document.querySelector('.sidebar .nav-item[data-tab="' + highlightTab + '"]');
+  if (highlightEl) highlightEl.classList.add('active');
+
+  // Find or render page (use the original `tab` to look up MENU_CONFIG)
   let page = document.getElementById('page-' + tab);
   if (!page && MENU_CONFIG[tab]) {
-    // Render the dynamic template page
+    // Render the dynamic template page (will recurse for mapsTo)
     renderTemplate(tab, domain);
     page = document.getElementById('page-template');
   }
@@ -5297,11 +5309,21 @@ function switchTab(tab) {
   const group = document.querySelector('.sidebar .nav-group[data-domain="'+domain+'"]');
   if (group) group.classList.add('active');
 
-  // Update breadcrumbs
+  // Update breadcrumbs — prefer the source menu item name (sidebar) over legacy page title
   const crumb = document.getElementById('crumbCurrent');
-  if (crumb) crumb.textContent = (page && page.dataset.title) || (MENU_CONFIG[tab]||{}).name || '首页';
+  const crumbName = (MENU_CONFIG[highlightTab]||{}).name || (page && page.dataset.title) || (MENU_CONFIG[tab]||{}).name || '首页';
+  if (crumb) crumb.textContent = crumbName;
   const crumbDom = document.getElementById('crumbDomain');
   if (crumbDom) crumbDom.textContent = DOMAIN_LABEL[domain] || '安全管理';
+
+  // If shown via mapsTo redirect: also override the legacy page-header's
+  // internal breadcrumb so the user sees the correct source path
+  if (page && opts.keepSidebarTab) {
+    const pageHdr = page.querySelector('.page-header .ph-breadcrumb');
+    if (pageHdr) {
+      pageHdr.innerHTML = '<span>'+(DOMAIN_LABEL[domain]||'')+'</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">'+crumbName+'</span>';
+    }
+  }
 
   // Close mobile sidebar after nav
   document.getElementById('sidebar').classList.remove('open');
