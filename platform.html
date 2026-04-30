@@ -141,6 +141,76 @@
   .ov-section-title{font-size:14px;font-weight:600;color:#475569;margin-bottom:10px;display:flex;align-items:center;gap:8px}
   .ov-section-title::before{content:"";width:3px;height:14px;background:#3b82f6;border-radius:2px}
 
+  /* Generic small list/timeline/card components used by new pages */
+  .pain-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+  .pain-card .pain-num{flex-shrink:0;width:32px;height:32px;border-radius:8px;background:#fef2f2;color:#dc2626;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .pain-card .pain-title{font-size:14.5px;font-weight:600;color:#0f172a;margin-bottom:4px}
+  .pain-card .pain-desc{font-size:12.5px;color:#475569;line-height:1.6}
+  .pain-card .pain-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+
+  .timeline{position:relative;padding-left:24px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,#3b82f6,#16a34a 50%,#94a3b8)}
+  .tl-item{position:relative;padding-bottom:18px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{content:"";position:absolute;left:-21px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--tl-color,#3b82f6);border:3px solid #fff;box-shadow:0 0 0 1px var(--tl-color,#3b82f6)}
+  .tl-item .tl-stage{font-size:11px;color:var(--tl-color,#3b82f6);font-weight:700;letter-spacing:.04em}
+  .tl-item .tl-title{font-size:14.5px;font-weight:600;color:#0f172a;margin:2px 0 6px}
+  .tl-item .tl-desc{font-size:12.5px;color:#475569;line-height:1.6}
+
+  .arch-layer{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--layer-color,#3b82f6)}
+  .arch-layer .arch-no{flex-shrink:0;font-size:24px;font-weight:800;color:var(--layer-color,#3b82f6);min-width:40px;font-feature-settings:"tnum" 1}
+  .arch-layer .arch-title{font-size:14.5px;font-weight:600;color:#0f172a}
+  .arch-layer .arch-desc{font-size:12.5px;color:#475569;margin-top:3px;line-height:1.55}
+
+  .principle-card{background:#f8fafc;border:1px solid #e2e8f0;border-left:3px solid var(--accent,#3b82f6);border-radius:8px;padding:14px 16px}
+  .principle-card .pc-num{font-size:11px;font-weight:700;color:var(--accent,#3b82f6);letter-spacing:.05em}
+  .principle-card .pc-title{font-size:14px;font-weight:600;color:#0f172a;margin:4px 0 6px}
+  .principle-card .pc-desc{font-size:12.5px;color:#475569;line-height:1.6}
+
+  .data-asset-row{display:flex;align-items:flex-start;gap:14px;padding:14px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px}
+  .data-asset-row:last-child{margin-bottom:0}
+  .data-asset-row .da-tier{flex-shrink:0;width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+  .da-tier.t1{background:#ecfeff;color:#0e7490}
+  .da-tier.t2{background:#f0fdf4;color:#15803d}
+  .da-tier.t3{background:#fef9c3;color:#854d0e}
+  .data-asset-row .da-title{font-size:14.5px;font-weight:600;color:#0f172a}
+  .data-asset-row .da-meta{font-size:11.5px;color:#94a3b8;margin-top:3px}
+  .data-asset-row .da-desc{font-size:12.5px;color:#475569;line-height:1.6;margin-top:6px}
+  .data-asset-row .da-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
+  .product-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;display:flex;flex-direction:column;height:100%}
+  .product-card .pd-batch{font-size:10.5px;color:#0e7490;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .product-card .pd-title{font-size:14.5px;font-weight:600;color:#0f172a;margin:4px 0}
+  .product-card .pd-desc{font-size:12.5px;color:#475569;line-height:1.55;flex:1}
+  .product-card .pd-foot{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed #e2e8f0;font-size:11.5px;color:#64748b}
+
+  .step-list{counter-reset:step}
+  .step-list .step{position:relative;padding:14px 14px 14px 56px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:10px}
+  .step-list .step::before{counter-increment:step;content:counter(step);position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:50%;background:var(--accent,#0891b2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .step-list .step .step-title{font-size:14.5px;font-weight:600;color:#0f172a;margin-bottom:4px}
+  .step-list .step .step-desc{font-size:12.5px;color:#475569;line-height:1.6}
+
+  .compl-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px}
+  .compl-card .cc-icon{font-size:18px;color:var(--accent,#0891b2);margin-bottom:6px}
+  .compl-card .cc-title{font-size:14px;font-weight:600;color:#0f172a;margin-bottom:6px}
+  .compl-card .cc-desc{font-size:12.5px;color:#475569;line-height:1.6}
+  .compl-card.danger{border-left:3px solid #dc2626}
+  .compl-card.warn{border-left:3px solid #f59e0b}
+  .compl-card.ok{border-left:3px solid #16a34a}
+
+  .roi-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
+  .roi-table th,.roi-table td{padding:11px 14px;font-size:13px;text-align:left;border-bottom:1px solid #f1f5f9}
+  .roi-table thead th{background:#f8fafc;color:#475569;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  .roi-table tbody td:first-child{font-weight:600;color:#0f172a}
+  .roi-table .roi-num{font-feature-settings:"tnum" 1;color:#16a34a;font-weight:600}
+  .roi-table tfoot td{background:#f8fafc;font-weight:700;color:#0f172a;font-size:13.5px}
+
+  .impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+  .impact-arrow{padding:10px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:12.5px;color:#475569;text-align:center;line-height:1.45}
+  .impact-arrow .ia-from{color:#475569;font-weight:600}
+  .impact-arrow .ia-to{color:#0f172a;font-weight:600}
+  .impact-arrow .ia-label{font-size:11px;color:#94a3b8;margin-top:4px}
+
   @media (max-width:880px){
     .sidebar{transform:translateX(-100%);transition:transform .25s}
     .sidebar.open{transform:translateX(0)}
@@ -177,6 +247,15 @@
     </div>
     <div class="primary-item" data-domain="safety" onclick="selectDomain('safety')">
       <span class="pn-icon">⚠</span><span>安全管理</span>
+    </div>
+    <div class="primary-item" data-domain="hub" onclick="selectDomain('hub')">
+      <span class="pn-icon">◉</span><span>决策中枢</span>
+    </div>
+    <div class="primary-item" data-domain="assets" onclick="selectDomain('assets')">
+      <span class="pn-icon">⬢</span><span>数据资产</span>
+    </div>
+    <div class="primary-item" data-domain="governance" onclick="selectDomain('governance')">
+      <span class="pn-icon">◫</span><span>项目治理</span>
     </div>
   </nav>
   <div class="topbar-actions">
@@ -236,6 +315,57 @@
       </div>
       <div class="nav-item" style="--item-color:#dc2626;--accent:#991b1b;--accent-soft-bg:#fef2f2" data-tab="m8" onclick="switchTab('m8')">
         <span class="nav-icon">●</span><span>大客流预警</span>
+      </div>
+    </div>
+
+    <div class="nav-group" data-domain="hub">
+      <div class="nav-group-title">决策中枢</div>
+      <div class="nav-item" style="--item-color:#7c3aed;--accent:#5b21b6;--accent-soft-bg:#f5f3ff" data-tab="hub-cockpit" onclick="switchTab('hub-cockpit')">
+        <span class="nav-icon">▩</span><span>综合驾驶舱</span>
+      </div>
+      <div class="nav-item" style="--item-color:#7c3aed;--accent:#5b21b6;--accent-soft-bg:#f5f3ff" data-tab="hub-impact" onclick="switchTab('hub-impact')">
+        <span class="nav-icon">⇄</span><span>跨域影响评估</span>
+      </div>
+      <div class="nav-item" style="--item-color:#7c3aed;--accent:#5b21b6;--accent-soft-bg:#f5f3ff" data-tab="hub-scenario" onclick="switchTab('hub-scenario')">
+        <span class="nav-icon">▷</span><span>情景模拟</span>
+      </div>
+    </div>
+
+    <div class="nav-group" data-domain="assets">
+      <div class="nav-group-title">数据资产</div>
+      <div class="nav-item" style="--item-color:#0891b2;--accent:#0e7490;--accent-soft-bg:#ecfeff" data-tab="asset-overview" onclick="switchTab('asset-overview')">
+        <span class="nav-icon">◉</span><span>战略概览</span>
+      </div>
+      <div class="nav-item" style="--item-color:#0891b2;--accent:#0e7490;--accent-soft-bg:#ecfeff" data-tab="asset-inventory" onclick="switchTab('asset-inventory')">
+        <span class="nav-icon">⬢</span><span>资源盘点</span>
+      </div>
+      <div class="nav-item" style="--item-color:#0891b2;--accent:#0e7490;--accent-soft-bg:#ecfeff" data-tab="asset-products" onclick="switchTab('asset-products')">
+        <span class="nav-icon">▤</span><span>数据产品</span>
+      </div>
+      <div class="nav-item" style="--item-color:#0891b2;--accent:#0e7490;--accent-soft-bg:#ecfeff" data-tab="asset-booking" onclick="switchTab('asset-booking')">
+        <span class="nav-icon">◧</span><span>资产入表</span>
+      </div>
+      <div class="nav-item" style="--item-color:#0891b2;--accent:#0e7490;--accent-soft-bg:#ecfeff" data-tab="asset-compliance" onclick="switchTab('asset-compliance')">
+        <span class="nav-icon">⚖</span><span>数据合规</span>
+      </div>
+    </div>
+
+    <div class="nav-group" data-domain="governance">
+      <div class="nav-group-title">项目治理</div>
+      <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-pain" onclick="switchTab('gov-pain')">
+        <span class="nav-icon">!</span><span>痛点分析</span>
+      </div>
+      <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-arch" onclick="switchTab('gov-arch')">
+        <span class="nav-icon">▥</span><span>体系架构</span>
+      </div>
+      <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-roadmap" onclick="switchTab('gov-roadmap')">
+        <span class="nav-icon">→</span><span>实施路线图</span>
+      </div>
+      <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-roi" onclick="switchTab('gov-roi')">
+        <span class="nav-icon">¥</span><span>投资回报</span>
+      </div>
+      <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-safeguard" onclick="switchTab('gov-safeguard')">
+        <span class="nav-icon">◆</span><span>保障措施</span>
       </div>
     </div>
 
@@ -2605,6 +2735,741 @@
 </main>
 </div>
 
+<!-- ==================== HUB · 综合驾驶舱 ==================== -->
+<div class="model-page" id="page-hub-cockpit" data-title="综合驾驶舱" style="--accent:#7c3aed;--accent-soft-bg:#f5f3ff;--accent-soft-text:#5b21b6;--accent-soft-border:#ddd6fe">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>决策中枢</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">综合驾驶舱</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>运营综合决策驾驶舱</h1>
+        <p class="ph-subtitle">面向公司管理层的全线级决策视图，跨四域集中展示关键指标。当任一域出现重大异常（综合安全指数橙色预警 / 设备健康度急降 / 大客流预警）时主动推送摘要，支持一键下钻查看详情。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">决策中枢</span>
+          <span class="chip accent-soft">全线 · 区段 · 车站 三级钻取</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">4</div><div class="ph-kpi-label">业务域综合视图</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">29</div><div class="ph-kpi-label">车站全覆盖</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">活跃推送</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#7c3aed">四域综合视图</div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+      <div class="ov-stat-card"><div class="ov-stat-label">运输组织 · 全线满载率</div><div class="ov-stat-num">87.3<span style="font-size:14px;color:#94a3b8">%</span></div><div class="ov-stat-trend">↗ 较昨日 +1.8pp</div></div>
+      <div class="ov-stat-card"><div class="ov-stat-label">设备运维 · 关注设备数</div><div class="ov-stat-num">12</div><div class="ov-stat-trend" style="color:#dc2626">⚠ 高优先级 3</div></div>
+      <div class="ov-stat-card"><div class="ov-stat-label">能耗管控 · 基线达标率</div><div class="ov-stat-num">91.2<span style="font-size:14px;color:#94a3b8">%</span></div><div class="ov-stat-trend">↗ 26 / 29 站达标</div></div>
+      <div class="ov-stat-card"><div class="ov-stat-label">安全生产 · 综合安全指数</div><div class="ov-stat-num">82.5</div><div class="ov-stat-trend" style="color:#f59e0b">⚠ 黄色 (75-85)</div></div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#7c3aed">需要管理层关注的事项</div>
+    <div class="grid lg:grid-cols-2 gap-3 mb-5">
+      <div class="alert-row"><span style="font-weight:700;color:#dc2626">高</span><div style="flex:1"><div style="font-weight:600">17# 列车 · 蓄电池组 A 健康度连续 3 天下降至 71</div><div style="font-size:11.5px;color:#64748b;margin-top:2px">设备运维 · 14:25 触发 · 建议本季度安排状态修</div></div><span class="chip" style="background:#fef2f2;color:#991b1b">设备运维</span></div>
+      <div class="alert-row" style="background:#fef9c3;border-left-color:#f59e0b"><span style="font-weight:700;color:#854d0e">中</span><div style="flex:1"><div style="font-weight:600">昆明南站 16:40 预计高铁脉冲 · 站台密度可能突破阈值</div><div style="font-size:11.5px;color:#64748b;margin-top:2px">大客流预警 · 14:25 触发 · 建议增 2 列短交路</div></div><span class="chip" style="background:#fef9c3;color:#854d0e">安全管理</span></div>
+      <div class="alert-row" style="background:#f0fdf4;border-left-color:#16a34a"><span style="font-weight:700;color:#15803d">优</span><div style="flex:1"><div style="font-weight:600">小菜园站日均能耗 ↓ 4.2% (vs 上月)</div><div style="font-size:11.5px;color:#64748b;margin-top:2px">能耗管控 · 节能策略已采纳 · 月度节约 ~ 1.2 万元</div></div><span class="chip" style="background:#f0fdf4;color:#15803d">能耗管控</span></div>
+      <div class="alert-row" style="background:#eff6ff;border-left-color:#3b82f6"><span style="font-weight:700;color:#1d4ed8">提示</span><div style="flex:1"><div style="font-weight:600">本周末客流预测较上周末偏高 12% (旅游波动)</div><div style="font-size:11.5px;color:#64748b;margin-top:2px">客流预测 · 周日提前 12h 触发 · 已自动建议加车方案</div></div><span class="chip" style="background:#eff6ff;color:#1d4ed8">运输组织</span></div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#7c3aed">本周关键运营指标</div>
+    <div class="card p-5">
+      <table class="df w-full">
+        <thead><tr><th>指标</th><th>本周值</th><th>上周值</th><th>同比变化</th><th>目标值</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr><td>日均客运量 (万人次)</td><td>30.8</td><td>30.2</td><td><span style="color:#16a34a">+2.0%</span></td><td>≥ 28.0</td><td><span class="chip tag-ok">达标</span></td></tr>
+          <tr><td>正点率 (%)</td><td>99.74</td><td>99.81</td><td><span style="color:#dc2626">−0.07pp</span></td><td>≥ 99.5</td><td><span class="chip tag-ok">达标</span></td></tr>
+          <tr><td>列车非计划停时 (分钟/列·天)</td><td>2.3</td><td>3.1</td><td><span style="color:#16a34a">−25.8%</span></td><td>≤ 5.0</td><td><span class="chip tag-ok">达标</span></td></tr>
+          <tr><td>车公里 (万公里)</td><td>10.42</td><td>10.85</td><td><span style="color:#16a34a">−4.0%</span></td><td>—</td><td><span class="chip tag-ok">优化</span></td></tr>
+          <tr><td>单位车公里能耗 (kWh)</td><td>4.18</td><td>4.32</td><td><span style="color:#16a34a">−3.2%</span></td><td>≤ 4.50</td><td><span class="chip tag-ok">达标</span></td></tr>
+          <tr><td>客户满意度 (分)</td><td>92.1</td><td>91.8</td><td><span style="color:#16a34a">+0.3</span></td><td>≥ 90.0</td><td><span class="chip tag-ok">达标</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== HUB · 跨域影响评估 ==================== -->
+<div class="model-page" id="page-hub-impact" data-title="跨域影响评估" style="--accent:#7c3aed;--accent-soft-bg:#f5f3ff;--accent-soft-text:#5b21b6;--accent-soft-border:#ddd6fe">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>决策中枢</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">跨域影响评估</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>跨域影响评估</h1>
+        <p class="ph-subtitle">中枢消费四域模型输出结论，评估单一事件 / 决策对其他业务域的连锁影响。例如设备健康度下降如何同时拉低安全指数，运行图调整如何影响牵引能耗与司机排班。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">决策中枢</span>
+          <span class="chip accent-soft">连锁分析 · 影响传导链</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">12</div><div class="ph-kpi-label">已建链路</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">8</div><div class="ph-kpi-label">本周触发</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">高影响事件</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#7c3aed">四域间数据共享与联动关系</div>
+    <div class="card p-5 mb-4">
+      <div class="grid lg:grid-cols-2 gap-3 text-sm">
+        <div class="impact-arrow"><span class="ia-from">客流预测</span> → <span class="ia-to">运力调度</span><div class="ia-label">每日下午预测 → 次日运力配置</div></div>
+        <div class="impact-arrow"><span class="ia-from">客流预测</span> → <span class="ia-to">站级能耗 / 大客流预警</span><div class="ia-label">15min 预测 → 能耗基线动态更新 + 客流密度阈值预警</div></div>
+        <div class="impact-arrow"><span class="ia-from">设备健康度</span> → <span class="ia-to">故障诊断 / 安全风险</span><div class="ia-label">健康度评分驱动诊断 + 设备安全板块加权</div></div>
+        <div class="impact-arrow"><span class="ia-from">牵引能耗</span> → <span class="ia-to">运力调度 / 设备健康度</span><div class="ia-label">运行图与司机排班反馈 + 蓄电池 SOC 协同</div></div>
+        <div class="impact-arrow"><span class="ia-from">大客流预警</span> → <span class="ia-to">运力调度</span><div class="ia-label">提前 15-30min 触发加车联动</div></div>
+        <div class="impact-arrow"><span class="ia-from">安全风险</span> ← <span class="ia-to">多系统汇聚</span><div class="ia-label">行车 / 设备 / 客运 / 外部环境四板块加权合成</div></div>
+      </div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#7c3aed">本周触发的跨域影响事件</div>
+    <div class="card p-5 mb-4">
+      <table class="df w-full">
+        <thead><tr><th>触发时间</th><th>源域 / 事件</th><th>影响传导</th><th>预估业务影响</th><th>处置状态</th></tr></thead>
+        <tbody>
+          <tr><td>04-29 14:23</td><td>设备运维 · 17# 列车蓄电池组健康度 → 71</td><td>→ 安全风险（设备板块 ↓ 4 分）</td><td>综合安全指数 84.6 → 82.5（黄色）</td><td><span class="chip tag-warn">人工已确认</span></td></tr>
+          <tr><td>04-28 16:40</td><td>客流预测 · 昆明南站高铁脉冲</td><td>→ 大客流预警（M8 提前 18min 触发）→ 运力调度（加车 2 列）</td><td>站台最大密度 ↓ 17%，无客流积压</td><td><span class="chip tag-ok">已闭环</span></td></tr>
+          <tr><td>04-27 09:12</td><td>安全风险 · 外部气象（暴雨蓝色预警）</td><td>→ 客流预测（雨季客流变化系数 ×0.92）→ 运力调度</td><td>避免运力浪费约 12 列次</td><td><span class="chip tag-ok">已闭环</span></td></tr>
+          <tr><td>04-26 23:45</td><td>设备运维 · 火车北站 3#-12 道岔预警</td><td>→ 安全风险 + 故障诊断知识库 Top-3 匹配</td><td>润滑过期问题，本周天窗修复</td><td><span class="chip tag-warn">维修中</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-3">
+      <div class="card p-4"><div class="text-xs text-slate-500 mb-1">客流 → 运力 联动率</div><div class="text-2xl font-bold accent">86%</div><div class="text-xs text-slate-500 mt-1">客流偏差 ≥ 20% 时自动触发运力建议</div></div>
+      <div class="card p-4"><div class="text-xs text-slate-500 mb-1">设备 → 安全 传导延迟</div><div class="text-2xl font-bold accent">≤ 5min</div><div class="text-xs text-slate-500 mt-1">健康度变化到安全指数刷新</div></div>
+      <div class="card p-4"><div class="text-xs text-slate-500 mb-1">高影响事件人工干预率</div><div class="text-2xl font-bold accent">28%</div><div class="text-xs text-slate-500 mt-1">其余 72% 模型自动处置闭环</div></div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== HUB · 情景模拟 ==================== -->
+<div class="model-page" id="page-hub-scenario" data-title="情景模拟" style="--accent:#7c3aed;--accent-soft-bg:#f5f3ff;--accent-soft-text:#5b21b6;--accent-soft-border:#ddd6fe">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>决策中枢</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">情景模拟</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>情景模拟与预案评估</h1>
+        <p class="ph-subtitle">基于"如果……那么……"假设条件，跨域调用模型重新计算指标输出，用于运营预案评估与重大事件准备（春运 / 旅游高峰 / 高铁加密 / 大型活动）。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">决策中枢</span>
+          <span class="chip accent-soft">What-If 推演 · 预案评估</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">6</div><div class="ph-kpi-label">已建情景模板</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">23</div><div class="ph-kpi-label">本季度模拟次数</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">4</div><div class="ph-kpi-label">采纳预案数</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#7c3aed">情景模板库</div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+      <div class="card p-4 cursor-pointer" style="border-top:3px solid #7c3aed"><div style="font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:.05em">情景 01</div><div class="font-semibold mt-1">春运高铁加密</div><p class="text-xs text-slate-500 mt-2 leading-relaxed">昆明南站每日高铁班次 +30%，模拟 4 号线接驳客流压力与运力配置方案。</p><div class="text-xs text-slate-400 mt-3">最近模拟: 2026-01-15</div></div>
+      <div class="card p-4 cursor-pointer" style="border-top:3px solid #7c3aed"><div style="font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:.05em">情景 02</div><div class="font-semibold mt-1">大型活动 (世博园展会)</div><p class="text-xs text-slate-500 mt-2 leading-relaxed">单日客流叠加 +8 万人次，模拟车站客控措施触发链路与限流时长预估。</p><div class="text-xs text-slate-400 mt-3">最近模拟: 2026-03-22</div></div>
+      <div class="card p-4 cursor-pointer" style="border-top:3px solid #7c3aed"><div style="font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:.05em">情景 03</div><div class="font-semibold mt-1">蓄电池故障批量更换</div><p class="text-xs text-slate-500 mt-2 leading-relaxed">同批次蓄电池组 (8 列) 集中状态修，模拟运力可用率影响与备车调度。</p><div class="text-xs text-slate-400 mt-3">最近模拟: 2026-04-10</div></div>
+      <div class="card p-4 cursor-pointer" style="border-top:3px solid #7c3aed"><div style="font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:.05em">情景 04</div><div class="font-semibold mt-1">极端天气 (持续暴雨)</div><p class="text-xs text-slate-500 mt-2 leading-relaxed">连续 3 天暴雨，模拟雨季客流降幅 + 防汛响应 + 站务用水管控。</p><div class="text-xs text-slate-400 mt-3">最近模拟: 2026-04-25</div></div>
+      <div class="card p-4 cursor-pointer" style="border-top:3px solid #7c3aed"><div style="font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:.05em">情景 05</div><div class="font-semibold mt-1">高峰提前 30 分钟</div><p class="text-xs text-slate-500 mt-2 leading-relaxed">沿线高校开学日提前出行，模拟运行图前移收益与临时加车成本。</p><div class="text-xs text-slate-400 mt-3">最近模拟: 2026-02-20</div></div>
+      <div class="card p-4 cursor-pointer" style="border-top:3px solid #7c3aed"><div style="font-size:11px;color:#7c3aed;font-weight:700;letter-spacing:.05em">情景 06</div><div class="font-semibold mt-1">能源价格上涨 +15%</div><p class="text-xs text-slate-500 mt-2 leading-relaxed">外部电价上涨，模拟年化能耗成本变化 + 节能优化方案 ROI 重算。</p><div class="text-xs text-slate-400 mt-3">最近模拟: 2026-03-08</div></div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#7c3aed">最近一次模拟 · 春运高铁加密 (2026-01-15)</div>
+    <div class="grid lg:grid-cols-2 gap-3 mb-3">
+      <div class="card p-5">
+        <div class="font-semibold mb-3">输入假设</div>
+        <ul class="text-sm text-slate-600 space-y-2">
+          <li>· 昆明南站每日高铁班次：120 → 156 (+30%)</li>
+          <li>· 假设期间：2026-01-25 ~ 02-25 (春运 31 天)</li>
+          <li>· 4 号线南端高铁换乘客流 ×1.42</li>
+          <li>· 沿线高校放假，通勤客流 ×0.65</li>
+        </ul>
+      </div>
+      <div class="card p-5">
+        <div class="font-semibold mb-3">模拟输出</div>
+        <ul class="text-sm text-slate-600 space-y-2">
+          <li>· 全线日均客流：30.8 万 → 33.5 万 (+8.8%)</li>
+          <li>· 高峰满载率：87% → 96% （需扩能）</li>
+          <li>· 建议方案：高峰加密至 5min 间隔 + 短交路 6 列</li>
+          <li>· 预估车公里增量：+8.2%；安全指数维持 85+</li>
+        </ul>
+      </div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== ASSETS · 战略概览 ==================== -->
+<div class="model-page" id="page-asset-overview" data-title="战略概览" style="--accent:#0891b2;--accent-soft-bg:#ecfeff;--accent-soft-text:#0e7490;--accent-soft-border:#a5f3fc">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>数据资产</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">战略概览</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>数据资产化战略概览</h1>
+        <p class="ph-subtitle">大数据模型建设的目标是"<b>用数据省钱</b>"，运营数据资产化的目标是"<b>用数据赚钱</b>"。两条曲线相互促进，将运营沉淀的高质量数据转化为可交易产品 / 可入表资产，为 PPP 运营期开辟票务收入和政府补贴之外的第三类收入。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">数据资产</span>
+          <span class="chip accent-soft">第二曲线 · 三十年视角</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">5<span class="unit">年+</span></div><div class="ph-kpi-label">运营数据沉淀</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">资产层级</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">10<span class="unit">+</span></div><div class="ph-kpi-label">规划数据产品</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="grid md:grid-cols-2 gap-4 mb-5">
+      <div class="card p-5" style="border-top:3px solid #16a34a">
+        <div class="text-sm font-semibold" style="color:#15803d">第一曲线 · 用数据省钱</div>
+        <div class="text-base font-bold mt-2">大数据决策模型建设</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">通过运力优化、设备状态修、能耗管控降低运营成本。直接体现为车公里成本下降、维修人工节约、能耗下降等可量化指标。</p>
+        <ul class="text-xs text-slate-500 mt-3 space-y-1">
+          <li>· 8 个核心决策模型 · 4 大业务域</li>
+          <li>· 中期年化收益 1535-2320 万元</li>
+          <li>· 远期年化收益 2950-4450 万元</li>
+        </ul>
+      </div>
+      <div class="card p-5" style="border-top:3px solid #0891b2">
+        <div class="text-sm font-semibold" style="color:#0e7490">第二曲线 · 用数据赚钱</div>
+        <div class="text-base font-bold mt-2">运营数据资产化</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">将运营数据合规处理后转化为数据产品 / 数据服务 / 数据资产入表，开辟票务收入和政府补贴之外的第三类收入来源。</p>
+        <ul class="text-xs text-slate-500 mt-3 space-y-1">
+          <li>· 客流系列、跨域融合、行业知识 三批产品</li>
+          <li>· 资产入表预估增加 2000-3000 万元资产</li>
+          <li>· 探索数据资产质押融资</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#0891b2">两条曲线协同关系</div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="principle-card" style="--accent:#0891b2"><div class="pc-num">协同 1</div><div class="pc-title">数据治理协同</div><div class="pc-desc">大数据模型需要的数据标准化、质量提升、元数据管理同时也是数据资产化的基础。一次治理投入，两个方向受益。</div></div>
+      <div class="principle-card" style="--accent:#0891b2"><div class="pc-num">协同 2</div><div class="pc-title">特征加工协同</div><div class="pc-desc">为模型训练加工的特征数据（如客流指标、能耗基线），经适当处理后可直接转化为数据产品的核心内容。</div></div>
+      <div class="principle-card" style="--accent:#0891b2"><div class="pc-num">协同 3</div><div class="pc-title">价值验证协同</div><div class="pc-desc">大数据模型带来的降本增效成果（节约的车公里成本、减少的维修费用），可作为数据价值评估的重要参考依据。</div></div>
+      <div class="principle-card" style="--accent:#0891b2"><div class="pc-num">协同 4</div><div class="pc-title">能力建设协同</div><div class="pc-desc">两项工作所需的数据人才、技术平台、外部合作伙伴资源高度重叠，统一推进可避免重复投入。</div></div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== ASSETS · 资源盘点 ==================== -->
+<div class="model-page" id="page-asset-inventory" data-title="资源盘点" style="--accent:#0891b2;--accent-soft-bg:#ecfeff;--accent-soft-text:#0e7490;--accent-soft-border:#a5f3fc">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>数据资产</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">资源盘点</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>4 号线可资产化数据资源盘点</h1>
+        <p class="ph-subtitle">按数据类型与潜在商业价值，4 号线自 2020 年开通以来积累的数据可划分为三个层级，构成数据资产化的原材料库。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">数据资产</span>
+          <span class="chip accent-soft">5 年累积 · 全 29 站</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">资产层级</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">29</div><div class="ph-kpi-label">车站全覆盖</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">5<span class="unit">年+</span></div><div class="ph-kpi-label">数据深度</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="data-asset-row">
+      <div class="da-tier t1">L1</div>
+      <div style="flex:1">
+        <div class="da-title">客流与出行数据 · 第一层级（成熟度最高）</div>
+        <div class="da-meta">最接近商业化 · 立即可开发产品</div>
+        <div class="da-desc">AFC 系统采集的各站分时进出站客流量、OD 矩阵、乘车码出行记录、客流热力分布等。横跨昆明 6 个行政区，连接高新区-主城-大学城-高铁站，反映多个功能区之间的通勤和非通勤出行关联。<b>昆明南站高铁换乘客流数据和斗南花卉市场关联客流数据具有不可替代的本地唯一性。</b></div>
+        <div class="da-tags"><span class="chip tag-ok">已脱敏</span><span class="chip" style="background:#ecfeff;color:#0e7490">规划/调度可用</span><span class="chip" style="background:#ecfeff;color:#0e7490">商业地产可用</span><span class="chip" style="background:#ecfeff;color:#0e7490">广告投放可用</span></div>
+      </div>
+    </div>
+
+    <div class="data-asset-row">
+      <div class="da-tier t2">L2</div>
+      <div style="flex:1">
+        <div class="da-title">设备运行与能耗数据 · 第二层级（长期价值）</div>
+        <div class="da-meta">需更多积累 · 高原稀缺性</div>
+        <div class="da-desc">高原环境下的设备运行参数和能耗基线，对昆明后续新建线路及其他高原城市（贵阳、拉萨）地铁建设具有参考价值。包括各站点及区间分项能耗、通风空调系统参数、列车牵引能耗及再生制动回馈量。<b>取消轨道排热系统的环控能耗数据 + 蓄电池牵引系统衰减数据具有行业稀缺性。</b></div>
+        <div class="da-tags"><span class="chip tag-warn">需脱敏</span><span class="chip" style="background:#f0fdf4;color:#15803d">节能服务商</span><span class="chip" style="background:#f0fdf4;color:#15803d">设备厂商</span><span class="chip" style="background:#f0fdf4;color:#15803d">合同能源管理</span></div>
+      </div>
+    </div>
+
+    <div class="data-asset-row">
+      <div class="da-tier t3">L3</div>
+      <div style="flex:1">
+        <div class="da-title">设备维护与物资消耗 · 第三层级（成本-效能平衡）</div>
+        <div class="da-meta">最适合内部运营优化 · 衍生为行业经验包</div>
+        <div class="da-desc">各专业系统设备维护工单（故障现象、维修时长、更换部件）、备品备件消耗清单、可靠性指标（MTBF、MTTR）、维修成本结构（人工 / 物料 / 委外）以及库存物资全生命周期数据。可衍生为<b>预测性维保产品</b>和<b>备件供应链柔性补货方案</b>。</div>
+        <div class="da-tags"><span class="chip tag-warn">部分脱敏</span><span class="chip" style="background:#fef9c3;color:#854d0e">维保服务商</span><span class="chip" style="background:#fef9c3;color:#854d0e">物资供应商</span><span class="chip" style="background:#fef9c3;color:#854d0e">行业研究机构</span></div>
+      </div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== ASSETS · 数据产品 ==================== -->
+<div class="model-page" id="page-asset-products" data-title="数据产品" style="--accent:#0891b2;--accent-soft-bg:#ecfeff;--accent-soft-text:#0e7490;--accent-soft-border:#a5f3fc">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>数据资产</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">数据产品</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>数据产品开发路线图</h1>
+        <p class="ph-subtitle">参考国内轨道交通企业案例，分三批次推进数据产品的开发和上架。第一批基于现有 AFC 客流数据，边际开发成本最低；中后期推进跨域融合产品和行业知识产品。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">数据资产</span>
+          <span class="chip accent-soft">3 批次 · 10+ 产品</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">批次</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">10<span class="unit">+</span></div><div class="ph-kpi-label">规划产品</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">5-150<span class="unit">万</span></div><div class="ph-kpi-label">年化交易收入区间</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#0891b2">第一批 · 基于 AFC 数据的客流系列产品（近期上架）</div>
+    <div class="grid md:grid-cols-3 gap-3 mb-5">
+      <div class="product-card">
+        <div class="pd-batch">产品 01</div>
+        <div class="pd-title">4 号线分站分时段客流指数</div>
+        <div class="pd-desc">29 站历史和实时客流数据加工为标准化客流指数，按小时颗粒度提供进出站客流及环比、同比变化率。</div>
+        <div class="pd-foot"><span style="color:#0891b2;font-weight:600">需求方</span><span>规划部门 · 商业地产 · 广告代理</span></div>
+      </div>
+      <div class="product-card">
+        <div class="pd-batch">产品 02</div>
+        <div class="pd-title">高铁-地铁换乘客流分析</div>
+        <div class="pd-desc">基于 AFC 与高铁到发时刻表的关联分析，提供高铁旅客抵昆后的地铁出行分布数据。本地稀缺性高。</div>
+        <div class="pd-foot"><span style="color:#0891b2;font-weight:600">需求方</span><span>南站商圈 · 旅游服务商 · 交通规划</span></div>
+      </div>
+      <div class="product-card">
+        <div class="pd-batch">产品 03</div>
+        <div class="pd-title">沿线通勤出行特征数据</div>
+        <div class="pd-desc">基于工作日 / 非工作日 OD 矩阵的对比分析，识别通勤走廊和通勤客流占比。</div>
+        <div class="pd-foot"><span style="color:#0891b2;font-weight:600">需求方</span><span>城市规划 · 人力资源 · 商业选址</span></div>
+      </div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#0891b2">第二批 · 跨域融合数据产品（中期推进）</div>
+    <div class="grid md:grid-cols-2 gap-3 mb-5">
+      <div class="product-card">
+        <div class="pd-batch">产品 04</div>
+        <div class="pd-title">站点周边出行碳足迹指数</div>
+        <div class="pd-desc">结合客流和能耗数据，为每个站点的绿色出行贡献度给出量化评分。</div>
+        <div class="pd-foot"><span style="color:#0891b2;font-weight:600">需求方</span><span>碳交易 · ESG 评估 · 政府绿色金融</span></div>
+      </div>
+      <div class="product-card">
+        <div class="pd-batch">产品 05</div>
+        <div class="pd-title">高原地铁设备运行基准数据集</div>
+        <div class="pd-desc">4 号线在高原环境下积累的设备运行和退化规律数据进行标准化整理，面向设备厂商和其他高原城市地铁运营方。</div>
+        <div class="pd-foot"><span style="color:#0891b2;font-weight:600">需求方</span><span>设备厂商 · 高原城市地铁 · 行业研究院</span></div>
+      </div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#0891b2">第三批 · 行业知识数据产品（远期探索）</div>
+    <div class="grid md:grid-cols-2 gap-3">
+      <div class="product-card">
+        <div class="pd-batch">产品 06</div>
+        <div class="pd-title">蓄电池牵引系统维护知识库</div>
+        <div class="pd-desc">将 4 号线特色设备（蓄电池牵引）的维护经验知识库作为行业咨询产品对外输出。</div>
+        <div class="pd-foot"><span style="color:#0891b2;font-weight:600">需求方</span><span>行业咨询机构 · 同类型创新线路</span></div>
+      </div>
+      <div class="product-card">
+        <div class="pd-batch">产品 07</div>
+        <div class="pd-title">轨交故障诊断知识 API</div>
+        <div class="pd-desc">基于模型 4 沉淀的故障诊断知识库，开放为标准化诊断推理 API。</div>
+        <div class="pd-foot"><span style="color:#0891b2;font-weight:600">需求方</span><span>设备维保服务商 · 中小线路</span></div>
+      </div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== ASSETS · 资产入表 ==================== -->
+<div class="model-page" id="page-asset-booking" data-title="资产入表" style="--accent:#0891b2;--accent-soft-bg:#ecfeff;--accent-soft-text:#0e7490;--accent-soft-border:#a5f3fc">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>数据资产</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">资产入表</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>数据资产入表路径规划</h1>
+        <p class="ph-subtitle">从财务层面体现数据价值的战略性举措。数据资产入表可降低企业资产负债率、拓宽融资渠道。对 PPP 模式下负债率较高的 4 号线而言，财务报表改善具有特殊意义。建议分四步推进。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">数据资产</span>
+          <span class="chip accent-soft">4 步路径 · 入表估值 2000-3000 万</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">4</div><div class="ph-kpi-label">推进步骤</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">2000-3000<span class="unit">万</span></div><div class="ph-kpi-label">预估入表价值</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">12-18<span class="unit">月</span></div><div class="ph-kpi-label">完整周期</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="step-list" style="--accent:#0891b2">
+      <div class="step">
+        <div class="step-title">数据资源盘点与确权</div>
+        <div class="step-desc">配合全量数据盘点工作，按"数据类型 + 来源 + 处理流程 + 应用场景"形成台账。完成数据权属法律论证：<b>云南京建轨道依 PPP 合同自主控制的数据</b>（设备运行、运营管理）vs <b>需与昆明轨道集团 / 政府界定权属的数据</b>（AFC 客流的公共属性）。</div>
+      </div>
+      <div class="step">
+        <div class="step-title">合规评估与资产登记</div>
+        <div class="step-desc">委托第三方专业机构进行合规评估和安全评估，取得法律意见书。与昆明国际数据交易所紧密沟通，确保产品顺利通过<b>产品进场 → 合规登记 → 挂牌交易</b>三个环节。</div>
+      </div>
+      <div class="step">
+        <div class="step-title">价值评估与会计处理</div>
+        <div class="step-desc">采用<b>成本法</b>（数据采集、治理、加工的实际成本归集）+ <b>收益法</b>（基于已实现和预期的数据交易收入）综合评估。财务部门按《企业数据资源相关会计处理暂行规定》将相关支出正式入账并披露。</div>
+      </div>
+      <div class="step">
+        <div class="step-title">探索数据资产融资</div>
+        <div class="step-desc">数据作为资产可进行<b>质押融资 · 作价入股 · 增信贷款 · 资产证券化</b>。入表完成后，探索以数据资产质押向金融机构申请融资，拓宽 4 号线 PPP 项目资金来源渠道。</div>
+      </div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#0891b2;margin-top:18px">关键监管/参考文件</div>
+    <div class="grid md:grid-cols-3 gap-3">
+      <div class="card p-4"><div class="text-xs text-slate-500">财政部</div><div class="text-sm font-semibold mt-1">《企业数据资源相关会计处理暂行规定》</div><div class="text-xs text-slate-500 mt-2">2024-01-01 起施行 · 数据资源入表的会计处理标准</div></div>
+      <div class="card p-4"><div class="text-xs text-slate-500">交易场所</div><div class="text-sm font-semibold mt-1">昆明国际数据交易所</div><div class="text-xs text-slate-500 mt-2">区块链存证 + 隐私计算 · 登记/确权/交易/跨境全链条</div></div>
+      <div class="card p-4"><div class="text-xs text-slate-500">行业指引</div><div class="text-sm font-semibold mt-1">公用事业 · 交通运输 · 政务数据</div><div class="text-xs text-slate-500 mt-2">城投公司重点考虑的入表数据资产 · 评估估值较高</div></div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== ASSETS · 数据合规 ==================== -->
+<div class="model-page" id="page-asset-compliance" data-title="数据合规" style="--accent:#0891b2;--accent-soft-bg:#ecfeff;--accent-soft-text:#0e7490;--accent-soft-border:#a5f3fc">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>数据资产</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">数据合规</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>数据合规与安全红线</h1>
+        <p class="ph-subtitle">数据资产化必须以合规和安全为前提底线。数据安全与数据共享之间的平衡是关键。所有对外输出必须严格遵循三条红线原则。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">数据资产</span>
+          <span class="chip" style="background:#fef2f2;color:#991b1b">不可逾越</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">合规原则</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">数据安全分级</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">100<span class="unit">%</span></div><div class="ph-kpi-label">交易可追溯</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#0891b2">三大合规原则</div>
+    <div class="grid md:grid-cols-3 gap-3 mb-5">
+      <div class="compl-card danger">
+        <div class="cc-icon">🔒</div>
+        <div class="cc-title">个人隐私保护</div>
+        <div class="cc-desc">所有对外输出的数据产品必须经过严格脱敏。AFC 客流数据仅以聚合统计形式（站级、时段级汇总）对外，不得包含任何可识别到个人的出行轨迹。乘车码数据须严格遵守《个人信息保护法》。</div>
+      </div>
+      <div class="compl-card warn">
+        <div class="cc-icon">▦</div>
+        <div class="cc-title">数据安全分级</div>
+        <div class="cc-desc">建立"禁止对外 / 脱敏后可对外 / 可直接对外"三级分类体系。涉及行车安全的信号系统参数、CBTC 核心数据、安全风险评估结论严禁对外。</div>
+      </div>
+      <div class="compl-card ok">
+        <div class="cc-icon">✓</div>
+        <div class="cc-title">交易合规</div>
+        <div class="cc-desc">所有数据产品交易通过昆明国际数据交易所正规渠道进行，确保全流程可追溯、可审计。区块链存证 + 隐私计算构建可信基础设施。</div>
+      </div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#0891b2">数据安全分级清单</div>
+    <div class="card p-5">
+      <table class="df w-full">
+        <thead><tr><th>分级</th><th>标识</th><th>数据范围</th><th>对外策略</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip" style="background:#fef2f2;color:#991b1b">禁止对外</span></td><td>核心安全</td><td>CBTC 信号核心数据 · 行车关键参数 · 安全风险评估结论 · 应急预案</td><td>仅内部使用，不得任何形式对外</td></tr>
+          <tr><td><span class="chip" style="background:#fef9c3;color:#854d0e">脱敏后可对外</span></td><td>设备运行</td><td>设备状态参数 · 故障工单 · 维修记录 · 能耗分项数据</td><td>经脱敏 / 聚合后限定范围对外，含合作伙伴 NDA</td></tr>
+          <tr><td><span class="chip" style="background:#f0fdf4;color:#15803d">可直接对外</span></td><td>客流统计</td><td>站级时段级客流总量 · OD 聚合矩阵 · 客流热力图</td><td>聚合处理后可对外交易</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== GOVERNANCE · 痛点分析 ==================== -->
+<div class="model-page" id="page-gov-pain" data-title="痛点分析" style="--accent:#475569;--accent-soft-bg:#f1f5f9;--accent-soft-text:#334155;--accent-soft-border:#cbd5e1">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>项目治理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">痛点分析</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>4 号线运营生产决策核心痛点</h1>
+        <p class="ph-subtitle">结合对昆明地铁 4 号线运营管理现状的系统评估、与行业标杆的对标分析，从运营管理团队和信息化团队的日常工作出发，识别出六大核心决策痛点。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">项目治理</span>
+          <span class="chip" style="background:#fef2f2;color:#991b1b">六大痛点</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">6</div><div class="ph-kpi-label">核心痛点</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">4</div><div class="ph-kpi-label">业务域覆盖</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">8</div><div class="ph-kpi-label">对应解决模型</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="grid lg:grid-cols-2 gap-3">
+      <div class="pain-card"><div class="pain-num">01</div><div style="flex:1"><div class="pain-title">运力配置仍以经验为主</div><div class="pain-desc">客流呈"通勤潮汐 + 高铁脉冲 + 旅游波动 + 活动突发"四重叠加特征，固定运行图模板无法精细匹配。空间上跨区间运力暂未实现按需调配，时间上高峰满载率较高、平峰运力浪费。</div><div class="pain-tags"><span class="chip tag-warn">运输组织</span><span class="chip" style="background:#f1f5f9;color:#475569">→ 模型 1 / 模型 2</span></div></div></div>
+      <div class="pain-card"><div class="pain-num">02</div><div style="flex:1"><div class="pain-title">设备维修仍以计划修和故障修为主</div><div class="pain-desc">"状态修"缺乏数据模型支撑。计划预防修存在过度维修和漏检两方面问题。蓄电池牵引系统作为行业首创，缺乏成熟的本地化退化规律分析，运营 5 年后衰减管理日益突出。</div><div class="pain-tags"><span class="chip tag-warn">设备运维</span><span class="chip" style="background:#f1f5f9;color:#475569">→ 模型 3 / 模型 4</span></div></div></div>
+      <div class="pain-card"><div class="pain-num">03</div><div style="flex:1"><div class="pain-title">能耗管控停留在事后统计层面</div><div class="pain-desc">缺乏站级能耗水耗双基线管理；牵引能耗（占总能耗 40-50%）协同优化手段缺位；昆明高原气候 (海拔 1891m / 81kPa / 干湿季分明) 综合影响未被系统量化。</div><div class="pain-tags"><span class="chip tag-warn">能耗管控</span><span class="chip" style="background:#f1f5f9;color:#475569">→ 模型 5 / 模型 6</span></div></div></div>
+      <div class="pain-card"><div class="pain-num">04</div><div style="flex:1"><div class="pain-title">安全风险评估以人工赋分为主</div><div class="pain-desc">已建成安全风险隐患系统，但量化评估仍以人工经验为主，缺乏基于实时运营数据自动计算的动态风险评估能力。多因素叠加时人工评估难以快速准确判断综合风险水平。</div><div class="pain-tags"><span class="chip tag-warn">安全生产</span><span class="chip" style="background:#f1f5f9;color:#475569">→ 模型 7 / 模型 8</span></div></div></div>
+      <div class="pain-card"><div class="pain-num">05</div><div style="flex:1"><div class="pain-title">业务系统数据未打通</div><div class="pain-desc">金龙云在基础设施层统一，但数据应用层各业务系统数据仍以域内使用为主。设备故障对运输组织的影响、客流变化对设备磨耗的传导、能耗与运行图的关联未被系统分析。"无治理、不分析"。</div><div class="pain-tags"><span class="chip tag-new">跨域</span><span class="chip" style="background:#f1f5f9;color:#475569">→ 数据治理 / 决策中枢</span></div></div></div>
+      <div class="pain-card"><div class="pain-num">06</div><div style="flex:1"><div class="pain-title">数据要素价值释放不充分</div><div class="pain-desc">已建立覆盖运营、运维、业财、客流的信息化系统，数据采集广、积累丰富，但数据资产化探索尚未起步。未开展确权登记、价值评估、资产入表，也无可流通数据产品。大量数据"沉睡"。</div><div class="pain-tags"><span class="chip tag-new">数据资产</span><span class="chip" style="background:#f1f5f9;color:#475569">→ 数据资产化路径</span></div></div></div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== GOVERNANCE · 体系架构 ==================== -->
+<div class="model-page" id="page-gov-arch" data-title="体系架构" style="--accent:#475569;--accent-soft-bg:#f1f5f9;--accent-soft-text:#334155;--accent-soft-border:#cbd5e1">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>项目治理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">体系架构</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>三层四域一中枢 总体架构</h1>
+        <p class="ph-subtitle">不是在一张白纸上从零起步，而是在已有信息化基础（金龙云 / TCMS / 运营管理系统）上的<b>精准叠加</b>。结合 4 号线单线运营特点和 PPP 模式 30 年运营期成本约束，提出"三层四域一中枢"架构。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">项目治理</span>
+          <span class="chip accent-soft">3 层 + 4 域 + 1 中枢</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">3</div><div class="ph-kpi-label">技术架构层</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">4</div><div class="ph-kpi-label">业务决策域</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">8</div><div class="ph-kpi-label">核心决策模型</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#475569">三大设计原则</div>
+    <div class="grid md:grid-cols-3 gap-3 mb-5">
+      <div class="principle-card" style="--accent:#475569"><div class="pc-num">原则 1</div><div class="pc-title">场景驱动而非平台驱动</div><div class="pc-desc">不追求大而泛的数据平台建设，以运营业务决策场景为牵引，构建"场景明确 → 数据到位 → 模型可用 → 决策有效"端到端闭环。</div></div>
+      <div class="principle-card" style="--accent:#475569"><div class="pc-num">原则 2</div><div class="pc-title">增量叠加而非推倒重来</div><div class="pc-desc">充分尊重 4 号线已有信息化投资成果。数据汇聚治理层以金龙云接口为基础扩展，决策应用层通过接口与现有系统对接，而非替代。</div></div>
+      <div class="principle-card" style="--accent:#475569"><div class="pc-num">原则 3</div><div class="pc-title">分步见效而非一步到位</div><div class="pc-desc">单线运营不需要线网级全量模型覆盖。优先部署数据成熟度高、业务价值明确、见效周期短的模型，再逐步扩展。</div></div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#475569">三层架构（自下而上）</div>
+    <div class="space-y-2 mb-5">
+      <div class="arch-layer" style="--layer-color:#0891b2"><div class="arch-no">L1</div><div style="flex:1"><div class="arch-title">数据汇聚治理层</div><div class="arch-desc">采集、清洗、标准化、特征加工。数据源分五大类：实时生产 / 车辆状态 / 业务管理 / 安全管理 / 外部环境（昆明气象 + 高铁到发 + 节假日历）</div></div></div>
+      <div class="arch-layer" style="--layer-color:#16a34a"><div class="arch-no">L2</div><div style="flex:1"><div class="arch-title">模型引擎层</div><div class="arch-desc">8 个核心模型分三类：时间序列预测（M1/M5）/ 设备状态评估（M3/M4/M6/M7）/ 优化决策（M2/M8）。"公有云训练 + 本地部署推理"混合部署</div></div></div>
+      <div class="arch-layer" style="--layer-color:#7c3aed"><div class="arch-no">L3</div><div style="flex:1"><div class="arch-title">决策应用层</div><div class="arch-desc">面向不同角色：管理层（综合决策驾驶舱）/ 各专业管理岗位（专业域工作台）/ 一线作业人员（企业微信移动端推送）</div></div></div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#475569">四域 + 一中枢</div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div class="card p-4" style="border-top:3px solid #2563eb"><div class="text-xs font-semibold" style="color:#1e40af">运输组织决策域</div><div class="text-base font-bold mt-2">客流 → 运力</div><div class="text-xs text-slate-500 mt-2">M1 + M2 · 调度业务线</div></div>
+      <div class="card p-4" style="border-top:3px solid #ea580c"><div class="text-xs font-semibold" style="color:#9a3412">设备运维决策域</div><div class="text-base font-bold mt-2">健康 → 故障</div><div class="text-xs text-slate-500 mt-2">M3 + M4 · 检修业务线</div></div>
+      <div class="card p-4" style="border-top:3px solid #16a34a"><div class="text-xs font-semibold" style="color:#15803d">能耗管控决策域</div><div class="text-base font-bold mt-2">基线 → 优化</div><div class="text-xs text-slate-500 mt-2">M5 + M6 · 能源业务线</div></div>
+      <div class="card p-4" style="border-top:3px solid #dc2626"><div class="text-xs font-semibold" style="color:#991b1b">安全生产决策域</div><div class="text-base font-bold mt-2">风险 → 预警</div><div class="text-xs text-slate-500 mt-2">M7 + M8 · 安全业务线</div></div>
+      <div class="card p-4" style="border-top:3px solid #7c3aed"><div class="text-xs font-semibold" style="color:#5b21b6">综合决策中枢</div><div class="text-base font-bold mt-2">跨域研判</div><div class="text-xs text-slate-500 mt-2">驾驶舱 / 跨域影响 / 情景模拟</div></div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== GOVERNANCE · 实施路线图 ==================== -->
+<div class="model-page" id="page-gov-roadmap" data-title="实施路线图" style="--accent:#475569;--accent-soft-bg:#f1f5f9;--accent-soft-text:#334155;--accent-soft-border:#cbd5e1">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>项目治理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">实施路线图</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>三阶段滚动推进计划</h1>
+        <p class="ph-subtitle">"近期筑基见效 - 中期价值释放 - 远期体系成熟"三阶段滚动推进。严格遵循"<b>先试点后推广、先验证后投入</b>"原则，在控制总投资规模的前提下，确保每阶段产出可量化、可考核的业务成果。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">项目治理</span>
+          <span class="chip accent-soft">3 阶段 · 48 个月</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">48<span class="unit">月</span></div><div class="ph-kpi-label">总实施周期</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">2600-3900<span class="unit">万</span></div><div class="ph-kpi-label">累计总投入</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">1.7<span class="unit">年</span></div><div class="ph-kpi-label">静态投资回收期</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="timeline">
+      <div class="tl-item" style="--tl-color:#3b82f6">
+        <div class="tl-stage">近期阶段 · 第 1-12 个月</div>
+        <div class="tl-title">数据治理筑基 + 核心模型试点</div>
+        <div class="tl-desc">
+          <p style="margin-bottom:8px"><b>核心目标：</b>完成智慧化底座搭建，验证 2-3 个高价值模型的技术可行性与业务价值，实现首笔数据资产交易。</p>
+          <ul style="list-style:disc;padding-left:18px;font-size:12.5px;line-height:1.8">
+            <li><b>数据侧：</b>编制全线模型数据需求清单；客流/设备/能耗/安全 4 个核心 + 1-4 个扩展主题域治理；外部气象/高铁数据接口打通</li>
+            <li><b>模型侧：</b>客流预测 (M1) + 蓄电池健康度评估 (M3) <b>影子模式</b>运行；连续 3 个月准确率达标后转正</li>
+            <li><b>资产化侧：</b>全量数据资源盘点 + 交易资质申请 + 2-3 款客流系列产品上架</li>
+            <li><b>预计投入：</b>800-1200 万元</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item" style="--tl-color:#16a34a">
+        <div class="tl-stage">中期阶段 · 第 13-30 个月</div>
+        <div class="tl-title">模型规模扩展 + 生产决策融入</div>
+        <div class="tl-desc">
+          <p style="margin-bottom:8px"><b>核心目标：</b>验证通过的模型全面接入生产流程，扩展覆盖核心业务域的模型矩阵，实现规模化降本增效，完成首批数据资产入表。</p>
+          <ul style="list-style:disc;padding-left:18px;font-size:12.5px;line-height:1.8">
+            <li><b>模型侧：</b>M1 正式接入调度系统；启动 M2 开发；M3 扩展至道岔/屏蔽门，沉淀 1000+ 故障案例 (M4)；上线 M5 + M7；搭建管理层驾驶舱</li>
+            <li><b>资产化侧：</b>迭代第一批产品；启动跨域融合产品开发；按《暂行规定》完成首批数据资产入账</li>
+            <li><b>预计增量投入：</b>1000-1500 万元</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item" style="--tl-color:#94a3b8">
+        <div class="tl-stage">远期阶段 · 第 31-48 个月及以后</div>
+        <div class="tl-title">体系全面成熟 + 持续迭代优化</div>
+        <div class="tl-desc">
+          <p style="margin-bottom:8px"><b>核心目标：</b>建成完整"三层四域一中枢"智慧决策体系，建立模型自主迭代常态化机制，形成可复制可输出的行业解决方案。</p>
+          <ul style="list-style:disc;padding-left:18px;font-size:12.5px;line-height:1.8">
+            <li><b>模型侧：</b>上线 M6 牵引能耗优化 + M8 大客流预警；构建中枢跨域评估与情景模拟能力；季度评估 + 年度迭代</li>
+            <li><b>资产化侧：</b>3-5 系列 10+ 产品矩阵；探索数据资产质押融资；评估面向其他城市输出标准化解决方案</li>
+            <li><b>预计增量投入：</b>800-1200 万元</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== GOVERNANCE · 投资回报 ==================== -->
+<div class="model-page" id="page-gov-roi" data-title="投资回报" style="--accent:#475569;--accent-soft-bg:#f1f5f9;--accent-soft-text:#334155;--accent-soft-border:#cbd5e1">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>项目治理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">投资回报</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>投资回报分析</h1>
+        <p class="ph-subtitle">三阶段累计总投入约 2600-3900 万元。对标青岛地铁 6 号线 1.83 亿元投资，本方案为聚焦高价值场景的轻量适配版，总投入仅为 6 号线的 14%-21%。<b>静态投资回收期约 1.7 年</b>，比 6 号线 (3.9 年) 缩短约 56%。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">项目治理</span>
+          <span class="chip" style="background:#f0fdf4;color:#15803d">回收期 1.1-2.6 年</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">2600-3900<span class="unit">万</span></div><div class="ph-kpi-label">总投入</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">2950-4450<span class="unit">万/年</span></div><div class="ph-kpi-label">远期年化收益</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">1.7<span class="unit">年</span></div><div class="ph-kpi-label">静态回收期</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#475569">分阶段可量化年化收益测算</div>
+    <div class="card p-4 mb-5">
+      <table class="roi-table">
+        <thead><tr><th>收益类型</th><th>测算依据 (青岛 6 号线实测)</th><th>近期 (1-12 月)</th><th>中期 (13-30 月)</th><th>远期 (31 月+)</th></tr></thead>
+        <tbody>
+          <tr><td>控员缩编</td><td>6 号线生产岗 ↓30%、委外 ↓10%，年节约 8700 万；本方案逐步推进</td><td><span class="roi-num">0</span> <span style="color:#94a3b8;font-size:11px">(影子模式)</span></td><td class="roi-num">1200-1600 万</td><td class="roi-num">2400-3200 万</td></tr>
+          <tr><td>设备运维</td><td>车辆日检 4 → 15 日，机电巡视效率 ↑50%，检修成本 ↓25%</td><td class="roi-num">0</td><td class="roi-num">200-400 万</td><td class="roi-num">300-600 万</td></tr>
+          <tr><td>能耗管控</td><td>车公里牵引电耗 ↓13%，车站日均动力电耗 ↓30%</td><td class="roi-num">0</td><td class="roi-num">80-200 万</td><td class="roi-num">100-300 万</td></tr>
+          <tr><td>管理效率</td><td>自动化替代每年节省 2.6 万人工时</td><td class="roi-num">0</td><td class="roi-num">50-100 万</td><td class="roi-num">100-200 万</td></tr>
+          <tr><td>数据资产化</td><td>数据产品交易直接收入 + 入表财务价值</td><td class="roi-num">5-20 万 <span style="color:#94a3b8;font-size:11px">(首笔)</span></td><td class="roi-num">50-100 万</td><td class="roi-num">50-150 万</td></tr>
+        </tbody>
+        <tfoot><tr><td>合计</td><td>—</td><td>5-20 万</td><td>1535-2320 万</td><td>2950-4450 万</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#475569">综合投资回报关键指标</div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
+      <div class="card p-5"><div class="text-xs text-slate-500">静态投资回收期</div><div class="text-3xl font-bold mt-1" style="color:#16a34a">1.7 年</div><div class="text-xs text-slate-500 mt-2">区间 1.1-2.6 年 · 较青岛 6 号线 (3.9 年) ↓ 56%</div></div>
+      <div class="card p-5"><div class="text-xs text-slate-500">数据资产入表</div><div class="text-3xl font-bold mt-1" style="color:#0891b2">+2000-3000 万</div><div class="text-xs text-slate-500 mt-2">首批入表预计资产增加，改善资产负债结构</div></div>
+      <div class="card p-5"><div class="text-xs text-slate-500">设备可靠度提升</div><div class="text-3xl font-bold mt-1" style="color:#475569">100-200 万/年</div><div class="text-xs text-slate-500 mt-2">减少非计划停机间接损失</div></div>
+    </div>
+
+    <div class="ov-section-title" style="--accent:#475569">收益实现保障机制</div>
+    <div class="grid md:grid-cols-3 gap-3">
+      <div class="card p-4"><div class="font-semibold text-sm">控员收益强绑定模型上线进度</div><p class="text-xs text-slate-500 mt-2">M1 转正后启动调度岗优化；M3 上线后启动运维岗班制调整</p></div>
+      <div class="card p-4"><div class="font-semibold text-sm">收益分享激励机制</div><p class="text-xs text-slate-500 mt-2">节约成本的 10% 用于团队激励，确保各部门主动推进</p></div>
+      <div class="card p-4"><div class="font-semibold text-sm">季度收益核算</div><p class="text-xs text-slate-500 mt-2">每季度对实际节约成本核算，动态调整后续投入与模型优化方向</p></div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== GOVERNANCE · 保障措施 ==================== -->
+<div class="model-page" id="page-gov-safeguard" data-title="保障措施" style="--accent:#475569;--accent-soft-bg:#f1f5f9;--accent-soft-text:#334155;--accent-soft-border:#cbd5e1">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>项目治理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">保障措施</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>关键保障措施</h1>
+        <p class="ph-subtitle">从组织、人才、数据、安全四个维度建立项目实施的关键保障，确保"业务说得清、技术做得到、效果看得见"。</p>
+        <div class="ph-tags">
+          <span class="chip" style="background:#f1f5f9;color:#475569">项目治理</span>
+          <span class="chip accent-soft">4 大保障维度</span>
+        </div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">4</div><div class="ph-kpi-label">保障维度</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">3-5</div><div class="ph-kpi-label">内部技术骨干</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">1-2</div><div class="ph-kpi-label">外部合作方</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="grid md:grid-cols-2 gap-3 mb-3">
+      <div class="card p-5">
+        <div class="text-xs font-semibold" style="color:#475569;letter-spacing:.05em">保障 01 · 组织保障</div>
+        <div class="text-base font-bold mt-1">业务主导、技术支撑</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">成立运营生产决策智慧化升级专项工作组，由<b>运营管理部门负责人任组长</b>，信息化部门提供技术支撑。每个模型指定<b>业务负责人</b>（定义需求、提供领域知识、验收效果）和<b>技术负责人</b>（数据准备、模型开发、部署）。</p>
+        <ul class="text-xs text-slate-500 mt-3 space-y-1">
+          <li>· 内部技术骨干 3-5 名（领域经验是模型成功的关键）</li>
+          <li>· 外部 1-2 家具有城轨数据模型落地经验的技术合作方</li>
+          <li>· "联合研发"模式 · 在项目实施中完成知识转移</li>
+        </ul>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs font-semibold" style="color:#475569;letter-spacing:.05em">保障 02 · 人才保障</div>
+        <div class="text-base font-bold mt-1">内培为主、外引为辅</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">运营团队在轨道交通专业领域经验丰富，所缺乏的主要是数据分析和模型应用能力。<b>运营 30 年期间不可避免的人员更替</b>背景下，模型建设过程本身是经验知识结构化沉淀的过程，具有重要的知识资产价值。</p>
+        <ul class="text-xs text-slate-500 mt-3 space-y-1">
+          <li>· 选派 3-5 名技术骨干参加智慧化运维 / 数据治理认证培训</li>
+          <li>· 模型项目"联合工作"模式 · 实践中完成能力内化</li>
+          <li>· 引进 1-2 名轨道交通信息化复合型人才</li>
+        </ul>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs font-semibold" style="color:#475569;letter-spacing:.05em">保障 03 · 数据保障</div>
+        <div class="text-base font-bold mt-1">将模型数据需求嵌入数据治理计划</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">"<b>无治理、不分析</b>"。模型效果直接取决于数据质量。本方案中明确的各项模型数据需求，应作为硬性需求纳入 2025-2027 年数据治理体系建设的优先项。</p>
+        <ul class="text-xs text-slate-500 mt-3 space-y-1">
+          <li>· AFC 数据完整率 ≥ 99%，数据延迟 ≤ 2 分钟</li>
+          <li>· TCMS 车辆状态数据回传完整率 ≥ 95%</li>
+          <li>· 各站电表读数小时级采集，空调系统参数实时获取</li>
+        </ul>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs font-semibold" style="color:#475569;letter-spacing:.05em">保障 04 · 安全红线</div>
+        <div class="text-base font-bold mt-1">人机协同、模型辅助</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">所有专业域工作台均应遵循<b>人机协同原则</b>：模型提供量化分析结论和推荐方案，但<b>最终决策权归属专业人员</b>。工作台界面明确区分"模型建议"和"待人工确认"状态标识，确保模型输出不被误解为自动执行指令。</p>
+        <ul class="text-xs text-slate-500 mt-3 space-y-1">
+          <li>· 涉及行车安全的关键决策必须人工确认</li>
+          <li>· 模型异常时自动降级到现有人工决策模式</li>
+          <li>· 模型输出留痕、可追溯、可审计</li>
+        </ul>
+      </div>
+    </div>
+
+  </div></main>
+</div>
+
   </div><!-- /.content -->
 </div><!-- /.main-area -->
 </div><!-- /.app -->
@@ -2619,11 +3484,17 @@ const TAB_DOMAIN = {
   m1: 'transport', m2: 'transport',
   m3: 'equipment', m4: 'equipment',
   m5: 'energy',    m6: 'energy',
-  m7: 'safety',    m8: 'safety'
+  m7: 'safety',    m8: 'safety',
+  'hub-cockpit': 'hub', 'hub-impact': 'hub', 'hub-scenario': 'hub',
+  'asset-overview': 'assets', 'asset-inventory': 'assets', 'asset-products': 'assets',
+  'asset-booking': 'assets', 'asset-compliance': 'assets',
+  'gov-pain': 'governance', 'gov-arch': 'governance', 'gov-roadmap': 'governance',
+  'gov-roi': 'governance', 'gov-safeguard': 'governance'
 };
 const DOMAIN_LABEL = {
   home: '工作台', transport: '运输组织', equipment: '设备运维',
-  energy: '能耗管理', safety: '安全管理'
+  energy: '能耗管理', safety: '安全管理',
+  hub: '决策中枢', assets: '数据资产', governance: '项目治理'
 };
 
 // Click a top-nav primary item: switch to first sub-page in that domain
@@ -3503,7 +4374,10 @@ function switchSub(page, sub) {
 // Hash routing — open the requested page on load and on hash change
 function applyHashRoute(){
   const h=(location.hash||'').replace('#','').trim();
-  const valid=['overview','m1','m2','m3','m4','m5','m6','m7','m8'];
+  const valid=['overview','m1','m2','m3','m4','m5','m6','m7','m8',
+    'hub-cockpit','hub-impact','hub-scenario',
+    'asset-overview','asset-inventory','asset-products','asset-booking','asset-compliance',
+    'gov-pain','gov-arch','gov-roadmap','gov-roi','gov-safeguard'];
   if(valid.includes(h)) switchTab(h);
 }
 window.addEventListener('hashchange', applyHashRoute);
