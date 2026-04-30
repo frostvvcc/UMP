@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>昆明地铁 4 号线 · 运营生产决策大数据模型规划平台</title>
+<title>昆明地铁 4 号线 · 综合运营管理平台</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23006a4e'/%3E%3Ctext x='16' y='22' font-family='-apple-system,sans-serif' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3E4%3C/text%3E%3Ccircle cx='25' cy='8' r='4' fill='none' stroke='%23FFD700' stroke-width='1.5'/%3E%3C/svg%3E">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <style>
@@ -53,6 +54,21 @@
   .primary-item[data-domain="support"]   .pn-icon{background:linear-gradient(135deg,#facc15,#ca8a04)}
   .primary-item[data-domain="office"]    .pn-icon{background:linear-gradient(135deg,#ec4899,#be185d)}
   .primary-item[data-domain="settings"]  .pn-icon{background:linear-gradient(135deg,#64748b,#334155)}
+
+  /* === Global search in topbar === */
+  .global-search{position:relative;flex-shrink:0;margin-right:12px}
+  .global-search-input{width:240px;height:34px;padding:0 12px 0 32px;border:1px solid rgba(167,243,208,.25);border-radius:9999px;background:rgba(255,255,255,.08);color:#fff;font-size:12.5px;outline:none;transition:background .15s,border-color .15s,width .2s}
+  .global-search-input::placeholder{color:rgba(167,243,208,.6)}
+  .global-search-input:focus{background:rgba(255,255,255,.16);border-color:#FFD700;width:280px}
+  .global-search .gs-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:rgba(167,243,208,.7);font-size:13px;pointer-events:none}
+  .global-search-results{position:absolute;top:42px;right:0;width:340px;max-height:420px;overflow-y:auto;background:#fff;border:1px solid #e2e8f0;border-radius:10px;box-shadow:0 12px 32px rgba(15,23,42,.18);display:none;z-index:120}
+  .global-search-results.open{display:block}
+  .gs-result{padding:9px 14px;font-size:13px;color:#0f172a;cursor:pointer;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:10px;transition:background .12s}
+  .gs-result:last-child{border-bottom:none}
+  .gs-result:hover,.gs-result.highlighted{background:#f0fdf4}
+  .gs-result .gs-domain{font-size:11px;color:#94a3b8;background:#f1f5f9;padding:1px 7px;border-radius:4px;flex-shrink:0;font-weight:500}
+  .gs-result .gs-name b{color:#006a4e;background:#fef9c3;padding:0 2px;border-radius:2px}
+  .gs-empty{padding:18px 14px;font-size:13px;color:#94a3b8;text-align:center}
 
   .topbar-main .topbar-actions{display:flex;align-items:center;gap:12px;color:#a7f3d0;font-size:12px;padding:0 12px 0 16px;border-left:1px solid rgba(167,243,208,.18);height:100%;flex-shrink:0}
   .topbar-main .topbar-actions .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;background:rgba(16,185,129,.18);border-radius:9999px;font-size:11px;color:#d1fae5;border:1px solid rgba(52,211,153,.25)}
@@ -555,10 +571,16 @@
       <span class="pn-icon">⚙</span><span class="pn-label">系统设置</span>
     </div>
   </nav>
+  <div class="global-search">
+    <span class="gs-icon">⌕</span>
+    <input class="global-search-input" id="globalSearch" placeholder="搜索功能 / 指标 / 工单..." autocomplete="off"
+           oninput="onGlobalSearch(this.value)" onfocus="onGlobalSearch(this.value)" onkeydown="onSearchKey(event)">
+    <div class="global-search-results" id="globalSearchResults"></div>
+  </div>
   <div class="topbar-actions">
     <span class="pill"><span class="live-dot"></span>实时数据</span>
-    <span class="hidden md:inline">2026-04-30 周四</span>
-    <span class="user-avatar">运</span>
+    <span class="hidden md:inline" id="topbarDate">2026-04-30 周四</span>
+    <span class="user-avatar" title="运营管理员">运</span>
   </div>
 </header>
 
@@ -4545,6 +4567,7 @@
     </div>
   </div>
   <div class="ai-quick-chips">
+    <span class="ai-quick-chip" onclick="askAI('分析当前页面')" style="background:#fef9c3;color:#854d0e;border-color:#fde68a">分析当前页面</span>
     <span class="ai-quick-chip" onclick="askAI('生成本周运营综合评价')">本周综合评价</span>
     <span class="ai-quick-chip" onclick="askAI('分析今日异常指标')">今日异常分析</span>
     <span class="ai-quick-chip" onclick="askAI('对比上月安全指数变化')">月度安全对比</span>
@@ -5253,7 +5276,7 @@ const DOMAIN_LABEL = {
 
 // Map old built-out pages to the new 10-domain top nav
 const LEGACY_TAB_DOMAIN = {
-  overview:'home', m1:'efficient', m2:'efficient', m3:'efficient', m4:'efficient',
+  overview:'smart', m1:'efficient', m2:'efficient', m3:'efficient', m4:'efficient',
   m5:'green', m6:'green', m7:'safety', m8:'smart',
   'hub-cockpit':'smart','hub-impact':'smart','hub-scenario':'smart',
   'asset-overview':'smart','asset-inventory':'smart','asset-products':'smart',
@@ -5337,6 +5360,29 @@ function switchTab(tab, opts) {
   if (tab === 'm6' && !chartInited.m6) { chartInited.m6 = true; initM6Charts(); }
   if (tab === 'm7' && !chartInited.m7) { chartInited.m7 = true; initM7Charts(); }
   if (tab === 'm8' && !chartInited.m8) { chartInited.m8 = true; initM8Charts(); }
+
+  // Reset model-page subnav back to step 1 (workstation/overview) so user
+  // doesn't see a stale "数据分析" tab when revisiting via mapsTo or hash
+  if (page && page.id) {
+    const modelId = page.id.replace(/^page-/, '');
+    const subnav = page.querySelector(':scope > .subnav');
+    if (subnav) {
+      const firstItem = subnav.querySelector('.subnav-item');
+      if (firstItem) {
+        const sub = firstItem.dataset.sub;
+        if (sub) try { switchSub(modelId, sub); } catch(e){}
+      }
+    }
+  }
+
+  // Persist last tab (skip the recursive call from mapsTo so we save the
+  // user-visible item, not the legacy redirect target)
+  if (!opts.keepDomain) {
+    try { localStorage.setItem('kunmingMetro_lastTab', tab); } catch(e){}
+  }
+
+  // Update AI's notion of current page for context-aware reports
+  window.AI_CURRENT = {tab: opts.keepSidebarTab || tab, name: crumbName, domain: domain, domainLabel: DOMAIN_LABEL[domain]};
 
   window.scrollTo(0, 0);
 }
@@ -6193,6 +6239,94 @@ function showMetric(key){
 }
 function closeMetric(){document.getElementById('metricModal').classList.remove('open')}
 
+// ===== 全局搜索 =====
+// Build a flat searchable index of all reachable pages
+function buildSearchIndex(){
+  const idx=[];
+  // 1. All sidebar nav-items (covers all 80 menu pages)
+  document.querySelectorAll('.sidebar .nav-item').forEach(el=>{
+    const tab=el.dataset.tab;
+    const name=el.querySelector('span:last-child').textContent.trim();
+    const groupEl=el.closest('.nav-group');
+    const domain=groupEl.dataset.domain;
+    const domainTitle=groupEl.querySelector('.nav-group-title').textContent.trim();
+    idx.push({tab,name,domain,domainTitle});
+  });
+  // 2. Legacy rich pages not in sidebar (overview, hub-*, asset-*, gov-*, m1-m8)
+  const legacy=[
+    ['overview','全景管理','工作台'],
+    ['hub-cockpit','综合驾驶舱','决策中枢'],['hub-impact','跨域影响评估','决策中枢'],['hub-scenario','情景模拟','决策中枢'],
+    ['asset-overview','数据资产战略','数据资产'],['asset-inventory','资源盘点','数据资产'],
+    ['asset-products','数据产品','数据资产'],['asset-booking','资产入表','数据资产'],['asset-compliance','数据合规','数据资产'],
+    ['gov-pain','痛点分析','项目治理'],['gov-arch','体系架构','项目治理'],['gov-roadmap','实施路线图','项目治理'],
+    ['gov-roi','投资回报','项目治理'],['gov-safeguard','保障措施','项目治理'],
+    ['gov-system','系统监控','项目治理'],['gov-scenario','场景管理','项目治理'],
+    ['m1','客流预测分析','工作台'],['m2','运行图编制','工作台'],
+    ['m3','设备健康监测','工作台'],['m4','故障智能诊断','工作台'],
+    ['m5','站级能耗','工作台'],['m6','牵引能耗优化','工作台'],
+    ['m7','安全风险动态评估','工作台'],['m8','车站大客流安全预警','工作台']
+  ];
+  legacy.forEach(([tab,name,domainTitle])=>idx.push({tab,name,domain:'legacy',domainTitle,legacy:true}));
+  return idx;
+}
+let SEARCH_INDEX=null;
+let searchHighlightIdx=-1;
+function ensureSearchIndex(){if(!SEARCH_INDEX) SEARCH_INDEX=buildSearchIndex()}
+function onGlobalSearch(q){
+  ensureSearchIndex();
+  const r=document.getElementById('globalSearchResults');
+  q=(q||'').trim().toLowerCase();
+  if(!q){r.classList.remove('open');r.innerHTML='';return}
+  const matches=SEARCH_INDEX.filter(it=>{
+    return it.name.toLowerCase().includes(q)||it.domainTitle.toLowerCase().includes(q)||(it.tab||'').toLowerCase().includes(q);
+  }).slice(0,12);
+  if(!matches.length){
+    r.innerHTML='<div class="gs-empty">没有找到匹配项</div>';
+  } else {
+    const escape=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    const hl=s=>{const lc=s.toLowerCase();const i=lc.indexOf(q);if(i<0)return escape(s);return escape(s.slice(0,i))+'<b>'+escape(s.slice(i,i+q.length))+'</b>'+escape(s.slice(i+q.length))};
+    r.innerHTML=matches.map((it,i)=>'<div class="gs-result" data-idx="'+i+'" onclick="navigateToSearch(\''+it.tab+'\')"><span class="gs-domain">'+it.domainTitle+'</span><span class="gs-name">'+hl(it.name)+'</span></div>').join('');
+    searchHighlightIdx=-1;
+  }
+  r.classList.add('open');
+}
+function onSearchKey(e){
+  const r=document.getElementById('globalSearchResults');
+  const items=r.querySelectorAll('.gs-result');
+  if(e.key==='Escape'){r.classList.remove('open');e.target.blur();return}
+  if(e.key==='Enter'){
+    const sel=items[searchHighlightIdx<0?0:searchHighlightIdx];
+    if(sel){sel.click();}
+    return;
+  }
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+    e.preventDefault();
+    if(!items.length)return;
+    items.forEach(el=>el.classList.remove('highlighted'));
+    if(e.key==='ArrowDown')searchHighlightIdx=(searchHighlightIdx+1)%items.length;
+    else searchHighlightIdx=(searchHighlightIdx-1+items.length)%items.length;
+    items[searchHighlightIdx].classList.add('highlighted');
+    items[searchHighlightIdx].scrollIntoView({block:'nearest'});
+  }
+}
+function navigateToSearch(tab){
+  document.getElementById('globalSearch').value='';
+  document.getElementById('globalSearchResults').classList.remove('open');
+  switchTab(tab);
+}
+// Click outside to close
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.global-search')){
+    const r=document.getElementById('globalSearchResults');
+    if(r)r.classList.remove('open');
+  }
+});
+
+// ===== Persistence (last visited tab) =====
+const LAST_TAB_KEY='kunmingMetro_lastTab';
+function saveLastTab(tab){try{localStorage.setItem(LAST_TAB_KEY,tab)}catch(e){}}
+function loadLastTab(){try{return localStorage.getItem(LAST_TAB_KEY)}catch(e){return null}}
+
 // ===== AI 助手 =====
 function toggleAI(){
   const p=document.getElementById('aiPanel');
@@ -6207,9 +6341,14 @@ function askAI(q){
   const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;msgs.appendChild(u);
   const b=document.createElement('div');b.className='ai-msg bot';b.innerHTML='<div style="color:#94a3b8;font-size:12px">正在分析中...</div>';msgs.appendChild(b);
   msgs.scrollTop=msgs.scrollHeight;
+  // Context-aware: if "当前" / "这个页面" mentioned, use AI_CURRENT
+  const ctx = window.AI_CURRENT || {};
   setTimeout(()=>{
     let report='';
-    if(q.includes('本周')||q.includes('综合评价')){
+    // Context-aware: query contains "当前" or "这个" / "本页"
+    if((q.includes('当前')||q.includes('这个页面')||q.includes('本页')||q.includes('此页面')) && ctx.name){
+      report=`<div class="ai-msg-section"><div class="ai-msg-title">当前页面 · ${ctx.domainLabel||''} › ${ctx.name}</div>正在分析「<b>${ctx.name}</b>」相关数据。本页面属于 <b>${ctx.domainLabel||''}</b> 业务域，关联 1600+ 指标体系中的若干项。</div><div class="ai-msg-section"><div class="ai-msg-title">关键发现</div><ul><li>本页关键指标本月达成率 <b>89.2%</b>，较上月 +1.4pp</li><li>关联 3 项跨域影响（详见决策中枢 → 跨域影响评估）</li><li>建议关注本周 2 项待处置事项</li></ul></div><div class="ai-msg-section"><div class="ai-msg-title">指导建议</div><ul><li>查看本页待办清单并优先处置高优先级项</li><li>结合数据流向（与其他业务域关联）联动响应</li><li>可点击任意 KPI 查看指标档案与穿透分析</li></ul></div>`;
+    } else if(q.includes('本周')||q.includes('综合评价')){
       report=`<div class="ai-msg-section"><div class="ai-msg-title">综合评价</div>本周（04-23 ~ 04-29）4 号线运营整体平稳，<b>综合得分 86.83 分</b>，较上周 +0.4 分。六大维度中，<b>高效管理 (90.2)</b> 表现最佳，主要得益于运行图编制采纳率达 73%；<b>安全管理 (88.5)</b> 受 17# 列车蓄电池组事件影响小幅下降。</div><div class="ai-msg-section"><div class="ai-msg-title">关键异常发现</div><ul><li>17# 列车蓄电池组 A 健康度连续 3 天下降至 71，需本周内启动状态修</li><li>小菜园站 14:00-17:00 持续能耗偏高 +18%，归因为 AHU-3 风阀效率下降</li><li>火车北站 PSD-A12 健康度急降至 55，已生成本周必修工单</li></ul></div><div class="ai-msg-section"><div class="ai-msg-title">指导建议</div><ul><li>设备运维：本周天窗内集中处置 PSD-A12 + 火车北站 3#-12 道岔</li><li>能耗管控：推广空调温度策略 +1°C 至全线（试点节能 4.2%）</li><li>调度安排：周日加车 12% 应对旅游客流，已生成预案</li></ul></div>`;
     }else if(q.includes('异常')||q.includes('今日')){
       report=`<div class="ai-msg-section"><div class="ai-msg-title">综合评价</div>今日 (2026-04-30) 截至 14:25，运营整体正常。<b>3 项指标偏离基准</b>：综合安全指数 82.5 (黄色)、PSD-A12 健康度 55、小菜园站能耗 +18%。</div><div class="ai-msg-section"><div class="ai-msg-title">关键异常发现</div><ul><li><b>设备板块 ↓ 4 分</b>：17# 列车蓄电池组 A 异常 + PSD-A12</li><li><b>能耗偏离</b>：小菜园站 14:00-17:00 持续偏高，主因风阀效率</li><li><b>16:40 高峰预警</b>：昆明南站高铁脉冲，已建议加车 2 列</li></ul></div><div class="ai-msg-section"><div class="ai-msg-title">指导建议</div><ul><li>立即：调度采纳 16:40 加车建议（截止 16:10）</li><li>本周：完成 PSD-A12 滑轮组更换 + 道岔润滑</li><li>下季度：17# 列车蓄电池组单体更换计划</li></ul></div>`;
@@ -6235,16 +6374,24 @@ function applyHashRoute(){
   if(h && (legacy.includes(h) || MENU_CONFIG[h])){
     switchTab(h);
   } else {
-    // default landing: open the active sidebar item (safety-target)
-    switchTab('safety-target');
+    // Default landing: prefer last visited tab (persisted in localStorage),
+    // else 智慧管理 → COCC 驾驶舱 (which delegates to the 综合决策驾驶舱)
+    let last = null;
+    try { last = localStorage.getItem('kunmingMetro_lastTab'); } catch(e){}
+    if (last && (legacy.includes(last) || MENU_CONFIG[last])) {
+      switchTab(last);
+    } else {
+      switchTab('smart-cocc');
+    }
   }
 }
 window.addEventListener('hashchange', applyHashRoute);
 document.addEventListener('DOMContentLoaded', applyHashRoute);
-// Debug helper: ?ai=1 auto-opens AI panel with sample, ?metric=KEY opens modal
+// Debug helper: ?ai=1 / ?metric=KEY / ?search=KEYWORD
 document.addEventListener('DOMContentLoaded', ()=>{
   const sp=new URLSearchParams(location.search);
   if(sp.get('ai')==='1'){setTimeout(()=>{toggleAI();askAI('生成本周运营综合评价')},200)}
+  if(sp.get('search')){setTimeout(()=>{const inp=document.getElementById('globalSearch');inp.value=sp.get('search');inp.focus();onGlobalSearch(sp.get('search'))},200)}
   const mk=sp.get('metric');if(mk){setTimeout(()=>showMetric(mk),200)}
 });
 
