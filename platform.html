@@ -37,9 +37,9 @@
   .sidebar .nav-item{display:flex;align-items:center;gap:10px;padding:8px 18px;font-size:13.5px;color:#cbd5e1;cursor:pointer;border-left:3px solid transparent;transition:background .15s,color .15s}
   .sidebar .nav-item:hover{background:rgba(148,163,184,.08);color:#f8fafc}
   .sidebar .nav-item.active{background:rgba(59,130,246,.12);color:#fff;border-left-color:var(--item-color,#3b82f6)}
-  .sidebar .nav-item .nav-num{display:inline-block;width:18px;font-size:11px;color:#64748b;font-weight:600;text-align:center}
-  .sidebar .nav-item.active .nav-num{color:#cbd5e1}
-  .sidebar .nav-item .nav-dot{width:6px;height:6px;border-radius:50%;background:var(--item-color,#64748b);flex-shrink:0}
+  .sidebar .nav-item .nav-icon{display:inline-flex;width:18px;justify-content:center;font-size:13px;color:#64748b;flex-shrink:0;line-height:1}
+  .sidebar .nav-item:hover .nav-icon{color:#cbd5e1}
+  .sidebar .nav-item.active .nav-icon{color:var(--item-color,#3b82f6)}
   .sidebar .sidebar-foot{padding:14px 18px;border-top:1px solid rgba(148,163,184,.12);font-size:11px;color:#475569;line-height:1.5}
 
   .main-area{flex:1;margin-left:236px;min-height:100vh;display:flex;flex-direction:column}
@@ -96,6 +96,20 @@
   .overview-card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(15,23,42,.08)}
   .overview-card .card-num{font-size:64px;font-weight:800;opacity:.12;position:absolute;right:14px;top:0;line-height:1}
 
+  /* Function tile (overview homepage entries) */
+  .func-tile{display:flex;flex-direction:column;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s;border-top:3px solid var(--tile-color,#3b82f6)}
+  .func-tile:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(15,23,42,.07);border-color:var(--tile-color,#3b82f6);border-top-color:var(--tile-color,#3b82f6)}
+  .func-tile .ft-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .func-tile .ft-icon{width:36px;height:36px;border-radius:8px;background:var(--tile-soft,#eff6ff);color:var(--tile-color,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .func-tile .ft-title{font-size:14.5px;font-weight:600;color:#0f172a;line-height:1.3}
+  .func-tile .ft-domain{font-size:11px;color:#94a3b8;margin-top:2px}
+  .func-tile .ft-desc{font-size:12.5px;color:#475569;line-height:1.55;margin:0 0 10px;flex:1}
+  .func-tile .ft-kpis{display:flex;gap:6px;flex-wrap:wrap}
+  .func-tile .ft-kpi{font-size:11px;color:#475569;background:#f8fafc;padding:2px 8px;border-radius:4px;border:1px solid #e2e8f0;font-feature-settings:"tnum" 1}
+
+  .ov-section-title{font-size:14px;font-weight:600;color:#475569;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .ov-section-title::before{content:"";width:3px;height:14px;background:#3b82f6;border-radius:2px}
+
   @media (max-width:880px){
     .sidebar{transform:translateX(-100%);transition:transform .25s}
     .sidebar.open{transform:translateX(0)}
@@ -116,49 +130,49 @@
     <div class="logo">4</div>
     <div class="brand-text">
       <div class="brand-title">昆明地铁 4 号线</div>
-      <div class="brand-sub">运营生产决策平台</div>
+      <div class="brand-sub">运营管理系统</div>
     </div>
   </div>
   <nav class="nav" id="sidebarNav">
-    <div class="nav-group-title">概览</div>
+    <div class="nav-group-title">工作台</div>
     <div class="nav-item active" style="--item-color:#64748b" data-tab="overview" onclick="switchTab('overview')">
-      <span class="nav-dot"></span><span>总览仪表盘</span>
+      <span class="nav-icon">▦</span><span>首页</span>
     </div>
 
     <div class="nav-group-title">运输组织</div>
     <div class="nav-item" style="--item-color:#2563eb" data-tab="m1" onclick="switchTab('m1')">
-      <span class="nav-num">M1</span><span>客流预测</span>
+      <span class="nav-icon">◐</span><span>客流预测</span>
     </div>
     <div class="nav-item" style="--item-color:#2563eb" data-tab="m2" onclick="switchTab('m2')">
-      <span class="nav-num">M2</span><span>运力优化</span>
+      <span class="nav-icon">◑</span><span>运力调度</span>
     </div>
 
     <div class="nav-group-title">设备运维</div>
     <div class="nav-item" style="--item-color:#ea580c" data-tab="m3" onclick="switchTab('m3')">
-      <span class="nav-num">M3</span><span>设备健康度</span>
+      <span class="nav-icon">♥</span><span>设备健康监测</span>
     </div>
     <div class="nav-item" style="--item-color:#ea580c" data-tab="m4" onclick="switchTab('m4')">
-      <span class="nav-num">M4</span><span>故障诊断</span>
+      <span class="nav-icon">⚒</span><span>故障智能诊断</span>
     </div>
 
-    <div class="nav-group-title">能耗管控</div>
+    <div class="nav-group-title">能耗管理</div>
     <div class="nav-item" style="--item-color:#16a34a" data-tab="m5" onclick="switchTab('m5')">
-      <span class="nav-num">M5</span><span>能耗基线</span>
+      <span class="nav-icon">▤</span><span>站级能耗</span>
     </div>
     <div class="nav-item" style="--item-color:#16a34a" data-tab="m6" onclick="switchTab('m6')">
-      <span class="nav-num">M6</span><span>牵引能耗</span>
+      <span class="nav-icon">⚡</span><span>牵引能耗</span>
     </div>
 
-    <div class="nav-group-title">安全生产</div>
+    <div class="nav-group-title">安全管理</div>
     <div class="nav-item" style="--item-color:#dc2626" data-tab="m7" onclick="switchTab('m7')">
-      <span class="nav-num">M7</span><span>安全风险</span>
+      <span class="nav-icon">⚠</span><span>安全风险评估</span>
     </div>
     <div class="nav-item" style="--item-color:#dc2626" data-tab="m8" onclick="switchTab('m8')">
-      <span class="nav-num">M8</span><span>大客流预警</span>
+      <span class="nav-icon">●</span><span>大客流预警</span>
     </div>
   </nav>
   <div class="sidebar-foot">
-    <div>方案演示平台 v1.0</div>
+    <div>运营管理系统 v1.0</div>
     <div style="margin-top:4px;color:#334155">数据均为模拟示意</div>
   </div>
 </aside>
@@ -170,9 +184,9 @@
   <header class="topbar">
     <div class="crumbs">
       <span class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</span>
-      <span>运营决策平台</span>
+      <span>工作台</span>
       <span class="crumb-sep">›</span>
-      <span class="crumb-current" id="crumbCurrent">总览仪表盘</span>
+      <span class="crumb-current" id="crumbCurrent">首页</span>
     </div>
     <div class="top-actions">
       <span class="pill"><span class="live-dot"></span>实时数据</span>
@@ -183,16 +197,16 @@
 
   <div class="content">
 
-<!-- ==================== OVERVIEW PAGE ==================== -->
-<div class="model-page active" id="page-overview" data-title="总览仪表盘">
+<!-- ==================== HOME / OVERVIEW PAGE ==================== -->
+<div class="model-page active" id="page-overview" data-title="首页">
   <div class="page-header">
     <div class="ph-breadcrumb">
-      <span>运营决策平台</span><span class="sep">›</span><span>总览</span>
+      <span>工作台</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">首页</span>
     </div>
     <div class="ph-row">
       <div style="flex:1;min-width:280px">
-        <h1>运营生产决策大数据模型 · 总览仪表盘</h1>
-        <p class="ph-subtitle">围绕<b>运输组织、设备运维、能耗管控、安全生产</b>四大决策域，统一管理 8 个核心大数据决策模型，构建数据到决策的闭环能力。</p>
+        <h1>运营管理系统 · 工作台</h1>
+        <p class="ph-subtitle">覆盖<b>运输组织、设备运维、能耗管理、安全管理</b>四大业务域，集中查看关键指标、待处理事项与各功能入口。</p>
       </div>
     </div>
   </div>
@@ -221,147 +235,127 @@
         <div class="ov-stat-trend" style="color:#475569">B 型车 · 6 节编组</div>
       </div>
     </div>
-    <!-- Domain cards -->
-    <div class="mb-8">
-      <h2 class="text-xl font-bold mb-1 text-slate-800">运输组织决策域</h2>
-      <p class="text-sm text-slate-500 mb-4">客流预测驱动运力配置优化</p>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="overview-card" style="background:linear-gradient(135deg,#1e3a8a,#2563eb)" onclick="switchTab('m1')">
-          <div class="card-num">1</div>
-          <div class="chip bg-white/15 text-white mb-3">优先建设 · 第一批</div>
-          <div class="text-xl font-bold">多粒度客流预测模型</div>
-          <p class="text-blue-100/80 text-sm mt-2">日/时段/15分钟三粒度预测，支撑运行图编制与实时调度</p>
-          <div class="flex gap-4 mt-4 text-xs text-blue-200/70">
-            <span>MAPE ≤8%</span><span>29站全覆盖</span><span>5yr+数据</span>
-          </div>
+    <!-- Function modules -->
+    <div class="ov-section-title">业务功能模块</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+
+      <div class="func-tile" style="--tile-color:#2563eb;--tile-soft:#eff6ff" onclick="switchTab('m1')">
+        <div class="ft-head">
+          <div class="ft-icon">◐</div>
+          <div><div class="ft-title">客流预测</div><div class="ft-domain">运输组织</div></div>
         </div>
-        <div class="overview-card" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)" onclick="switchTab('m2')">
-          <div class="card-num">2</div>
-          <div class="chip bg-white/15 text-white mb-3">中期推进</div>
-          <div class="text-xl font-bold">运力优化与运行图编制辅助模型</div>
-          <p class="text-blue-100/80 text-sm mt-2">MILP + 离散事件仿真，系统性求解最优运力配置</p>
-          <div class="flex gap-4 mt-4 text-xs text-blue-200/70">
-            <span>车公里 ≥3%</span><span>48列配属</span><span>采纳率 ≥70%</span>
-          </div>
-        </div>
+        <p class="ft-desc">日 / 时段 / 15 分钟三粒度全线分站客流预测，支撑运行图编制与实时调度。</p>
+        <div class="ft-kpis"><span class="ft-kpi">MAPE ≤8%</span><span class="ft-kpi">29 站</span></div>
       </div>
-    </div>
-    <div class="mb-8">
-      <h2 class="text-xl font-bold mb-1 text-slate-800">设备运维决策域</h2>
-      <p class="text-sm text-slate-500 mb-4">从计划修向状态修转型</p>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="overview-card" style="background:linear-gradient(135deg,#7c2d12,#ea580c)" onclick="switchTab('m3')">
-          <div class="card-num">3</div>
-          <div class="chip bg-white/15 text-white mb-3">优先建设 · 第一批</div>
-          <div class="text-xl font-bold">关键设备健康度评估与 RUL 预测</div>
-          <p class="text-orange-100/80 text-sm mt-2">蓄电池/道岔/屏蔽门三类设备健康度评分与剩余寿命预测</p>
-          <div class="flex gap-4 mt-4 text-xs text-orange-200/70">
-            <span>3类设备</span><span>停机 ↓30%</span><span>RUL预测</span>
-          </div>
+
+      <div class="func-tile" style="--tile-color:#2563eb;--tile-soft:#eff6ff" onclick="switchTab('m2')">
+        <div class="ft-head">
+          <div class="ft-icon">◑</div>
+          <div><div class="ft-title">运力调度</div><div class="ft-domain">运输组织</div></div>
         </div>
-        <div class="overview-card" style="background:linear-gradient(135deg,#7c2d12,#f97316)" onclick="switchTab('m4')">
-          <div class="card-num">4</div>
-          <div class="chip bg-white/15 text-white mb-3">第一批</div>
-          <div class="text-xl font-bold">故障智能诊断与根因定位</div>
-          <p class="text-orange-100/80 text-sm mt-2">知识推理+案例匹配，秒级根因排序与处置建议</p>
-          <div class="flex gap-4 mt-4 text-xs text-orange-200/70">
-            <span>Top-3 ≥85%</span><span>≤30s响应</span><span>MTTR ↓25%</span>
-          </div>
-        </div>
+        <p class="ft-desc">基于客流预测的量化运力配置优化与运行图自动编制辅助。</p>
+        <div class="ft-kpis"><span class="ft-kpi">车公里 ≥3%</span><span class="ft-kpi">48 列</span></div>
       </div>
-    </div>
-    <div class="mb-8">
-      <h2 class="text-xl font-bold mb-1 text-slate-800">能耗管控决策域</h2>
-      <p class="text-sm text-slate-500 mb-4">精细化能耗管理与优化</p>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="overview-card" style="background:linear-gradient(135deg,#14532d,#16a34a)" onclick="switchTab('m5')">
-          <div class="card-num">5</div>
-          <div class="chip bg-white/15 text-white mb-3">中期推进</div>
-          <div class="text-xl font-bold">站级能耗基线与异常诊断</div>
-          <p class="text-emerald-100/80 text-sm mt-2">XGBoost + SHAP 归因，29站动态能耗基线</p>
-          <div class="flex gap-4 mt-4 text-xs text-emerald-200/70">
-            <span>29站基线</span><span>用电 ↓3-5%</span><span>时效 ↓90%</span>
-          </div>
+
+      <div class="func-tile" style="--tile-color:#ea580c;--tile-soft:#fff7ed" onclick="switchTab('m3')">
+        <div class="ft-head">
+          <div class="ft-icon">♥</div>
+          <div><div class="ft-title">设备健康监测</div><div class="ft-domain">设备运维</div></div>
         </div>
-        <div class="overview-card" style="background:linear-gradient(135deg,#14532d,#22c55e)" onclick="switchTab('m6')">
-          <div class="card-num">6</div>
-          <div class="chip bg-white/15 text-white mb-3">远期推进</div>
-          <div class="text-xl font-bold">牵引能耗优化模型</div>
-          <p class="text-emerald-100/80 text-sm mt-2">物理仿真+动态规划，区间速度策略与运行图能耗协同</p>
-          <div class="flex gap-4 mt-4 text-xs text-emerald-200/70">
-            <span>电耗 ↓3-5%</span><span>再生 ↑3-5pp</span><span>81kPa修正</span>
-          </div>
-        </div>
+        <p class="ft-desc">蓄电池 / 道岔 / 屏蔽门三类关键设备健康度评分与剩余寿命预测。</p>
+        <div class="ft-kpis"><span class="ft-kpi">3 类设备</span><span class="ft-kpi">停机 ↓30%</span></div>
       </div>
-    </div>
-    <div class="mb-8">
-      <h2 class="text-xl font-bold mb-1 text-slate-800">安全生产决策域</h2>
-      <p class="text-sm text-slate-500 mb-4">数据驱动的安全态势感知</p>
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="overview-card" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)" onclick="switchTab('m7')">
-          <div class="card-num">7</div>
-          <div class="chip bg-white/15 text-white mb-3">中期推进</div>
-          <div class="text-xl font-bold">安全风险动态评估模型</div>
-          <p class="text-red-100/80 text-sm mt-2">四板块综合安全指数，分级预警与响应</p>
-          <div class="flex gap-4 mt-4 text-xs text-red-200/70">
-            <span>4板块</span><span>≤30min延迟</span><span>响应 ↓80%</span>
-          </div>
+
+      <div class="func-tile" style="--tile-color:#ea580c;--tile-soft:#fff7ed" onclick="switchTab('m4')">
+        <div class="ft-head">
+          <div class="ft-icon">⚒</div>
+          <div><div class="ft-title">故障智能诊断</div><div class="ft-domain">设备运维</div></div>
         </div>
-        <div class="overview-card" style="background:linear-gradient(135deg,#7f1d1d,#ef4444)" onclick="switchTab('m8')">
-          <div class="card-num">8</div>
-          <div class="chip bg-white/15 text-white mb-3">远期推进</div>
-          <div class="text-xl font-bold">车站大客流安全预警模型</div>
-          <p class="text-red-100/80 text-sm mt-2">超前15-30分钟预警，分级客流管控措施</p>
-          <div class="flex gap-4 mt-4 text-xs text-red-200/70">
-            <span>15-30min预警</span><span>召回 ≥85%</span><span>2-5min更新</span>
-          </div>
-        </div>
+        <p class="ft-desc">知识推理 + 案例匹配，秒级根因排序与处置建议，缩短 MTTR。</p>
+        <div class="ft-kpis"><span class="ft-kpi">Top-3 ≥85%</span><span class="ft-kpi">≤30s</span></div>
       </div>
+
+      <div class="func-tile" style="--tile-color:#16a34a;--tile-soft:#f0fdf4" onclick="switchTab('m5')">
+        <div class="ft-head">
+          <div class="ft-icon">▤</div>
+          <div><div class="ft-title">站级能耗</div><div class="ft-domain">能耗管理</div></div>
+        </div>
+        <p class="ft-desc">29 站动态能耗基线与异常诊断，归因合理偏差与可优化偏差。</p>
+        <div class="ft-kpis"><span class="ft-kpi">29 站基线</span><span class="ft-kpi">用电 ↓3-5%</span></div>
+      </div>
+
+      <div class="func-tile" style="--tile-color:#16a34a;--tile-soft:#f0fdf4" onclick="switchTab('m6')">
+        <div class="ft-head">
+          <div class="ft-icon">⚡</div>
+          <div><div class="ft-title">牵引能耗</div><div class="ft-domain">能耗管理</div></div>
+        </div>
+        <p class="ft-desc">区间速度策略优化与运行图能耗协同，提升再生制动利用率。</p>
+        <div class="ft-kpis"><span class="ft-kpi">电耗 ↓3-5%</span><span class="ft-kpi">81kPa</span></div>
+      </div>
+
+      <div class="func-tile" style="--tile-color:#dc2626;--tile-soft:#fef2f2" onclick="switchTab('m7')">
+        <div class="ft-head">
+          <div class="ft-icon">⚠</div>
+          <div><div class="ft-title">安全风险评估</div><div class="ft-domain">安全管理</div></div>
+        </div>
+        <p class="ft-desc">四板块综合安全指数（0-100），分级预警与响应建议。</p>
+        <div class="ft-kpis"><span class="ft-kpi">4 板块</span><span class="ft-kpi">≤30min</span></div>
+      </div>
+
+      <div class="func-tile" style="--tile-color:#dc2626;--tile-soft:#fef2f2" onclick="switchTab('m8')">
+        <div class="ft-head">
+          <div class="ft-icon">●</div>
+          <div><div class="ft-title">大客流预警</div><div class="ft-domain">安全管理</div></div>
+        </div>
+        <p class="ft-desc">超前 15-30 分钟预测站台 / 站厅密度，分级触发客流管控。</p>
+        <div class="ft-kpis"><span class="ft-kpi">15-30min</span><span class="ft-kpi">召回 ≥85%</span></div>
+      </div>
+
     </div>
 
-    <!-- Model dependency -->
-    <div class="card p-6">
-      <h2 class="section-title mb-4">模型关联关系</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-        <div class="bg-blue-50 rounded-lg p-4">
-          <div class="font-bold text-blue-800 mb-2">运输组织</div>
+    <!-- Cross-module data flow -->
+    <div class="card p-5">
+      <div class="ov-section-title" style="margin-bottom:12px">数据流向</div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+        <div class="bg-blue-50 rounded-lg p-3">
+          <div class="font-semibold text-blue-800 mb-1.5 text-[13px]">运输组织</div>
           <div class="text-slate-600 text-xs space-y-1">
-            <div>模型 1 (客流) → 模型 2 (运力)</div>
-            <div>模型 1 → 模型 8 (大客流预警)</div>
-            <div>模型 2 ← 模型 8 (加车联动)</div>
+            <div>客流预测 → 运力调度</div>
+            <div>客流预测 → 大客流预警</div>
+            <div>运力调度 ← 大客流预警</div>
           </div>
         </div>
-        <div class="bg-orange-50 rounded-lg p-4">
-          <div class="font-bold text-orange-800 mb-2">设备运维</div>
+        <div class="bg-orange-50 rounded-lg p-3">
+          <div class="font-semibold text-orange-800 mb-1.5 text-[13px]">设备运维</div>
           <div class="text-slate-600 text-xs space-y-1">
-            <div>模型 3 (健康度) → 模型 4 (诊断)</div>
-            <div>模型 3 → 模型 7 (设备安全)</div>
-            <div>模型 3 ← 模型 6 (电池协同)</div>
+            <div>设备健康 → 故障诊断</div>
+            <div>设备健康 → 安全风险</div>
+            <div>设备健康 ← 牵引能耗</div>
           </div>
         </div>
-        <div class="bg-emerald-50 rounded-lg p-4">
-          <div class="font-bold text-emerald-800 mb-2">能耗管控</div>
+        <div class="bg-emerald-50 rounded-lg p-3">
+          <div class="font-semibold text-emerald-800 mb-1.5 text-[13px]">能耗管理</div>
           <div class="text-slate-600 text-xs space-y-1">
-            <div>模型 1 → 模型 5 (客流特征)</div>
-            <div>模型 6 → 模型 2 (运行图协同)</div>
-            <div>模型 6 ↔ 模型 3 (电池约束)</div>
+            <div>客流预测 → 站级能耗</div>
+            <div>牵引能耗 → 运力调度</div>
+            <div>牵引能耗 ↔ 设备健康</div>
           </div>
         </div>
-        <div class="bg-red-50 rounded-lg p-4">
-          <div class="font-bold text-red-800 mb-2">安全生产</div>
+        <div class="bg-red-50 rounded-lg p-3">
+          <div class="font-semibold text-red-800 mb-1.5 text-[13px]">安全管理</div>
           <div class="text-slate-600 text-xs space-y-1">
-            <div>模型 3 → 模型 7 (设备板块)</div>
-            <div>模型 1 → 模型 8 (客流输入)</div>
-            <div>模型 7 ← 多系统汇聚</div>
+            <div>设备健康 → 安全风险</div>
+            <div>客流预测 → 大客流预警</div>
+            <div>安全风险 ← 多系统汇聚</div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Reference -->
-    <div class="card p-6 mt-6">
-      <h2 class="section-title mb-3">4 号线特色</h2>
-      <div class="grid md:grid-cols-4 gap-4 text-sm">
+    <div class="card p-5 mt-3">
+      <div class="ov-section-title" style="margin-bottom:12px">4 号线运营特征</div>
+      <div class="grid md:grid-cols-4 gap-3 text-sm">
         <div class="bg-slate-50 rounded-lg p-4">
           <div class="font-bold text-slate-800">蓄电池牵引 · 行业首创</div>
           <p class="text-xs text-slate-500 mt-1">无架空线区段纯电池驱动，SOC 约束贯穿多个模型</p>
@@ -384,19 +378,18 @@
 </div>
 
 <!-- ==================== MODEL 1 · 客流预测 ==================== -->
-<div class="model-page" id="page-m1" data-title="M1 · 客流预测" data-domain="运输组织" style="--accent:#2563eb;--accent-soft-bg:#eff6ff;--accent-soft-text:#1d4ed8;--accent-soft-border:#dbeafe">
+<div class="model-page" id="page-m1" data-title="客流预测" data-domain="运输组织" style="--accent:#2563eb;--accent-soft-bg:#eff6ff;--accent-soft-text:#1d4ed8;--accent-soft-border:#dbeafe">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>运输组织决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M1 · 多粒度客流预测模型</span>
+    <span>运输组织</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">客流预测</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>多粒度客流预测模型</h1>
+      <h1>客流预测分析</h1>
       <p class="ph-subtitle">为运营保障部调度部门提供 <b>日级 / 时段级 (1h) / 15 分钟级</b> 三种粒度的分站客流预测，支撑运行图编制从「经验驱动」向「数据量化驱动」转型。</p>
       <div class="ph-tags">
+        <span class="chip" style="background:#f1f5f9;color:#475569">运输组织</span>
         <span class="chip accent-soft">时间序列预测</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">运输组织 · Transport</span>
-        <span class="chip tag-ok">优先建设 · 第一批</span>
       </div>
     </div>
     <div class="ph-kpis">
@@ -429,19 +422,18 @@
 </div>
 
 <!-- ==================== MODEL 2 ==================== -->
-<div class="model-page" id="page-m2" data-title="M2 · 运力优化" data-domain="运输组织" style="--accent:#2563eb;--accent-soft-bg:#eff6ff;--accent-soft-text:#1d4ed8;--accent-soft-border:#dbeafe">
+<div class="model-page" id="page-m2" data-title="运力调度" data-domain="运输组织" style="--accent:#2563eb;--accent-soft-bg:#eff6ff;--accent-soft-text:#1d4ed8;--accent-soft-border:#dbeafe">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>运输组织决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M2 · 运力优化与运行图编制辅助模型</span>
+    <span>运输组织</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">运力调度</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>运力优化与运行图编制辅助模型</h1>
+      <h1>运力调度与运行图编制</h1>
       <p class="ph-subtitle">基于客流预测的<b>量化运力配置优化</b>：在满足信号系统、满载率、司机排班等多重约束下，求解车公里成本最低的运行图方案，使编图从「固定模板微调」走向「数据驱动优化」。</p>
       <div class="ph-tags">
-        <span class="chip accent-soft">优化决策 · MILP</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">运输组织 · Transport</span>
-        <span class="chip tag-warn">中期推进</span>
+        <span class="chip" style="background:#f1f5f9;color:#475569">运输组织</span>
+        <span class="chip accent-soft">MILP 优化</span>
       </div>
     </div>
     <div class="ph-kpis">
@@ -706,19 +698,18 @@
 </div>
 
 <!-- ==================== MODEL 3 ==================== -->
-<div class="model-page" id="page-m3" data-title="M3 · 设备健康度" data-domain="设备运维" style="--accent:#ea580c;--accent-soft-bg:#fff7ed;--accent-soft-text:#9a3412;--accent-soft-border:#fed7aa">
+<div class="model-page" id="page-m3" data-title="设备健康监测" data-domain="设备运维" style="--accent:#ea580c;--accent-soft-bg:#fff7ed;--accent-soft-text:#9a3412;--accent-soft-border:#fed7aa">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>设备运维决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M3 · 关键设备健康度评估与 RUL 预测</span>
+    <span>设备运维</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">设备健康监测</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>关键设备健康度评估与 RUL 预测模型</h1>
+      <h1>关键设备健康度评估与 RUL 预测</h1>
       <p class="ph-subtitle">建立<b>蓄电池牵引 / 道岔 / 屏蔽门</b>三类关键设备的量化健康度评分体系与剩余使用寿命 (RUL) 预测能力，支撑维修策略从「计划修」逐步转向「<b>状态修</b>」。</p>
       <div class="ph-tags">
-        <span class="chip accent-soft">异常检测 + RUL 预测</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">设备运维 · Equipment</span>
-        <span class="chip tag-ok">优先建设 · 第一批</span>
+        <span class="chip" style="background:#f1f5f9;color:#475569">设备运维</span>
+        <span class="chip accent-soft">异常检测 · RUL</span>
       </div>
     </div>
     <div class="ph-kpis">
@@ -982,19 +973,18 @@
 </div>
 
 <!-- ==================== MODEL 4 ==================== -->
-<div class="model-page" id="page-m4" data-title="M4 · 故障诊断" data-domain="设备运维" style="--accent:#ea580c;--accent-soft-bg:#fff7ed;--accent-soft-text:#9a3412;--accent-soft-border:#fed7aa">
+<div class="model-page" id="page-m4" data-title="故障智能诊断" data-domain="设备运维" style="--accent:#ea580c;--accent-soft-bg:#fff7ed;--accent-soft-text:#9a3412;--accent-soft-border:#fed7aa">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>设备运维决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M4 · 故障智能诊断与根因定位</span>
+    <span>设备运维</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">故障智能诊断</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>故障智能诊断与根因定位模型</h1>
+      <h1>故障智能诊断与根因定位</h1>
       <p class="ph-subtitle">辅助检修人员快速定位根因 / 匹配最优处置方案，缩短 MTTR、提高一次修复成功率。沉淀<b>30 年 PPP 运营期</b>的设备故障知识资产，应对人员代际交替的经验断层。</p>
       <div class="ph-tags">
-        <span class="chip accent-soft">知识推理 + 案例匹配</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">设备运维 · Equipment</span>
-        <span class="chip tag-ok">第一批</span>
+        <span class="chip" style="background:#f1f5f9;color:#475569">设备运维</span>
+        <span class="chip accent-soft">知识推理 · 案例匹配</span>
       </div>
     </div>
     <div class="ph-kpis">
@@ -1301,19 +1291,18 @@
 </div>
 
 <!-- ==================== MODEL 5 ==================== -->
-<div class="model-page" id="page-m5" data-title="M5 · 能耗基线" data-domain="能耗管控" style="--accent:#16a34a;--accent-soft-bg:#f0fdf4;--accent-soft-text:#15803d;--accent-soft-border:#bbf7d0">
+<div class="model-page" id="page-m5" data-title="站级能耗" data-domain="能耗管理" style="--accent:#16a34a;--accent-soft-bg:#f0fdf4;--accent-soft-text:#15803d;--accent-soft-border:#bbf7d0">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>能耗管控决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M5 · 站级能耗基线与异常诊断</span>
+    <span>能耗管理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">站级能耗</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>站级能耗基线与异常诊断模型</h1>
+      <h1>站级能耗基线与异常诊断</h1>
       <p class="ph-subtitle">为 29 站建立<b>动态能耗合理区间</b>，实现「<b>实时监测 → 自动诊断 → 主动优化</b>」闭环管理。区分「合理偏差」与「可优化偏差」，定位设备效率问题与运行策略问题。</p>
       <div class="ph-tags">
-        <span class="chip accent-soft">回归 + SHAP 归因</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">能耗管控 · Energy</span>
-        <span class="chip tag-warn">中期推进</span>
+        <span class="chip" style="background:#f1f5f9;color:#475569">能耗管理</span>
+        <span class="chip accent-soft">回归 · SHAP 归因</span>
       </div>
     </div>
     <div class="ph-kpis">
@@ -1592,19 +1581,18 @@
 </div>
 
 <!-- ==================== MODEL 6 ==================== -->
-<div class="model-page" id="page-m6" data-title="M6 · 牵引能耗" data-domain="能耗管控" style="--accent:#16a34a;--accent-soft-bg:#f0fdf4;--accent-soft-text:#15803d;--accent-soft-border:#bbf7d0">
+<div class="model-page" id="page-m6" data-title="牵引能耗" data-domain="能耗管理" style="--accent:#16a34a;--accent-soft-bg:#f0fdf4;--accent-soft-text:#15803d;--accent-soft-border:#bbf7d0">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>能耗管控决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M6 · 牵引能耗优化</span>
+    <span>能耗管理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">牵引能耗</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>牵引能耗优化模型</h1>
+      <h1>牵引能耗优化</h1>
       <p class="ph-subtitle">通过<b>区间速度策略优化</b>与<b>运行图能耗协同</b>，降低 4 号线全线牵引能耗、提升再生制动利用率。牵引能耗占总能耗 40-50%，是降本杠杆最大的单项。</p>
       <div class="ph-tags">
-        <span class="chip accent-soft">优化决策 · 物理仿真</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">能耗管控 · Energy</span>
-        <span class="chip tag-new">远期推进</span>
+        <span class="chip" style="background:#f1f5f9;color:#475569">能耗管理</span>
+        <span class="chip accent-soft">物理仿真 · 动态规划</span>
       </div>
     </div>
     <div class="ph-kpis">
@@ -1856,19 +1844,18 @@
 </div>
 
 <!-- ==================== MODEL 7 ==================== -->
-<div class="model-page" id="page-m7" data-title="M7 · 安全风险" data-domain="安全生产" style="--accent:#dc2626;--accent-soft-bg:#fef2f2;--accent-soft-text:#991b1b;--accent-soft-border:#fecaca">
+<div class="model-page" id="page-m7" data-title="安全风险评估" data-domain="安全管理" style="--accent:#dc2626;--accent-soft-bg:#fef2f2;--accent-soft-text:#991b1b;--accent-soft-border:#fecaca">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>安全生产决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M7 · 安全风险动态评估</span>
+    <span>安全管理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">安全风险评估</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>安全风险动态评估模型</h1>
+      <h1>安全风险动态评估</h1>
       <p class="ph-subtitle">将分散在多个业务系统的安全相关数据汇聚为统一的<b>4 号线综合安全指数（0-100）</b>，实现全线安全态势从「月度人工评估」向「<b>小时级数据驱动</b>」升级。</p>
       <div class="ph-tags">
-        <span class="chip accent-soft">规则引擎 + 指标合成</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">安全生产 · Safety</span>
-        <span class="chip tag-warn">中期推进</span>
+        <span class="chip" style="background:#f1f5f9;color:#475569">安全管理</span>
+        <span class="chip accent-soft">规则引擎 · 指标合成</span>
       </div>
     </div>
     <div class="ph-kpis">
@@ -2135,19 +2122,18 @@
 </div>
 
 <!-- ==================== MODEL 8 ==================== -->
-<div class="model-page" id="page-m8" data-title="M8 · 大客流预警" data-domain="安全生产" style="--accent:#dc2626;--accent-soft-bg:#fef2f2;--accent-soft-text:#991b1b;--accent-soft-border:#fecaca">
+<div class="model-page" id="page-m8" data-title="大客流预警" data-domain="安全管理" style="--accent:#dc2626;--accent-soft-bg:#fef2f2;--accent-soft-text:#991b1b;--accent-soft-border:#fecaca">
 <div class="page-header">
   <div class="ph-breadcrumb">
-    <span>安全生产决策域</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">M8 · 车站大客流安全预警</span>
+    <span>安全管理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">大客流预警</span>
   </div>
   <div class="ph-row">
     <div style="flex:1;min-width:280px">
-      <h1>车站大客流安全预警模型</h1>
-      <p class="ph-subtitle">基于实时 AFC + 模型 1 客流预测，对重点站<b>站台/站厅客流密度</b>进行超前预测，在大客流到达前 <b>15-30 分钟</b>触发分级预警，为客流控制措施争取决策窗口。</p>
+      <h1>车站大客流安全预警</h1>
+      <p class="ph-subtitle">基于实时 AFC + 客流预测，对重点站<b>站台/站厅客流密度</b>进行超前预测，在大客流到达前 <b>15-30 分钟</b>触发分级预警，为客流控制措施争取决策窗口。</p>
       <div class="ph-tags">
-        <span class="chip accent-soft">短时预测 + 阈值</span>
-        <span class="chip" style="background:#f1f5f9;color:#475569">安全生产 · Safety</span>
-        <span class="chip tag-new">远期推进</span>
+        <span class="chip" style="background:#f1f5f9;color:#475569">安全管理</span>
+        <span class="chip accent-soft">短时预测 · 阈值</span>
       </div>
     </div>
     <div class="ph-kpis">
