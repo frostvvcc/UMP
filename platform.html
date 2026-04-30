@@ -102,8 +102,8 @@
 
   /* ===== Page header (compact, replaces gradient hero) ===== */
   .page-header{background:#fff;border-bottom:1px solid #e2e8f0;padding:22px 28px 18px}
-  .page-header .ph-breadcrumb{font-size:12.5px;color:#64748b;display:flex;align-items:center;gap:6px;margin-bottom:10px}
-  .page-header .ph-breadcrumb .sep{color:#cbd5e1;font-size:11px}
+  /* 内部 ph-breadcrumb 与外层 sticky topbar 重复，统一隐藏；保留元素以兼容 mapsTo 渲染逻辑 */
+  .page-header .ph-breadcrumb{display:none}
   .page-header .ph-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
   .page-header h1{font-size:22px;font-weight:700;letter-spacing:-.01em;color:#0f172a;margin:0 0 6px;line-height:1.3}
   .page-header .ph-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
