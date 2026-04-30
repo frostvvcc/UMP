@@ -533,6 +533,36 @@
   .sidebar .nav-item.dom-nav:hover{background:#f0fdf4}
   .sidebar .nav-item.dom-nav.active{background:linear-gradient(90deg,#bbf7d0 0%,#dcfce7 100%);color:#006a4e}
 
+  /* ===== Domain dashboard hero header (compact, no internal breadcrumb) ===== */
+  .dom-page-header{padding:18px 28px 16px}
+  .dom-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .dom-hero-left{flex:1;min-width:280px;max-width:560px}
+  .dom-hero-titleline{display:flex;align-items:baseline;gap:8px;line-height:1.2;margin:0 0 6px}
+  .dom-hero-titleline h1{font-size:22px;font-weight:700;letter-spacing:-.01em;color:#0f172a;margin:0;line-height:1.2}
+  .dom-hero-pre{font-size:22px;font-weight:600;color:var(--dom-color,#006a4e)}
+  .dom-hero-sep{color:#cbd5e1;font-size:18px;font-weight:300}
+  .dom-page-header .ph-subtitle{font-size:13px;color:#475569;line-height:1.6;max-width:680px;margin:0 0 8px}
+  .dom-page-header .ph-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+
+  /* Hero KPIs — compact 6-column grid on the right of the header */
+  .dom-hero-kpis{display:grid;grid-template-columns:repeat(6,minmax(86px,1fr));gap:8px;flex:1;min-width:560px;max-width:none}
+  .dom-hero-kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;border-top:2px solid var(--khero-color,#006a4e);min-width:0}
+  .dom-hero-kpi .dhk-label{font-size:11px;color:#64748b;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dom-hero-kpi .dhk-num{font-size:18px;font-weight:700;color:#0f172a;line-height:1.15;margin-top:3px;font-feature-settings:"tnum" 1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dom-hero-kpi .dhk-num .unit{font-size:11px;font-weight:500;color:#64748b;margin-left:1px}
+  .dom-hero-kpi .dhk-trend{font-size:10.5px;margin-top:3px;display:inline-flex;align-items:center;gap:2px;font-weight:500;line-height:1}
+  .dom-hero-kpi .dhk-trend.up{color:#16a34a}
+  .dom-hero-kpi .dhk-trend.down{color:#dc2626}
+  .dom-hero-kpi .dhk-trend.flat{color:#94a3b8}
+
+  @media(max-width:1280px){
+    .dom-hero-kpis{grid-template-columns:repeat(3,minmax(86px,1fr));min-width:0;flex:0 1 380px}
+  }
+  @media(max-width:900px){
+    .dom-hero{flex-direction:column}
+    .dom-hero-kpis{grid-template-columns:repeat(3,1fr);width:100%;min-width:0;flex:none}
+  }
+
   /* ===== Domain dashboard (10 域驾驶舱) ===== */
   .dom-section{margin-bottom:18px}
   .dom-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -4643,16 +4673,18 @@
 
 <!-- ==================== 域驾驶舱模板 (10 个域共用) ==================== -->
 <div class="model-page" id="page-domain" data-title="">
-  <div class="page-header">
-    <div class="ph-breadcrumb">
-      <span id="domDomain">—</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">域驾驶舱</span>
-    </div>
-    <div class="ph-row">
-      <div style="flex:1;min-width:280px">
-        <h1 id="domTitle">—</h1>
+  <div class="page-header dom-page-header">
+    <div class="dom-hero">
+      <div class="dom-hero-left">
+        <div class="dom-hero-titleline">
+          <span class="dom-hero-pre" id="domDomain">—</span>
+          <span class="dom-hero-sep">·</span>
+          <h1 id="domTitle">域驾驶舱</h1>
+        </div>
         <p class="ph-subtitle" id="domSubtitle">—</p>
         <div class="ph-tags" id="domTags"></div>
       </div>
+      <div class="dom-hero-kpis" id="domHeroKpis"></div>
     </div>
   </div>
   <main><div style="padding:18px 28px 28px" id="domBody">—</div></main>
@@ -5959,32 +5991,32 @@ function renderDomainDashboard(domain) {
   const cfg = DOMAIN_DASHBOARD[domain];
   if (!cfg) return;
 
+  // Header: domain prefix + 「域驾驶舱」, no internal breadcrumb (topbar handles it)
+  const phEl = document.getElementById('page-domain').querySelector('.dom-page-header');
+  if (phEl) phEl.style.setProperty('--dom-color', cfg.color);
   document.getElementById('domDomain').textContent = DOMAIN_LABEL[domain] || '—';
-  document.getElementById('domTitle').textContent = (DOMAIN_LABEL[domain]||'') + ' · 域驾驶舱';
+  document.getElementById('domTitle').textContent = '域驾驶舱';
   document.getElementById('domSubtitle').textContent = cfg.subtitle || '';
   document.getElementById('domTags').innerHTML =
-    '<span class="chip" style="background:#dcfce7;color:#006a4e">'+(DOMAIN_LABEL[domain]||'')+'</span>'+
     '<span class="chip" style="background:#f1f5f9;color:#475569">昆明地铁 · 4 号线</span>'+
-    '<span class="chip" style="background:#fef9c3;color:#854d0e">数据更新 2026-04-30 14:25</span>';
+    '<span class="chip" style="background:#fef9c3;color:#854d0e">数据更新 2026-04-30 14:25</span>'+
+    '<span class="chip" style="background:#e0f2fe;color:#0369a1">'+_domSubItems(domain).length+' 项子职能</span>';
   document.getElementById('page-domain').dataset.title = (DOMAIN_LABEL[domain]||'') + ' · 域驾驶舱';
+
+  // 6 hero KPIs into the header right slot
+  document.getElementById('domHeroKpis').innerHTML = cfg.headerKpis.map(k => {
+    const dirSym = k.dir==='up'?'↑':(k.dir==='down'?'↓':'·');
+    return '<div class="dom-hero-kpi" style="--khero-color:'+(k.color||cfg.color)+'">'+
+           '<div class="dhk-label">'+k.l+'</div>'+
+           '<div class="dhk-num">'+k.n+(k.u?'<span class="unit">'+k.u+'</span>':'')+'</div>'+
+           '<div class="dhk-trend '+k.dir+'">'+dirSym+' '+k.trend+'</div>'+
+           '</div>';
+  }).join('');
 
   const subs = _domSubItems(domain);
   let body = '';
 
-  // (1) 6 头部 KPI 行
-  body += '<div class="dom-section"><div class="dom-section-head"><div class="dom-section-title" style="--dom-color:'+cfg.color+'">核心指标</div><div class="dom-section-meta">本月滚动 · 自动汇总自 '+subs.length+' 项子职能</div></div>';
-  body += '<div class="dom-kpi-row">';
-  cfg.headerKpis.forEach(k => {
-    const dirSym = k.dir==='up'?'↑':(k.dir==='down'?'↓':'·');
-    body += '<div class="dom-kpi-card" style="--kpi-color:'+(k.color||cfg.color)+'">'+
-            '<div class="dkp-label">'+k.l+'</div>'+
-            '<div class="dkp-num">'+k.n+(k.u?'<span class="unit">'+k.u+'</span>':'')+'</div>'+
-            '<div class="dkp-trend '+k.dir+'">'+dirSym+' '+k.trend+'</div>'+
-            '</div>';
-  });
-  body += '</div></div>';
-
-  // (2) 本周关注 + 子项卡片网格 (左 38% / 右 62%)
+  // (Body) 本周关注 + 子项卡片网格 (左 38% / 右 62%) — KPIs moved to header above
   body += '<div class="dom-section" style="display:grid;grid-template-columns:minmax(320px,38%) 1fr;gap:14px;align-items:start">';
   // 本周关注
   body += '<div><div class="dom-section-head"><div class="dom-section-title" style="--dom-color:'+cfg.color+'">本周关注</div><div class="dom-section-meta">点击进入详情</div></div>';
