@@ -22,46 +22,56 @@
   .h-chart{height:340px}
   .h-chart-sm{height:260px}
 
-  /* ===== Layout shell ===== */
-  body{padding-top:54px}
+  /* ===== Layout shell (青岛地铁风格 — 深绿顶部 + 极窄白色侧栏) ===== */
+  body{padding-top:58px;background:#f1f5f9}
 
-  /* Primary top nav (horizontal, fixed) */
-  .topbar-main{position:fixed;top:0;left:0;right:0;height:54px;background:#0f172a;color:#cbd5e1;display:flex;align-items:center;padding:0 18px 0 0;z-index:110;border-bottom:1px solid #1e293b}
-  .topbar-main .brand{display:flex;align-items:center;gap:10px;padding:0 18px;width:236px;flex-shrink:0;height:100%;border-right:1px solid rgba(148,163,184,.10)}
-  .topbar-main .brand .logo{width:32px;height:32px;border-radius:7px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0}
-  .topbar-main .brand .brand-text{line-height:1.25}
-  .topbar-main .brand .brand-title{font-size:13.5px;font-weight:600;color:#f1f5f9}
-  .topbar-main .brand .brand-sub{font-size:10.5px;color:#64748b;margin-top:2px;letter-spacing:.02em}
-  .primary-nav{flex:1;display:flex;align-items:center;gap:2px;padding:0 16px;height:100%;overflow-x:auto;scrollbar-width:none}
+  /* Primary top nav — dark navy/teal gradient + colorful icon tiles */
+  .topbar-main{position:fixed;top:0;left:0;right:0;height:58px;background:linear-gradient(90deg,#0a4a3f 0%,#0f5d4d 38%,#13705c 100%);color:#e7f5f0;display:flex;align-items:center;padding:0 18px 0 0;z-index:110;box-shadow:0 1px 0 rgba(0,0,0,.15)}
+  .topbar-main .brand{display:flex;align-items:center;gap:10px;padding:0 16px;width:148px;flex-shrink:0;height:100%}
+  .topbar-main .brand .logo{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#10b981,#047857);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+  .topbar-main .brand .brand-text{line-height:1.2}
+  .topbar-main .brand .brand-title{font-size:13px;font-weight:600;color:#fff;letter-spacing:.02em}
+  .topbar-main .brand .brand-sub{font-size:10px;color:#86efac;margin-top:1px;letter-spacing:.04em}
+  .primary-nav{flex:1;display:flex;align-items:center;gap:2px;padding:0 8px;height:100%;overflow-x:auto;scrollbar-width:none}
   .primary-nav::-webkit-scrollbar{display:none}
-  .primary-item{display:flex;align-items:center;gap:7px;padding:0 16px;height:100%;font-size:13.5px;color:#94a3b8;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
-  .primary-item:hover{color:#e2e8f0}
-  .primary-item.active{color:#fff;border-bottom-color:#3b82f6;background:rgba(59,130,246,.06)}
-  .primary-item .pn-icon{font-size:14px;line-height:1;color:#64748b}
-  .primary-item.active .pn-icon{color:#3b82f6}
-  .topbar-main .topbar-actions{display:flex;align-items:center;gap:14px;color:#94a3b8;font-size:12.5px;padding-left:16px;border-left:1px solid rgba(148,163,184,.10);height:100%;flex-shrink:0}
-  .topbar-main .topbar-actions .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:rgba(148,163,184,.08);border-radius:9999px;font-size:11.5px;color:#cbd5e1}
-  .topbar-main .topbar-actions .pill .live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse 2s infinite}
-  .topbar-main .topbar-actions .user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
+  .primary-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 14px;height:100%;font-size:12.5px;color:#a7f3d0;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;border-radius:0;position:relative}
+  .primary-item:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .primary-item.active{color:#fff;background:rgba(16,185,129,.18)}
+  .primary-item.active::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:#34d399;border-radius:1px}
+  .primary-item .pn-icon{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;font-size:12px;line-height:1;border-radius:5px;background:var(--pi-color,#0d9488);color:#fff;flex-shrink:0;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+  .primary-item .pn-label{font-size:12px;line-height:1;font-weight:500}
+  .primary-item[data-domain="home"]      .pn-icon{background:#3b82f6}
+  .primary-item[data-domain="transport"] .pn-icon{background:#0ea5e9}
+  .primary-item[data-domain="equipment"] .pn-icon{background:#f97316}
+  .primary-item[data-domain="energy"]    .pn-icon{background:#10b981}
+  .primary-item[data-domain="safety"]    .pn-icon{background:#ef4444}
+  .primary-item[data-domain="hub"]       .pn-icon{background:#a855f7}
+  .primary-item[data-domain="assets"]    .pn-icon{background:#06b6d4}
+  .primary-item[data-domain="governance"].pn-icon{background:#64748b}
 
-  .app{display:flex;min-height:calc(100vh - 54px)}
-  .sidebar{width:212px;flex-shrink:0;background:#fff;color:#475569;height:calc(100vh - 54px);position:fixed;left:0;top:54px;display:flex;flex-direction:column;z-index:100;overflow-y:auto;border-right:1px solid #e2e8f0}
-  .sidebar::-webkit-scrollbar{width:6px}
+  .topbar-main .topbar-actions{display:flex;align-items:center;gap:12px;color:#a7f3d0;font-size:12px;padding:0 12px 0 16px;border-left:1px solid rgba(167,243,208,.18);height:100%;flex-shrink:0}
+  .topbar-main .topbar-actions .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;background:rgba(16,185,129,.18);border-radius:9999px;font-size:11px;color:#d1fae5;border:1px solid rgba(52,211,153,.25)}
+  .topbar-main .topbar-actions .pill .live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;display:inline-block;animation:pulse 2s infinite;box-shadow:0 0 4px #34d399}
+  .topbar-main .topbar-actions .user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#10b981,#047857);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;border:1.5px solid #34d399}
+
+  .app{display:flex;min-height:calc(100vh - 58px)}
+  .sidebar{width:148px;flex-shrink:0;background:#fff;color:#475569;height:calc(100vh - 58px);position:fixed;left:0;top:58px;display:flex;flex-direction:column;z-index:100;overflow-y:auto;border-right:1px solid #e2e8f0}
+  .sidebar::-webkit-scrollbar{width:5px}
   .sidebar::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:3px}
-  .sidebar .nav{flex:1;padding:14px 0 16px}
+  .sidebar .nav{flex:1;padding:6px 0 16px}
   .sidebar .nav-group{display:none}
   .sidebar .nav-group.active{display:block}
-  .sidebar .nav-group-title{padding:6px 18px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:600}
-  .sidebar .nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:13.5px;color:#475569;cursor:pointer;border-left:3px solid transparent;transition:background .15s,color .15s;position:relative}
-  .sidebar .nav-item:hover{background:#f8fafc;color:#0f172a}
-  .sidebar .nav-item.active{background:var(--accent-soft-bg,#eff6ff);color:var(--accent,#1d4ed8);border-left-color:var(--item-color,#3b82f6);font-weight:600}
-  .sidebar .nav-item .nav-icon{display:inline-flex;width:18px;justify-content:center;font-size:14px;color:#94a3b8;flex-shrink:0;line-height:1}
-  .sidebar .nav-item:hover .nav-icon{color:#475569}
-  .sidebar .nav-item.active .nav-icon{color:var(--item-color,#3b82f6)}
-  .sidebar .sidebar-foot{padding:14px 18px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;line-height:1.5}
+  .sidebar .nav-group-title{padding:10px 14px 6px;font-size:10.5px;letter-spacing:.06em;color:#94a3b8;font-weight:600;border-bottom:1px solid #f1f5f9;margin-bottom:4px}
+  .sidebar .nav-item{display:flex;align-items:center;gap:8px;padding:9px 14px;font-size:13px;color:#475569;cursor:pointer;border-left:3px solid transparent;transition:background .15s,color .15s;position:relative}
+  .sidebar .nav-item:hover{background:#f0fdf4;color:#0f172a}
+  .sidebar .nav-item.active{background:#dcfce7;color:#065f46;border-left-color:#10b981;font-weight:600}
+  .sidebar .nav-item .nav-icon{display:inline-flex;width:14px;justify-content:center;font-size:11px;color:#94a3b8;flex-shrink:0;line-height:1}
+  .sidebar .nav-item:hover .nav-icon{color:#10b981}
+  .sidebar .nav-item.active .nav-icon{color:#10b981}
+  .sidebar .sidebar-foot{padding:10px 14px;border-top:1px solid #e2e8f0;font-size:10.5px;color:#94a3b8;line-height:1.5}
 
-  .main-area{flex:1;margin-left:212px;min-height:calc(100vh - 54px);display:flex;flex-direction:column}
-  .topbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:9px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:54px;z-index:50}
+  .main-area{flex:1;margin-left:148px;min-height:calc(100vh - 58px);display:flex;flex-direction:column}
+  .topbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:9px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:58px;z-index:50}
   .topbar .crumbs{font-size:12.5px;color:#64748b;display:flex;align-items:center;gap:6px}
   .topbar .crumbs .crumb-current{color:#0f172a;font-weight:600}
   .topbar .crumbs .crumb-sep{color:#cbd5e1;font-size:11px}
@@ -84,7 +94,7 @@
   .page-header .ph-kpi .ph-kpi-label{font-size:11.5px;color:#64748b;margin-top:4px}
 
   /* Sub-navigation (in-page tabs under page header) */
-  .subnav{display:flex;align-items:center;gap:2px;background:#fff;border-bottom:1px solid #e2e8f0;padding:0 28px;position:sticky;top:96px;z-index:40;overflow-x:auto;scrollbar-width:none}
+  .subnav{display:flex;align-items:center;gap:2px;background:#fff;border-bottom:1px solid #e2e8f0;padding:0 28px;position:sticky;top:100px;z-index:40;overflow-x:auto;scrollbar-width:none}
   .subnav::-webkit-scrollbar{display:none}
   .subnav-item{padding:11px 16px;font-size:13.5px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;font-weight:500;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px}
   .subnav-item:hover{color:#0f172a}
@@ -139,7 +149,147 @@
   .func-tile .ft-kpi{font-size:11px;color:#475569;background:#f8fafc;padding:2px 8px;border-radius:4px;border:1px solid #e2e8f0;font-feature-settings:"tnum" 1}
 
   .ov-section-title{font-size:14px;font-weight:600;color:#475569;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-  .ov-section-title::before{content:"";width:3px;height:14px;background:#3b82f6;border-radius:2px}
+  .ov-section-title::before{content:"";width:3px;height:14px;background:#10b981;border-radius:2px}
+
+  /* === Ring gauge KPI cards (青岛地铁风格) === */
+  .ring-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .ring-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden}
+  .ring-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ring-color,#10b981)}
+  .ring-svg{width:74px;height:74px;flex-shrink:0;position:relative}
+  .ring-svg svg{transform:rotate(-90deg);width:100%;height:100%}
+  .ring-svg .ring-bg{fill:none;stroke:#f1f5f9;stroke-width:8}
+  .ring-svg .ring-fg{fill:none;stroke:var(--ring-color,#10b981);stroke-width:8;stroke-linecap:round;transition:stroke-dasharray .4s ease}
+  .ring-svg .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+  .ring-svg .ring-center .ring-num{font-size:18px;font-weight:700;color:var(--ring-color,#0f172a);font-feature-settings:"tnum" 1}
+  .ring-svg .ring-center .ring-unit{font-size:9.5px;color:#94a3b8;margin-top:2px}
+  .ring-info{flex:1;min-width:0}
+  .ring-info .ring-label{font-size:13px;font-weight:600;color:#0f172a;line-height:1.3}
+  .ring-info .ring-sub{font-size:11.5px;color:#94a3b8;margin-top:4px;line-height:1.4}
+  .ring-info .ring-meta{display:flex;gap:10px;margin-top:6px;font-size:11px;color:#64748b}
+  .ring-info .ring-meta b{color:var(--ring-color,#10b981);font-weight:600}
+
+  /* === Quote / highlight box === */
+  .quote-box{background:#f0fdf4;border-left:4px solid #10b981;border-radius:0 8px 8px 0;padding:14px 18px;display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+  .quote-box .qb-icon{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:#10b981;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+  .quote-box .qb-content{flex:1;font-size:13.5px;line-height:1.65;color:#065f46}
+  .quote-box .qb-content b{color:#047857;font-weight:600}
+
+  /* === Numbered sub-tabs (1.1 / 1.2 / ...) Qingdao style === */
+  .num-tabs{display:flex;gap:0;border-bottom:1px solid #e2e8f0;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
+  .num-tabs::-webkit-scrollbar{display:none}
+  .num-tab{padding:10px 18px;font-size:13px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;font-weight:500}
+  .num-tab:hover{color:#10b981}
+  .num-tab.active{color:#10b981;border-bottom-color:#10b981;font-weight:600;background:#f0fdf4}
+  .num-tab .nt-no{color:#10b981;font-weight:700;margin-right:6px;font-feature-settings:"tnum" 1}
+  .num-tab:not(.active) .nt-no{color:#94a3b8}
+
+  /* === Mini stat row (bottom of page) === */
+  .mini-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+  .mini-stat{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+  .mini-stat .ms-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;flex-shrink:0}
+  .mini-stat.green .ms-icon{background:linear-gradient(135deg,#10b981,#059669)}
+  .mini-stat.blue .ms-icon{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+  .mini-stat.orange .ms-icon{background:linear-gradient(135deg,#f97316,#c2410c)}
+  .mini-stat.purple .ms-icon{background:linear-gradient(135deg,#a855f7,#7c3aed)}
+  .mini-stat.red .ms-icon{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+  .mini-stat .ms-text{flex:1;min-width:0}
+  .mini-stat .ms-value{font-size:16px;font-weight:700;color:#0f172a;line-height:1;font-feature-settings:"tnum" 1}
+  .mini-stat .ms-value .ms-unit{font-size:11px;color:#94a3b8;font-weight:500;margin-left:1px}
+  .mini-stat .ms-label{font-size:11px;color:#64748b;margin-top:4px}
+
+  /* Apple-like bg gradient for body to make platform feel premium */
+  body{background:linear-gradient(180deg,#f8faf9 0%,#f1f5f9 200px)}
+
+  /* === Business workstation components === */
+  /* WS section header: title + count badge + actions */
+  .ws-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px;flex-wrap:wrap}
+  .ws-head .ws-title{font-size:14.5px;font-weight:600;color:#0f172a;display:flex;align-items:center;gap:8px}
+  .ws-head .ws-title::before{content:"";width:3px;height:14px;background:var(--accent,#10b981);border-radius:2px}
+  .ws-head .ws-count{font-size:12px;color:#64748b;background:#f1f5f9;padding:1px 9px;border-radius:9999px;font-weight:500}
+  .ws-head .ws-actions{display:flex;gap:6px;font-size:12px;color:#64748b}
+  .ws-head .ws-link{color:var(--accent,#10b981);font-size:12px;cursor:pointer;font-weight:500}
+  .ws-head .ws-link:hover{text-decoration:underline}
+
+  /* KPI tile row at top of workstation */
+  .kpi-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:18px}
+  .kpi-tile{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+  .kpi-tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tile-color,#10b981)}
+  .kpi-tile .kt-icon{flex-shrink:0;width:38px;height:38px;border-radius:8px;background:var(--tile-soft,#dcfce7);color:var(--tile-color,#10b981);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+  .kpi-tile .kt-info{flex:1;min-width:0}
+  .kpi-tile .kt-label{font-size:12px;color:#64748b;font-weight:500;line-height:1}
+  .kpi-tile .kt-value{font-size:22px;font-weight:700;color:#0f172a;margin-top:6px;line-height:1;font-feature-settings:"tnum" 1}
+  .kpi-tile .kt-value .kt-unit{font-size:13px;color:#94a3b8;font-weight:500;margin-left:2px}
+  .kpi-tile .kt-trend{font-size:11px;margin-top:5px;color:var(--tile-color,#10b981);display:inline-flex;align-items:center;gap:3px;font-weight:500}
+  .kpi-tile.warn{--tile-color:#f59e0b;--tile-soft:#fef9c3}
+  .kpi-tile.danger{--tile-color:#dc2626;--tile-soft:#fef2f2}
+  .kpi-tile.info{--tile-color:#0ea5e9;--tile-soft:#e0f2fe}
+  .kpi-tile.neutral{--tile-color:#64748b;--tile-soft:#f1f5f9}
+
+  /* Task / decision row (待办列表) */
+  .task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;transition:border-color .15s}
+  .task-row:hover{border-color:var(--accent,#10b981)}
+  .task-row .tr-prio{flex-shrink:0;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+  .task-row .tr-prio.high{background:#dc2626}
+  .task-row .tr-prio.mid{background:#f59e0b}
+  .task-row .tr-prio.low{background:#3b82f6}
+  .task-row .tr-prio.info{background:#64748b}
+  .task-row .tr-body{flex:1;min-width:0}
+  .task-row .tr-title{font-size:13.5px;color:#0f172a;font-weight:500;line-height:1.4}
+  .task-row .tr-meta{font-size:11.5px;color:#94a3b8;margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
+  .task-row .tr-meta b{color:#475569;font-weight:500}
+  .task-row .tr-actions{display:flex;gap:6px;flex-shrink:0}
+  .btn-sm{padding:5px 10px;font-size:12px;border-radius:6px;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#475569;transition:all .15s;font-weight:500}
+  .btn-sm:hover{border-color:#cbd5e1}
+  .btn-sm.primary{background:var(--accent,#10b981);color:#fff;border-color:var(--accent,#10b981)}
+  .btn-sm.primary:hover{filter:brightness(1.05)}
+  .btn-sm.ghost{background:transparent;color:#64748b}
+
+  /* Equipment / station list row (通用排行/详情 list) */
+  .ws-list{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden}
+  .ws-list-row{display:grid;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid #f1f5f9;font-size:13px}
+  .ws-list-row:last-child{border-bottom:none}
+  .ws-list-row.head{background:#f8fafc;color:#475569;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;padding:9px 16px}
+  .ws-list-row .row-no{color:#94a3b8;font-feature-settings:"tnum" 1;font-weight:600}
+  .ws-list-row .row-id{font-family:"SF Mono",Menlo,monospace;font-size:11.5px;color:#64748b}
+  .ws-list-row .row-name{color:#0f172a;font-weight:500}
+  .ws-list-row .row-score{font-weight:700;font-feature-settings:"tnum" 1}
+  .ws-list-row .row-score.bad{color:#dc2626}
+  .ws-list-row .row-score.warn{color:#f59e0b}
+  .ws-list-row .row-score.ok{color:#16a34a}
+  .ws-list-row .health-bar{position:relative;height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;width:100px}
+  .ws-list-row .health-bar-fg{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+  .ws-list-row .health-bar-fg.bad{background:#dc2626}
+  .ws-list-row .health-bar-fg.warn{background:#f59e0b}
+  .ws-list-row .health-bar-fg.ok{background:#16a34a}
+
+  /* Activity timeline (近期活动) */
+  .activity-list{position:relative}
+  .activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+  .activity-item:last-child{border-bottom:none}
+  .activity-item .act-time{flex-shrink:0;width:90px;color:#94a3b8;font-size:11.5px;font-feature-settings:"tnum" 1;padding-top:2px}
+  .activity-item .act-tag{flex-shrink:0;padding:1px 7px;font-size:10.5px;border-radius:4px;font-weight:600;letter-spacing:.04em;height:18px;align-self:flex-start;margin-top:2px}
+  .activity-item .act-tag.ok{background:#dcfce7;color:#15803d}
+  .activity-item .act-tag.warn{background:#fef9c3;color:#854d0e}
+  .activity-item .act-tag.bad{background:#fef2f2;color:#991b1b}
+  .activity-item .act-tag.info{background:#e0f2fe;color:#0369a1}
+  .activity-item .act-text{flex:1;color:#475569;line-height:1.5}
+  .activity-item .act-text b{color:#0f172a;font-weight:500}
+
+  /* Compare card (推荐方案 vs 当前) */
+  .compare-card{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-bottom:10px}
+  .compare-side{padding:8px 4px}
+  .compare-side .cs-label{font-size:11px;color:#94a3b8;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .compare-side .cs-title{font-size:13.5px;font-weight:600;color:#0f172a;margin-top:4px}
+  .compare-side .cs-stats{display:flex;gap:14px;margin-top:8px;font-size:12px;color:#475569}
+  .compare-side .cs-stats b{color:#0f172a;font-weight:600;font-feature-settings:"tnum" 1}
+  .compare-side.recommended{background:#f0fdf4;border-radius:8px;padding:12px}
+  .compare-divider{display:flex;align-items:center;font-size:18px;color:#cbd5e1}
+
+  /* Search bar */
+  .ws-search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:9px 14px;margin-bottom:10px}
+  .ws-search input{border:none;outline:none;flex:1;font-size:13.5px;color:#0f172a;background:transparent}
+  .ws-search input::placeholder{color:#94a3b8}
+  .ws-search .ws-search-icon{color:#94a3b8;font-size:14px}
 
   /* Generic small list/timeline/card components used by new pages */
   .pain-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px;display:flex;gap:14px;align-items:flex-start}
@@ -234,28 +384,28 @@
   </div>
   <nav class="primary-nav" id="primaryNav">
     <div class="primary-item active" data-domain="home" onclick="selectDomain('home')">
-      <span class="pn-icon">▦</span><span>工作台</span>
+      <span class="pn-icon">⌂</span><span class="pn-label">工作台</span>
     </div>
     <div class="primary-item" data-domain="transport" onclick="selectDomain('transport')">
-      <span class="pn-icon">⛟</span><span>运输组织</span>
+      <span class="pn-icon">⛟</span><span class="pn-label">运输组织</span>
     </div>
     <div class="primary-item" data-domain="equipment" onclick="selectDomain('equipment')">
-      <span class="pn-icon">⚙</span><span>设备运维</span>
+      <span class="pn-icon">⚙</span><span class="pn-label">设备运维</span>
     </div>
     <div class="primary-item" data-domain="energy" onclick="selectDomain('energy')">
-      <span class="pn-icon">⚡</span><span>能耗管理</span>
+      <span class="pn-icon">⚡</span><span class="pn-label">能耗管理</span>
     </div>
     <div class="primary-item" data-domain="safety" onclick="selectDomain('safety')">
-      <span class="pn-icon">⚠</span><span>安全管理</span>
+      <span class="pn-icon">⚠</span><span class="pn-label">安全管理</span>
     </div>
     <div class="primary-item" data-domain="hub" onclick="selectDomain('hub')">
-      <span class="pn-icon">◉</span><span>决策中枢</span>
+      <span class="pn-icon">◉</span><span class="pn-label">决策中枢</span>
     </div>
     <div class="primary-item" data-domain="assets" onclick="selectDomain('assets')">
-      <span class="pn-icon">⬢</span><span>数据资产</span>
+      <span class="pn-icon">⬢</span><span class="pn-label">数据资产</span>
     </div>
     <div class="primary-item" data-domain="governance" onclick="selectDomain('governance')">
-      <span class="pn-icon">◫</span><span>项目治理</span>
+      <span class="pn-icon">◫</span><span class="pn-label">项目治理</span>
     </div>
   </nav>
   <div class="topbar-actions">
@@ -593,12 +743,71 @@
   </div>
 </div>
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m1','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m1','workstation')"><span class="step-num">1</span>调度员工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m1','data')"><span class="step-num">2</span>数据分析</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m1','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m1','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile" style="--tile-color:#2563eb;--tile-soft:#eff6ff"><div class="kt-icon">⊟</div><div class="kt-info"><div class="kt-label">今日全线预测客流</div><div class="kt-value">30.8<span class="kt-unit">万人次</span></div><div class="kt-trend">↗ vs 上周同日 +2.0%</div></div></div>
+    <div class="kpi-tile"><div class="kt-icon">✓</div><div class="kt-info"><div class="kt-label">本周预测精度 (MAPE)</div><div class="kt-value">6.2<span class="kt-unit">%</span></div><div class="kt-trend">优于目标 ≤8%</div></div></div>
+    <div class="kpi-tile warn"><div class="kt-icon">⚠</div><div class="kt-info"><div class="kt-label">未来 6h 高峰预警</div><div class="kt-value">3<span class="kt-unit">站次</span></div><div class="kt-trend">含昆明南站脉冲</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">○</div><div class="kt-info"><div class="kt-label">待审运力建议</div><div class="kt-value">5<span class="kt-unit">条</span></div><div class="kt-trend">最早需 60min 内决策</div></div></div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-4 mb-4">
+    <div class="card p-5 lg:col-span-2">
+      <div class="ws-head"><div class="ws-title">待审运力建议</div><span class="ws-count">5 条</span><div class="ws-actions"><span class="ws-link">查看全部 →</span></div></div>
+      <div class="task-row"><div class="tr-prio high">高</div><div class="tr-body"><div class="tr-title">15:50 小菜园→火车北站 加开 1 列短交路</div><div class="tr-meta"><span><b>触发：</b>预测满载率 105% (阈值 95%)</span><span><b>来源：</b>15min 滚动预测</span><span><b>截止：</b>15:30 前确认</span></div></div><div class="tr-actions"><button class="btn-sm primary">采纳</button><button class="btn-sm">驳回</button></div></div>
+      <div class="task-row"><div class="tr-prio high">高</div><div class="tr-body"><div class="tr-title">16:40 昆明南站高铁脉冲 · 加开 2 列上行</div><div class="tr-meta"><span><b>触发：</b>G1373/G2987 到站 +18min 换乘脉冲</span><span><b>预估增量：</b>~ 4500 人次</span><span><b>截止：</b>16:10 前确认</span></div></div><div class="tr-actions"><button class="btn-sm primary">采纳</button><button class="btn-sm">驳回</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">19:10-21:00 平峰区段缩减运力 · 间隔 6→8min</div><div class="tr-meta"><span><b>触发：</b>晚平峰满载率连续 7 日 ≤ 65%</span><span><b>预估节约：</b>车公里 ↓ 4.2%</span><span><b>截止：</b>18:00 前确认</span></div></div><div class="tr-actions"><button class="btn-sm primary">采纳</button><button class="btn-sm">驳回</button><button class="btn-sm ghost">查看依据</button></div></div>
+      <div class="task-row"><div class="tr-prio low">提示</div><div class="tr-body"><div class="tr-title">明日 (04-30) 运力安排建议草案</div><div class="tr-meta"><span><b>触发：</b>每日 17:30 自动生成</span><span><b>预测客流：</b>32.5 万 (vs 今日 +5.5%)</span><span><b>建议：</b>沿用今日图 + 早高峰加 1 列</span></div></div><div class="tr-actions"><button class="btn-sm primary">采纳</button><button class="btn-sm">调整</button></div></div>
+      <div class="task-row"><div class="tr-prio info">参考</div><div class="tr-body"><div class="tr-title">周日 (05-04) 客流趋势报告 · 较上周末偏高 12%</div><div class="tr-meta"><span><b>来源：</b>季节性 + 旅游波动 + 大型活动叠加</span><span><b>关注站：</b>昆明南、西部客运站、火车北站</span></div></div><div class="tr-actions"><button class="btn-sm">查看详情</button></div></div>
+    </div>
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">模型运行状态</div></div>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between"><span class="text-slate-500">本周日级精度</span><span class="font-semibold" style="color:#16a34a">MAPE 6.2%</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">本周时段级精度</span><span class="font-semibold" style="color:#16a34a">MAPE 9.8%</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">15min 级精度</span><span class="font-semibold" style="color:#16a34a">MAPE 14.5%</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">最近重训时间</span><span>2026-04-28 02:00</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">下次重训</span><span>2026-04-30 02:00 (今晚)</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">数据完整率</span><span class="font-semibold" style="color:#16a34a">99.6%</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">运行模式</span><span class="chip" style="background:#dcfce7;color:#15803d">已转正</span></div>
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500">连续 13 周 MAPE ≤ 8%<br>采纳率本周 78% (建议 32 条 / 采纳 25 条)</div>
+    </div>
+  </div>
+
+  <div class="card p-5 mb-4">
+    <div class="ws-head"><div class="ws-title">重点站未来 6h 客流预警时间线</div><div class="ws-actions"><span style="font-size:11px;color:#94a3b8">滚动更新于 14:25</span></div></div>
+    <div class="ws-list">
+      <div class="ws-list-row head" style="grid-template-columns:90px 120px 1fr 100px 110px 80px"><div>时间</div><div>车站</div><div>触发原因</div><div>预测密度</div><div>建议措施</div><div>状态</div></div>
+      <div class="ws-list-row" style="grid-template-columns:90px 120px 1fr 100px 110px 80px"><div class="row-id">14:50</div><div class="row-name">昆明南站</div><div>高铁 G2987 到达 14:42 · 换乘脉冲</div><div class="row-score warn">3.2 人/㎡</div><div>客流引导</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">预警中</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:90px 120px 1fr 100px 110px 80px"><div class="row-id">15:50</div><div class="row-name">火车北站</div><div>晚高峰前期 + 大学城放学</div><div class="row-score warn">3.8 人/㎡</div><div>预备加车</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">监控中</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:90px 120px 1fr 100px 110px 80px"><div class="row-id">16:40</div><div class="row-name">昆明南站</div><div>高铁 G1373 到达 16:32 · 高强度脉冲</div><div class="row-score bad">4.5 人/㎡</div><div>加车 + 限流</div><div><span class="chip" style="background:#fef2f2;color:#991b1b">高预警</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:90px 120px 1fr 100px 110px 80px"><div class="row-id">17:30</div><div class="row-name">小菜园</div><div>核心通勤区段 · 工作日返程</div><div class="row-score warn">3.6 人/㎡</div><div>常规加密</div><div><span class="chip" style="background:#dcfce7;color:#15803d">正常</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:90px 120px 1fr 100px 110px 80px"><div class="row-id">18:15</div><div class="row-name">金桂街</div><div>商圈 + 沿线办公区下班</div><div class="row-score ok">2.8 人/㎡</div><div>无</div><div><span class="chip" style="background:#dcfce7;color:#15803d">正常</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:90px 120px 1fr 100px 110px 80px"><div class="row-id">19:30</div><div class="row-name">白龙路</div><div>预测无异常</div><div class="row-score ok">2.1 人/㎡</div><div>无</div><div><span class="chip" style="background:#dcfce7;color:#15803d">正常</span></div></div>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="ws-head"><div class="ws-title">最近 24h 调度活动记录</div><div class="ws-actions"><span class="ws-link">查看完整日志 →</span></div></div>
+    <div class="activity-list">
+      <div class="activity-item"><div class="act-time">14:23</div><span class="act-tag warn">已采纳</span><div class="act-text">值班员 <b>李工</b> 采纳模型建议：<b>15:50 加开 1 列短交路</b>。预计影响乘客 ~ 3200 人次</div></div>
+      <div class="activity-item"><div class="act-time">11:08</div><span class="act-tag ok">已闭环</span><div class="act-text">11:00-11:15 预测偏差 −18% 触发自动核查，原因定位为 <b>气象预报修订</b>，模型已自动重计算</div></div>
+      <div class="activity-item"><div class="act-time">09:45</div><span class="act-tag info">已通知</span><div class="act-text">推送至司机端：14:30 昆明南站预计高铁脉冲，注意站台客流</div></div>
+      <div class="activity-item"><div class="act-time">08:30</div><span class="act-tag ok">已采纳</span><div class="act-text">值班员 <b>王主任</b> 采纳今日运力方案，沿用工作日图 + 早高峰加 1 列</div></div>
+      <div class="activity-item"><div class="act-time">04-29 17:30</div><span class="act-tag info">系统</span><div class="act-text">每日 17:30 自动生成今日运力安排建议草案</div></div>
+      <div class="activity-item"><div class="act-time">04-29 16:55</div><span class="act-tag bad">驳回</span><div class="act-text">值班员 <b>李工</b> 驳回 16:00 加车建议（实际客流回落，模型已反馈学习）</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
   <section class="card p-6 lg:p-8">
     <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><h2 class="section-title accent">模型工作原理 · 一图速览</h2><p class="text-sm text-slate-500 mt-1">数据输入 · 模型引擎 · 输出 · 业务决策</p></div><span class="chip accent-soft">分层组合 · 端到端 pipeline</span></div>
@@ -653,12 +862,59 @@
 </div>
 
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m2','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m2','workstation')"><span class="step-num">1</span>运行图工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m2','data')"><span class="step-num">2</span>数据分析</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m2','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m2','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile" style="--tile-color:#2563eb;--tile-soft:#eff6ff"><div class="kt-icon">▦</div><div class="kt-info"><div class="kt-label">今日上线列车</div><div class="kt-value">42<span class="kt-unit">/48</span></div><div class="kt-trend">备车 6 列 · 计划检修 2 列</div></div></div>
+    <div class="kpi-tile"><div class="kt-icon">⏱</div><div class="kt-info"><div class="kt-label">高峰发车间隔</div><div class="kt-value">6<span class="kt-unit">min</span></div><div class="kt-trend">平峰 8min · 与计划一致</div></div></div>
+    <div class="kpi-tile warn"><div class="kt-icon">↗</div><div class="kt-info"><div class="kt-label">早高峰平均满载率</div><div class="kt-value">87.3<span class="kt-unit">%</span></div><div class="kt-trend">局部区段 ↗ 95%</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">$</div><div class="kt-info"><div class="kt-label">今日车公里</div><div class="kt-value">10.42<span class="kt-unit">万公里</span></div><div class="kt-trend">vs 计划 −4.0%（采纳优化）</div></div></div>
+  </div>
+
+  <div class="ws-head"><div class="ws-title">明日 (04-30) 运行图方案对比 · 待审批</div></div>
+  <div class="compare-card">
+    <div class="compare-side"><div class="cs-label">当前方案</div><div class="cs-title">沿用工作日固定运行图</div><div class="cs-stats"><span>上线 <b>42 列</b></span><span>车公里 <b>10.85 万</b></span><span>高峰满载率 <b>89%</b></span><span>采纳率 <b>—</b></span></div></div>
+    <div class="compare-divider">→</div>
+    <div class="compare-side recommended"><div class="cs-label" style="color:#15803d">★ 模型推荐方案</div><div class="cs-title">动态调整 · 早高峰加密 + 晚平峰缩减</div><div class="cs-stats"><span>上线 <b>43 列</b></span><span>车公里 <b style="color:#16a34a">10.41 万</b></span><span>高峰满载率 <b style="color:#16a34a">85%</b></span><span>预估节约 <b style="color:#16a34a">~2.4 万</b></span></div></div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-4 mb-4">
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">运行图编制待办</div><span class="ws-count">3 项</span></div>
+      <div class="task-row"><div class="tr-prio high">高</div><div class="tr-body"><div class="tr-title">本周日 (05-04) 运行图修订 · 旅游高峰预案</div><div class="tr-meta"><span><b>客流预测：</b>较上周末 +12%</span><span><b>截止：</b>05-03 17:00 前完成</span></div></div><div class="tr-actions"><button class="btn-sm primary">开始编辑</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">短交路方案敏感性评估 · 火车北站折返</div><div class="tr-meta"><span><b>触发：</b>满载率连续 3 日 ≥ 95%</span><span><b>方案数：</b>3 个备选</span></div></div><div class="tr-actions"><button class="btn-sm">查看方案</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">司机排班合规性核查 · 5 月排班草案</div><div class="tr-meta"><span><b>合规约束：</b>连续驾驶 ≤ 4h, 间隔 ≥ 30min</span><span><b>状态：</b>已完成草案</span></div></div><div class="tr-actions"><button class="btn-sm primary">审核</button></div></div>
+    </div>
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">实时加减车记录 · 最近 24h</div><span class="ws-count">8 次</span></div>
+      <div class="ws-list">
+        <div class="ws-list-row head" style="grid-template-columns:80px 70px 1fr 80px"><div>时间</div><div>类型</div><div>说明</div><div>结果</div></div>
+        <div class="ws-list-row" style="grid-template-columns:80px 70px 1fr 80px"><div class="row-id">14:23</div><div><span class="chip" style="background:#dcfce7;color:#15803d">+1 列</span></div><div>15:50 小菜园→火车北站短交路</div><div class="row-score ok">已发车</div></div>
+        <div class="ws-list-row" style="grid-template-columns:80px 70px 1fr 80px"><div class="row-id">10:15</div><div><span class="chip" style="background:#dcfce7;color:#15803d">+1 列</span></div><div>10:30 早高峰末段补强</div><div class="row-score ok">已闭环</div></div>
+        <div class="ws-list-row" style="grid-template-columns:80px 70px 1fr 80px"><div class="row-id">07:50</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">间隔 ↓</span></div><div>07:55-08:30 高峰间隔 6→5min</div><div class="row-score ok">已闭环</div></div>
+        <div class="ws-list-row" style="grid-template-columns:80px 70px 1fr 80px"><div class="row-id">04-29 21:45</div><div><span class="chip" style="background:#fef2f2;color:#991b1b">−1 列</span></div><div>晚平峰运力优化</div><div class="row-score ok">已闭环</div></div>
+        <div class="ws-list-row" style="grid-template-columns:80px 70px 1fr 80px"><div class="row-id">04-29 17:00</div><div><span class="chip" style="background:#dcfce7;color:#15803d">+2 列</span></div><div>16:40 高铁脉冲应对</div><div class="row-score ok">已闭环</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="ws-head"><div class="ws-title">运力优化效果统计 · 本月</div></div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="ov-stat-card"><div class="ov-stat-label">采纳率</div><div class="ov-stat-num">73<span style="font-size:14px;color:#94a3b8">%</span></div><div class="ov-stat-trend">建议 187 / 采纳 137</div></div>
+      <div class="ov-stat-card"><div class="ov-stat-label">车公里节约</div><div class="ov-stat-num">3.4<span style="font-size:14px;color:#94a3b8">%</span></div><div class="ov-stat-trend">月度 ~ 24 万元</div></div>
+      <div class="ov-stat-card"><div class="ov-stat-label">高峰满载率改善</div><div class="ov-stat-num">−4<span style="font-size:14px;color:#94a3b8">pp</span></div><div class="ov-stat-trend">110% → 95% 区间</div></div>
+      <div class="ov-stat-card"><div class="ov-stat-label">编图工作量降幅</div><div class="ov-stat-num">52<span style="font-size:14px;color:#94a3b8">%</span></div><div class="ov-stat-trend">比对前 −58 工时/月</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
@@ -941,12 +1197,57 @@
 </div>
 
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m3','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m3','workstation')"><span class="step-num">1</span>设备工程师工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m3','data')"><span class="step-num">2</span>数据分析</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m3','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m3','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile" style="--tile-color:#ea580c;--tile-soft:#fff7ed"><div class="kt-icon">⚡</div><div class="kt-info"><div class="kt-label">蓄电池组关注</div><div class="kt-value">4<span class="kt-unit">/48 列</span></div><div class="kt-trend">健康度 ≤ 75</div></div></div>
+    <div class="kpi-tile warn"><div class="kt-icon">⚙</div><div class="kt-info"><div class="kt-label">道岔预警</div><div class="kt-value">3<span class="kt-unit">处</span></div><div class="kt-trend">含 1 个 7 天内必修</div></div></div>
+    <div class="kpi-tile danger"><div class="kt-icon">⊞</div><div class="kt-info"><div class="kt-label">屏蔽门高优先级</div><div class="kt-value">2<span class="kt-unit">扇</span></div><div class="kt-trend">本周天窗安排</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">○</div><div class="kt-info"><div class="kt-label">待审维修工单</div><div class="kt-value">7<span class="kt-unit">单</span></div><div class="kt-trend">RUL 预测触发</div></div></div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-4 mb-4">
+    <div class="card p-5 lg:col-span-2">
+      <div class="ws-head"><div class="ws-title">需关注设备清单 · 健康度 Top 10</div><span class="ws-count">12 条</span><div class="ws-actions"><span class="ws-link">导出 Excel →</span></div></div>
+      <div class="ws-list">
+        <div class="ws-list-row head" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div>#</div><div>设备</div><div>类型</div><div>评分</div><div>趋势</div><div>预估剩余寿命</div><div>建议</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div class="row-no">1</div><div class="row-name">火车北站站台 PSD-A12</div><div>屏蔽门</div><div class="row-score bad">55</div><div><div class="health-bar"><div class="health-bar-fg bad" style="width:55%"></div></div><div style="font-size:11px;color:#dc2626;margin-top:2px">↓ 15 分</div></div><div>~ 7 天</div><div><span class="chip" style="background:#fef2f2;color:#991b1b">本周必修</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div class="row-no">2</div><div class="row-name">火车北站 3#-12 道岔</div><div>道岔</div><div class="row-score bad">58</div><div><div class="health-bar"><div class="health-bar-fg bad" style="width:58%"></div></div><div style="font-size:11px;color:#dc2626;margin-top:2px">↓ 12 分</div></div><div>10-15 天</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">天窗润滑</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div class="row-no">3</div><div class="row-name">17# 列车 · 电池组 A</div><div>蓄电池</div><div class="row-score warn">71</div><div><div class="health-bar"><div class="health-bar-fg warn" style="width:71%"></div></div><div style="font-size:11px;color:#f59e0b;margin-top:2px">↓ 4 分/周</div></div><div>~ 180 天</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">下季度</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div class="row-no">4</div><div class="row-name">23# 列车 · 电池组 B</div><div>蓄电池</div><div class="row-score warn">73</div><div><div class="health-bar"><div class="health-bar-fg warn" style="width:73%"></div></div><div style="font-size:11px;color:#f59e0b;margin-top:2px">↓ 3 分/周</div></div><div>~ 220 天</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">下季度</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div class="row-no">5</div><div class="row-name">金桂街站 1#-08 道岔</div><div>道岔</div><div class="row-score warn">74</div><div><div class="health-bar"><div class="health-bar-fg warn" style="width:74%"></div></div><div style="font-size:11px;color:#f59e0b;margin-top:2px">↓ 5 分</div></div><div>~ 30 天</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">日常巡检</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div class="row-no">6</div><div class="row-name">小菜园站 PSD-B06</div><div>屏蔽门</div><div class="row-score warn">76</div><div><div class="health-bar"><div class="health-bar-fg warn" style="width:76%"></div></div><div style="font-size:11px;color:#94a3b8;margin-top:2px">→ 平稳</div></div><div>~ 60 天</div><div><span class="chip" style="background:#dcfce7;color:#15803d">观察</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 60px 110px 110px 100px"><div class="row-no">7</div><div class="row-name">31# 列车 · 电池组 A</div><div>蓄电池</div><div class="row-score ok">82</div><div><div class="health-bar"><div class="health-bar-fg ok" style="width:82%"></div></div><div style="font-size:11px;color:#94a3b8;margin-top:2px">→ 平稳</div></div><div>~ 380 天</div><div><span class="chip" style="background:#dcfce7;color:#15803d">观察</span></div></div>
+      </div>
+    </div>
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">待审维修工单</div><span class="ws-count">7 单</span></div>
+      <div class="task-row"><div class="tr-prio high">急</div><div class="tr-body"><div class="tr-title">PSD-A12 滑轮组预防性更换</div><div class="tr-meta"><span><b>预估工时：</b>4h</span><span><b>所需备件：</b>滑轮组 ×1</span></div></div><div class="tr-actions"><button class="btn-sm primary">推送至 OMS</button></div></div>
+      <div class="task-row"><div class="tr-prio high">急</div><div class="tr-body"><div class="tr-title">道岔 3#-12 润滑保养</div><div class="tr-meta"><span><b>天窗：</b>05-01 02:00-04:30</span><span><b>责任：</b>张工</span></div></div><div class="tr-actions"><button class="btn-sm primary">推送</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">17# 列车电池组 A 季度检查</div><div class="tr-meta"><span><b>下季度计划：</b>2026-Q3</span></div></div><div class="tr-actions"><button class="btn-sm">归档</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">23# 列车电池组 B 季度检查</div><div class="tr-meta"><span><b>下季度计划：</b>2026-Q3</span></div></div><div class="tr-actions"><button class="btn-sm">归档</button></div></div>
+      <div class="task-row"><div class="tr-prio low">低</div><div class="tr-body"><div class="tr-title">金桂街道岔润滑（巡检）</div><div class="tr-meta"><span><b>计划：</b>下次月度天窗</span></div></div><div class="tr-actions"><button class="btn-sm">归档</button></div></div>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="ws-head"><div class="ws-title">最近健康度变化与维修活动</div></div>
+    <div class="activity-list">
+      <div class="activity-item"><div class="act-time">14:25</div><span class="act-tag warn">健康度</span><div class="act-text">PSD-A12 健康度 <b style="color:#dc2626">55 ↓</b>（昨日 70），触发本周必修建议</div></div>
+      <div class="activity-item"><div class="act-time">11:30</div><span class="act-tag info">巡检</span><div class="act-text">王工完成 <b>火车北站道岔现场巡检</b>，确认润滑过期，模型推荐成立</div></div>
+      <div class="activity-item"><div class="act-time">04-29 03:15</div><span class="act-tag ok">已修复</span><div class="act-text">31# 列车电池组 A 完成季度检查，健康度 78→82</div></div>
+      <div class="activity-item"><div class="act-time">04-28 22:00</div><span class="act-tag ok">已修复</span><div class="act-text">小菜园站 PSD-B11 滑轮组更换完成，健康度恢复 92</div></div>
+      <div class="activity-item"><div class="act-time">04-28 09:00</div><span class="act-tag info">报告</span><div class="act-text">月度蓄电池健康度趋势报告生成，整体衰减率符合预期 (1.2%/月)</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
@@ -1228,12 +1529,86 @@
 </div>
 
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m4','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m4','workstation')"><span class="step-num">1</span>故障处置工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m4','data')"><span class="step-num">2</span>诊断分析</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m4','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m4','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile danger"><div class="kt-icon">!</div><div class="kt-info"><div class="kt-label">当前活跃故障</div><div class="kt-value">3<span class="kt-unit">起</span></div><div class="kt-trend">含 1 起影响行车</div></div></div>
+    <div class="kpi-tile warn"><div class="kt-icon">○</div><div class="kt-info"><div class="kt-label">待处置工单</div><div class="kt-value">8<span class="kt-unit">单</span></div><div class="kt-trend">最早 30min 内响应</div></div></div>
+    <div class="kpi-tile" style="--tile-color:#ea580c;--tile-soft:#fff7ed"><div class="kt-icon">★</div><div class="kt-info"><div class="kt-label">本周诊断 Top-3 命中率</div><div class="kt-value">87.2<span class="kt-unit">%</span></div><div class="kt-trend">优于目标 ≥85%</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">⊟</div><div class="kt-info"><div class="kt-label">知识库案例累计</div><div class="kt-value">1,248<span class="kt-unit">条</span></div><div class="kt-trend">本月新增 +47</div></div></div>
+  </div>
+
+  <div class="ws-search">
+    <span class="ws-search-icon">⌕</span>
+    <input placeholder="搜索故障现象 / 设备型号 / 处置方案 / 知识库..." />
+    <button class="btn-sm primary">检索</button>
+  </div>
+
+  <div class="ws-head"><div class="ws-title">当前活跃故障 · 实时诊断</div><span class="ws-count">3 起</span></div>
+  <div class="card p-5 mb-3" style="border-left:3px solid #dc2626">
+    <div class="flex justify-between items-start gap-4 flex-wrap mb-3">
+      <div>
+        <div style="font-size:11px;color:#dc2626;font-weight:700;letter-spacing:.04em">★ 高优先级 · 影响行车</div>
+        <div class="font-bold text-base mt-1">17# 列车 · 蓄电池组 A · SOC 异常下降</div>
+        <div class="text-sm text-slate-500 mt-1">报警时间 14:23 · 设备 ID: TRAIN-17-BAT-A · 检修人员: 张工</div>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn-sm primary">指派 / 派工</button>
+        <button class="btn-sm">查看历史</button>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-3 text-sm">
+      <div class="bg-slate-50 rounded p-3"><div class="text-xs text-slate-500 mb-1">Top-1 根因 <span class="chip" style="background:#dcfce7;color:#15803d;font-size:10px;margin-left:4px">置信度 78%</span></div><div class="font-semibold">单体电池容量退化</div><div class="text-xs text-slate-500 mt-1">温升异常 + 内阻偏高，与 142 起历史案例匹配</div></div>
+      <div class="bg-slate-50 rounded p-3"><div class="text-xs text-slate-500 mb-1">Top-2 根因 <span class="chip" style="background:#fef9c3;color:#854d0e;font-size:10px;margin-left:4px">置信度 14%</span></div><div class="font-semibold">SOC 估算偏差</div><div class="text-xs text-slate-500 mt-1">充放电曲线异常，建议算法重校</div></div>
+      <div class="bg-slate-50 rounded p-3"><div class="text-xs text-slate-500 mb-1">Top-3 根因 <span class="chip" style="background:#f1f5f9;color:#475569;font-size:10px;margin-left:4px">置信度 5%</span></div><div class="font-semibold">充电机故障</div><div class="text-xs text-slate-500 mt-1">充电截止电压偏低，需现场复核</div></div>
+    </div>
+    <div class="mt-3 pt-3 border-t border-slate-100 text-sm">
+      <span class="font-semibold">推荐处置：</span><span class="text-slate-600">本季度安排电池单体更换 + 重新整定 SOC 估算参数。同步推送至 17 列编组其他蓄电池组进行交叉验证。</span>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-3 mb-4">
+    <div class="card p-4" style="border-left:3px solid #f59e0b">
+      <div style="font-size:11px;color:#f59e0b;font-weight:700;letter-spacing:.04em">中优先级</div>
+      <div class="font-semibold mt-1">火车北站 PSD-A12 · 开关门时间偏长</div>
+      <div class="text-xs text-slate-500 mt-1">11:08 触发 · 推荐方案：润滑 + 滑轮组检查</div>
+    </div>
+    <div class="card p-4" style="border-left:3px solid #f59e0b">
+      <div style="font-size:11px;color:#f59e0b;font-weight:700;letter-spacing:.04em">中优先级</div>
+      <div class="font-semibold mt-1">中台站 · 信号机偶发瞬时灯丝</div>
+      <div class="text-xs text-slate-500 mt-1">09:45 触发 · 推荐方案：现场灯丝更换</div>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="ws-head"><div class="ws-title">待处置工单清单</div><span class="ws-count">8 单</span></div>
+    <div class="ws-list">
+      <div class="ws-list-row head" style="grid-template-columns:60px 1fr 100px 90px 80px 100px"><div>编号</div><div>故障内容</div><div>设备类型</div><div>诊断置信</div><div>SLA</div><div>处置</div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 80px 100px"><div class="row-id">#3471</div><div class="row-name">17# 列车 SOC 异常</div><div>蓄电池</div><div class="row-score ok">78%</div><div class="row-score bad">≤2h</div><div><button class="btn-sm primary">处置</button></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 80px 100px"><div class="row-id">#3470</div><div class="row-name">PSD-A12 开门偏长</div><div>屏蔽门</div><div class="row-score ok">82%</div><div class="row-score warn">≤4h</div><div><button class="btn-sm">领取</button></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 80px 100px"><div class="row-id">#3468</div><div class="row-name">中台站信号灯丝</div><div>信号</div><div class="row-score ok">91%</div><div class="row-score warn">≤4h</div><div><button class="btn-sm">领取</button></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 80px 100px"><div class="row-id">#3465</div><div class="row-name">小菜园 PSD-B06 紧固松动</div><div>屏蔽门</div><div class="row-score warn">68%</div><div class="row-score ok">≤24h</div><div><button class="btn-sm">领取</button></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 80px 100px"><div class="row-id">#3463</div><div class="row-name">23# 列车空调风量异常</div><div>车辆空调</div><div class="row-score ok">85%</div><div class="row-score ok">≤24h</div><div><button class="btn-sm">领取</button></div></div>
+    </div>
+  </div>
+
+  <div class="card p-5 mt-3">
+    <div class="ws-head"><div class="ws-title">本月知识库贡献 · 案例反馈</div></div>
+    <div class="activity-list">
+      <div class="activity-item"><div class="act-time">14:30</div><span class="act-tag info">新增</span><div class="act-text">张工反馈：<b>17# 列车 SOC 异常</b> 处置后健康度恢复至 76，案例已归档</div></div>
+      <div class="activity-item"><div class="act-time">04-29 19:20</div><span class="act-tag ok">采纳</span><div class="act-text">王工采纳模型 Top-1 推荐处置 PSD-A12，<b>一次修复成功</b>，MTTR 1.8h</div></div>
+      <div class="activity-item"><div class="act-time">04-28 14:00</div><span class="act-tag warn">修订</span><div class="act-text">王工对道岔 3#-12 润滑案例补充 <b>"高原干燥气候润滑频率应缩短至 90 天"</b></div></div>
+      <div class="activity-item"><div class="act-time">04-27 22:00</div><span class="act-tag info">报告</span><div class="act-text">本周 Top-3 命中率 87.2%，比对上周 +1.5pp</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
@@ -1558,12 +1933,88 @@
 </div>
 
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m5','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m5','workstation')"><span class="step-num">1</span>能源管理员工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m5','data')"><span class="step-num">2</span>能耗分析</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m5','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m5','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile" style="--tile-color:#16a34a;--tile-soft:#f0fdf4"><div class="kt-icon">✓</div><div class="kt-info"><div class="kt-label">29 站基线达标率</div><div class="kt-value">91.2<span class="kt-unit">%</span></div><div class="kt-trend">26 / 29 站达标</div></div></div>
+    <div class="kpi-tile warn"><div class="kt-icon">⚠</div><div class="kt-info"><div class="kt-label">异常车站</div><div class="kt-value">3<span class="kt-unit">站</span></div><div class="kt-trend">含小菜园站持续偏高</div></div></div>
+    <div class="kpi-tile" style="--tile-color:#16a34a;--tile-soft:#f0fdf4"><div class="kt-icon">¥</div><div class="kt-info"><div class="kt-label">本月累计节能</div><div class="kt-value">3.8<span class="kt-unit">%</span></div><div class="kt-trend">~ 12.3 万元</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">▦</div><div class="kt-info"><div class="kt-label">月度预算执行</div><div class="kt-value">82.5<span class="kt-unit">%</span></div><div class="kt-trend">vs 月历进度 83% · 持平</div></div></div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-4 mb-4">
+    <div class="card p-5 lg:col-span-2">
+      <div class="ws-head"><div class="ws-title">能耗异常车站清单 · 偏差归因</div><span class="ws-count">3 站</span><div class="ws-actions"><span class="ws-link">推送至运维 →</span></div></div>
+      <div class="task-row"><div class="tr-prio high">高</div><div class="tr-body"><div class="tr-title">小菜园站 · 14:00-17:00 持续偏高 +18%</div><div class="tr-meta"><span><b>SHAP 归因：</b>空调机组效率下降 (60%) · 客流偏高 (25%) · 其他 15%</span><span><b>建议：</b>巡检 AHU-3 风阀</span></div></div><div class="tr-actions"><button class="btn-sm primary">推送工单</button><button class="btn-sm">查看</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">金桂街站 · 早晨 06:00-09:00 偏高 +9%</div><div class="tr-meta"><span><b>归因：</b>商圈预冷过早启动 (主因)</span><span><b>建议：</b>调整环控启动时间至 06:30</span></div></div><div class="tr-actions"><button class="btn-sm primary">推送方案</button></div></div>
+      <div class="task-row"><div class="tr-prio low">低</div><div class="tr-body"><div class="tr-title">白龙路站 · 全日 +5%（合理）</div><div class="tr-meta"><span><b>归因：</b>客流持续高位增长（合理偏差）</span><span><b>建议：</b>无需干预，更新基线</span></div></div><div class="tr-actions"><button class="btn-sm">更新基线</button></div></div>
+    </div>
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">节能方案待审批</div><span class="ws-count">3 项</span></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">空调温度策略 +1°C 试点</div><div class="tr-meta"><span><b>预估节约：</b>~ 4.2%/月</span></div></div><div class="tr-actions"><button class="btn-sm primary">批准</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">中</div><div class="tr-body"><div class="tr-title">夜间照明 50% 调光</div><div class="tr-meta"><span><b>预估节约：</b>~ 1.8 万/月</span></div></div><div class="tr-actions"><button class="btn-sm primary">批准</button></div></div>
+      <div class="task-row"><div class="tr-prio low">低</div><div class="tr-body"><div class="tr-title">扶梯客流感应启停</div><div class="tr-meta"><span><b>试点站：</b>3 站</span></div></div><div class="tr-actions"><button class="btn-sm">查看</button></div></div>
+    </div>
+  </div>
+
+  <div class="card p-5 mb-3">
+    <div class="ws-head"><div class="ws-title">29 站达标率热力图 · 当日</div></div>
+    <div class="grid grid-cols-5 md:grid-cols-10 gap-1.5">
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#84cc16">合理</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-yellow">小菜园</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-yellow">金桂街</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#84cc16">白龙路</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+      <div class="health-cell lvl-blue" style="background:#16a34a">达标</div>
+    </div>
+    <div class="text-xs text-slate-500 mt-3 flex gap-4">
+      <span>● <span style="color:#16a34a">绿 = 达标</span></span>
+      <span>● <span style="color:#84cc16">浅绿 = 合理偏差</span></span>
+      <span>● <span style="color:#f59e0b">黄 = 偏离基线 5-15%</span></span>
+      <span>● <span style="color:#dc2626">红 = 偏离 ≥15%</span></span>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="ws-head"><div class="ws-title">最近能耗事件与处置</div></div>
+    <div class="activity-list">
+      <div class="activity-item"><div class="act-time">14:25</div><span class="act-tag warn">异常</span><div class="act-text">小菜园站能耗持续偏高，模型自动归因为 <b>AHU-3 风阀效率下降</b>，已生成工单</div></div>
+      <div class="activity-item"><div class="act-time">11:00</div><span class="act-tag ok">已闭环</span><div class="act-text">金桂街站环控策略调整生效，能耗回归基线区间</div></div>
+      <div class="activity-item"><div class="act-time">04-29 16:00</div><span class="act-tag info">基线</span><div class="act-text">月度基线自动更新，覆盖 27 站，预计节能空间 +0.3pp</div></div>
+      <div class="activity-item"><div class="act-time">04-28 22:00</div><span class="act-tag ok">采纳</span><div class="act-text">陈工采纳空调策略调整建议，预估节约 4.2%/月</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
@@ -1860,12 +2311,65 @@
 </div>
 
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m6','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m6','workstation')"><span class="step-num">1</span>牵引能耗工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m6','data')"><span class="step-num">2</span>能耗优化</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m6','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m6','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile" style="--tile-color:#16a34a;--tile-soft:#f0fdf4"><div class="kt-icon">⚡</div><div class="kt-info"><div class="kt-label">今日车公里牵引电耗</div><div class="kt-value">4.18<span class="kt-unit">kWh/车公里</span></div><div class="kt-trend">vs 仿真基线 −3.2%</div></div></div>
+    <div class="kpi-tile" style="--tile-color:#16a34a;--tile-soft:#f0fdf4"><div class="kt-icon">↻</div><div class="kt-info"><div class="kt-label">再生能量直接吸收率</div><div class="kt-value">42.6<span class="kt-unit">%</span></div><div class="kt-trend">优于上月 +3.1pp</div></div></div>
+    <div class="kpi-tile warn"><div class="kt-icon">⚠</div><div class="kt-info"><div class="kt-label">异常能耗区间</div><div class="kt-value">2<span class="kt-unit">/28 区间</span></div><div class="kt-trend">超基线 +12%</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">≈</div><div class="kt-info"><div class="kt-label">高原修正参数</div><div class="kt-value">81.2<span class="kt-unit">kPa</span></div><div class="kt-trend">Davis 系数实时拟合中</div></div></div>
+  </div>
+
+  <div class="ws-head"><div class="ws-title">本周优化方案 · 待审批</div><span class="ws-count">2 个方案</span></div>
+  <div class="compare-card">
+    <div class="compare-side"><div class="cs-label">当前运行图</div><div class="cs-title">沿用现行速度策略</div><div class="cs-stats"><span>区间能耗 <b>4.32 kWh/km</b></span><span>再生吸收 <b>39.5%</b></span><span>区间运行时分 <b>87s</b></span></div></div>
+    <div class="compare-divider">→</div>
+    <div class="compare-side recommended"><div class="cs-label" style="color:#15803d">★ 模型推荐 · 区间速度策略 V2</div><div class="cs-title">小菜园→火车北站 · 惰行策略调整</div><div class="cs-stats"><span>区间能耗 <b style="color:#16a34a">4.01 kWh/km</b></span><span>再生吸收 <b style="color:#16a34a">42.8%</b></span><span>区间运行时分 <b>87s (持平)</b></span><span>预估节约 <b style="color:#16a34a">~ 7.2%</b></span></div></div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-4 mb-4">
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">区间能耗排行 · 异常区间</div><div class="ws-actions"><span style="font-size:11px;color:#94a3b8">按 vs 基线偏差排序</span></div></div>
+      <div class="ws-list">
+        <div class="ws-list-row head" style="grid-template-columns:30px 1fr 100px 90px"><div>#</div><div>区间</div><div>实际/基线</div><div>偏差</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 100px 90px"><div class="row-no">1</div><div class="row-name">月牙潭→大塘子</div><div class="row-id">5.42 / 4.85</div><div class="row-score bad">+11.8%</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 100px 90px"><div class="row-no">2</div><div class="row-name">小菜园→火车北站</div><div class="row-id">4.32 / 3.95</div><div class="row-score warn">+9.4%</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 100px 90px"><div class="row-no">3</div><div class="row-name">高峣→白马</div><div class="row-id">4.05 / 3.92</div><div class="row-score warn">+3.3%</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 100px 90px"><div class="row-no">4</div><div class="row-name">火车北站→中台</div><div class="row-id">3.68 / 3.72</div><div class="row-score ok">−1.1%</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 100px 90px"><div class="row-no">5</div><div class="row-name">大塘子→金桂街</div><div class="row-id">3.42 / 3.60</div><div class="row-score ok">−5.0%</div></div>
+      </div>
+    </div>
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">司机能耗对比 · 本周排行</div><div class="ws-actions"><span style="font-size:11px;color:#94a3b8">同区间标准化</span></div></div>
+      <div class="ws-list">
+        <div class="ws-list-row head" style="grid-template-columns:30px 1fr 80px 90px"><div>#</div><div>司机</div><div>电耗指数</div><div>vs 平均</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 90px"><div class="row-no">1</div><div class="row-name">李师傅 (3201)</div><div class="row-score ok">92.4</div><div style="color:#16a34a">−7.6%</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 90px"><div class="row-no">2</div><div class="row-name">王师傅 (3215)</div><div class="row-score ok">94.8</div><div style="color:#16a34a">−5.2%</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 90px"><div class="row-no">…</div><div class="row-name">…</div><div>—</div><div>—</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 90px"><div class="row-no">42</div><div class="row-name">陈师傅 (3287)</div><div class="row-score warn">108.2</div><div style="color:#f59e0b">+8.2%</div></div>
+        <div class="ws-list-row" style="grid-template-columns:30px 1fr 80px 90px"><div class="row-no">43</div><div class="row-name">张师傅 (3302)</div><div class="row-score bad">112.5</div><div style="color:#dc2626">+12.5%</div></div>
+      </div>
+      <div class="mt-3 text-xs text-slate-500">建议为 +5pp 以上司机安排节能驾驶专项辅导（4 人）</div>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="ws-head"><div class="ws-title">最近优化策略生效记录</div></div>
+    <div class="activity-list">
+      <div class="activity-item"><div class="act-time">04-29 02:00</div><span class="act-tag ok">生效</span><div class="act-text">高峣→白马区间速度策略 V1.2 已下发，实测能耗 −4.8%</div></div>
+      <div class="activity-item"><div class="act-time">04-25 02:00</div><span class="act-tag ok">生效</span><div class="act-text">早高峰邻车再生吸收时间窗优化（间隔 ±15s 容差），再生吸收率 +2.1pp</div></div>
+      <div class="activity-item"><div class="act-time">04-22 14:00</div><span class="act-tag info">报告</span><div class="act-text">高原 Davis 修正参数月度重拟合完成，空气阻力系数 −1.3%</div></div>
+      <div class="activity-item"><div class="act-time">04-15 14:00</div><span class="act-tag warn">驳回</span><div class="act-text">运营科驳回区间限速调整方案，理由：影响平均运行时分</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
@@ -2135,12 +2639,73 @@
 </div>
 
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m7','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m7','workstation')"><span class="step-num">1</span>安全指挥工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m7','data')"><span class="step-num">2</span>风险态势</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m7','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m7','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile warn"><div class="kt-icon">●</div><div class="kt-info"><div class="kt-label">综合安全指数 · 实时</div><div class="kt-value">82.5</div><div class="kt-trend">黄色 (75-85) · ↓ 2.1 vs 昨日</div></div></div>
+    <div class="kpi-tile danger"><div class="kt-icon">!</div><div class="kt-info"><div class="kt-label">活跃预警</div><div class="kt-value">7<span class="kt-unit">条</span></div><div class="kt-trend">含 1 条橙色</div></div></div>
+    <div class="kpi-tile" style="--tile-color:#dc2626;--tile-soft:#fef2f2"><div class="kt-icon">○</div><div class="kt-info"><div class="kt-label">待处置隐患</div><div class="kt-value">12<span class="kt-unit">项</span></div><div class="kt-trend">含 3 项 7 天内到期</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">⊞</div><div class="kt-info"><div class="kt-label">外部风险源</div><div class="kt-value">2<span class="kt-unit">活跃</span></div><div class="kt-trend">气象 + 沿线施工</div></div></div>
+  </div>
+
+  <div class="card p-5 mb-3" style="border-left:3px solid #f59e0b">
+    <div class="flex justify-between items-start gap-4 flex-wrap">
+      <div>
+        <div style="font-size:11px;color:#f59e0b;font-weight:700;letter-spacing:.06em">★ 黄色综合预警 · 14:25 触发</div>
+        <div class="font-bold text-base mt-1">综合安全指数 84.6 → 82.5（↓ 2.1）</div>
+        <div class="text-sm text-slate-500 mt-1">主要驱动：设备板块 ↓ 4.2 · 客运板块 ↓ 1.5 · 行车板块 持平 · 外部 持平</div>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn-sm primary">值班签收</button>
+        <button class="btn-sm">下钻分析</button>
+        <button class="btn-sm">通知相关人</button>
+      </div>
+    </div>
+    <div class="mt-3 pt-3 border-t border-slate-100 text-sm">
+      <span class="font-semibold">推荐动作：</span><span class="text-slate-600">17# 列车蓄电池组健康度急降，建议下班高峰前对该列车进行预防性退出运行；同步通知大客流预警关注客运密度。</span>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-4 mb-4">
+    <div class="card p-5 lg:col-span-2">
+      <div class="ws-head"><div class="ws-title">活跃预警清单</div><span class="ws-count">7 条</span><div class="ws-actions"><span class="ws-link">导出报告 →</span></div></div>
+      <div class="task-row"><div class="tr-prio high">橙</div><div class="tr-body"><div class="tr-title">17# 列车蓄电池组 A 健康度急降</div><div class="tr-meta"><span><b>板块：</b>设备安全</span><span><b>触发时间：</b>14:23</span><span><b>责任：</b>检修部张工</span></div></div><div class="tr-actions"><button class="btn-sm primary">已知悉</button><button class="btn-sm">联动设备运维</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">黄</div><div class="tr-body"><div class="tr-title">昆明南站 16:40 高铁脉冲 · 站台密度趋近阈值</div><div class="tr-meta"><span><b>板块：</b>客运安全</span><span><b>触发：</b>大客流预警 M8</span></div></div><div class="tr-actions"><button class="btn-sm primary">已知悉</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">黄</div><div class="tr-body"><div class="tr-title">沿线施工 · 三市街区段路面下沉监测异常</div><div class="tr-meta"><span><b>板块：</b>外部环境</span><span><b>来源：</b>结构健康监测系统</span></div></div><div class="tr-actions"><button class="btn-sm primary">现场核实</button></div></div>
+      <div class="task-row"><div class="tr-prio mid">黄</div><div class="tr-body"><div class="tr-title">PSD-A12 屏蔽门动作时长超阈</div><div class="tr-meta"><span><b>板块：</b>设备安全</span><span><b>关联工单：</b>#3470</span></div></div><div class="tr-actions"><button class="btn-sm">查看工单</button></div></div>
+      <div class="task-row"><div class="tr-prio low">蓝</div><div class="tr-body"><div class="tr-title">气象预警 · 明日有中雨</div><div class="tr-meta"><span><b>板块：</b>外部环境</span><span><b>影响：</b>客流变化系数 ×0.92 · 防汛响应</span></div></div><div class="tr-actions"><button class="btn-sm">预案库</button></div></div>
+    </div>
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">四板块实时评分</div></div>
+      <div class="space-y-3 text-sm">
+        <div><div class="flex justify-between mb-1"><span>行车安全 (30%)</span><span class="font-semibold" style="color:#16a34a">92.0</span></div><div class="health-bar" style="width:100%;height:7px"><div class="health-bar-fg ok" style="width:92%"></div></div></div>
+        <div><div class="flex justify-between mb-1"><span>设备安全 (25%)</span><span class="font-semibold" style="color:#f59e0b">76.5</span></div><div class="health-bar" style="width:100%;height:7px"><div class="health-bar-fg warn" style="width:76.5%"></div></div></div>
+        <div><div class="flex justify-between mb-1"><span>客运安全 (25%)</span><span class="font-semibold" style="color:#f59e0b">81.5</span></div><div class="health-bar" style="width:100%;height:7px"><div class="health-bar-fg warn" style="width:81.5%"></div></div></div>
+        <div><div class="flex justify-between mb-1"><span>外部环境 (20%)</span><span class="font-semibold" style="color:#16a34a">85.0</span></div><div class="health-bar" style="width:100%;height:7px"><div class="health-bar-fg ok" style="width:85%"></div></div></div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500">综合 = 92.0×0.3 + 76.5×0.25 + 81.5×0.25 + 85.0×0.2 = <b>82.5</b></div>
+    </div>
+  </div>
+
+  <div class="card p-5">
+    <div class="ws-head"><div class="ws-title">待处置隐患清单 · 按截止日期</div><span class="ws-count">12 项</span></div>
+    <div class="ws-list">
+      <div class="ws-list-row head" style="grid-template-columns:60px 1fr 100px 90px 100px 80px"><div>编号</div><div>隐患描述</div><div>责任部门</div><div>等级</div><div>截止</div><div>状态</div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 80px"><div class="row-id">H-2389</div><div class="row-name">17# 列车蓄电池组 A 待退出</div><div>检修部</div><div><span class="chip" style="background:#fef2f2;color:#991b1b">A 级</span></div><div class="row-score bad">2 天</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">处置中</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 80px"><div class="row-id">H-2387</div><div class="row-name">三市街区段路面沉降</div><div>工务部</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">B 级</span></div><div class="row-score bad">3 天</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">现场核实</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 80px"><div class="row-id">H-2384</div><div class="row-name">火车北站消防设施年检</div><div>站务部</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">B 级</span></div><div class="row-score warn">7 天</div><div><span class="chip" style="background:#dcfce7;color:#15803d">已派工</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 80px"><div class="row-id">H-2380</div><div class="row-name">小菜园 5 号出入口防汛沙袋补充</div><div>站务部</div><div><span class="chip" style="background:#e0f2fe;color:#0369a1">C 级</span></div><div class="row-score warn">10 天</div><div><span class="chip" style="background:#dcfce7;color:#15803d">已派工</span></div></div>
+      <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 80px"><div class="row-id">H-2378</div><div class="row-name">司机休息室空调老化</div><div>机电部</div><div><span class="chip" style="background:#e0f2fe;color:#0369a1">C 级</span></div><div class="row-score ok">14 天</div><div><span class="chip" style="background:#f1f5f9;color:#475569">备件等待</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
@@ -2425,12 +2990,76 @@
 </div>
 
 <div class="subnav">
-  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m8','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item active" data-sub="workstation" onclick="switchSub('m8','workstation')"><span class="step-num">1</span>客流应急工作台</div>
   <div class="subnav-item" data-sub="data" onclick="switchSub('m8','data')"><span class="step-num">2</span>实时态势与预警</div>
   <div class="subnav-item" data-sub="metrics" onclick="switchSub('m8','metrics')"><span class="step-num">3</span>指标体系</div>
+  <div class="subnav-item" data-sub="overview" onclick="switchSub('m8','overview')"><span class="step-num">4</span>模型说明</div>
 </div>
 <main>
-<div class="subview active" data-sub="overview">
+<div class="subview active" data-sub="workstation">
+  <div class="kpi-tiles">
+    <div class="kpi-tile warn"><div class="kt-icon">●</div><div class="kt-info"><div class="kt-label">当前预警等级</div><div class="kt-value">黄色</div><div class="kt-trend">昆明南站 16:40 高铁脉冲</div></div></div>
+    <div class="kpi-tile danger"><div class="kt-icon">↗</div><div class="kt-info"><div class="kt-label">最高站台密度</div><div class="kt-value">3.8<span class="kt-unit">人/㎡</span></div><div class="kt-trend">火车北站 · 趋近阈值 4.0</div></div></div>
+    <div class="kpi-tile" style="--tile-color:#dc2626;--tile-soft:#fef2f2"><div class="kt-icon">★</div><div class="kt-info"><div class="kt-label">活跃管控站</div><div class="kt-value">2<span class="kt-unit">站</span></div><div class="kt-trend">客流引导生效中</div></div></div>
+    <div class="kpi-tile info"><div class="kt-icon">⏱</div><div class="kt-info"><div class="kt-label">本周平均预警提前量</div><div class="kt-value">22<span class="kt-unit">min</span></div><div class="kt-trend">达成 15-30min 目标</div></div></div>
+  </div>
+
+  <div class="card p-5 mb-3" style="border-left:3px solid #f59e0b">
+    <div class="flex justify-between items-start gap-4 flex-wrap mb-3">
+      <div>
+        <div style="font-size:11px;color:#f59e0b;font-weight:700;letter-spacing:.06em">★ 活跃预警 · 昆明南站</div>
+        <div class="font-bold text-base mt-1">16:40 预测站台密度 4.5 人/㎡（橙色阈值 4.0）</div>
+        <div class="text-sm text-slate-500 mt-1">触发原因：高铁 G1373 + G2987 同时段到达，预估换乘客流脉冲 ~ 6800 人次。当前提前 25 分钟。</div>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn-sm primary">采纳措施</button>
+        <button class="btn-sm">查看预案</button>
+        <button class="btn-sm">通知现场</button>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-3 text-sm">
+      <div class="bg-slate-50 rounded p-3"><div class="text-xs text-slate-500 mb-1">推荐措施 1</div><div class="font-semibold">加开 2 列短交路（M2 联动）</div><div class="text-xs text-slate-500 mt-1">预估降密度 ~ 0.8 人/㎡</div></div>
+      <div class="bg-slate-50 rounded p-3"><div class="text-xs text-slate-500 mb-1">推荐措施 2</div><div class="font-semibold">站厅入口分级限流</div><div class="text-xs text-slate-500 mt-1">仅当措施 1 不足时启动</div></div>
+      <div class="bg-slate-50 rounded p-3"><div class="text-xs text-slate-500 mb-1">推荐措施 3</div><div class="font-semibold">公安 + 站务支援</div><div class="text-xs text-slate-500 mt-1">客流密度 ≥ 4.5 时触发</div></div>
+    </div>
+  </div>
+
+  <div class="card p-5 mb-4">
+    <div class="ws-head"><div class="ws-title">重点站实时密度面板</div><span style="font-size:11px;color:#94a3b8">滚动更新于 14:25 · 5min 周期</span></div>
+    <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="stn-card" style="border-left:3px solid #dc2626"><div class="text-xs text-slate-500">火车北站 (4/2/5)</div><div class="text-lg font-bold mt-1" style="color:#dc2626">3.8 人/㎡</div><div class="text-xs text-slate-500 mt-1">站台 · 持续 8min</div><div class="chip" style="background:#fef2f2;color:#991b1b;font-size:11px;margin-top:6px">已联动加车</div></div>
+      <div class="stn-card" style="border-left:3px solid #f59e0b"><div class="text-xs text-slate-500">昆明南站 (4/高铁)</div><div class="text-lg font-bold mt-1" style="color:#f59e0b">3.2 人/㎡</div><div class="text-xs text-slate-500 mt-1">站台 · 上升趋势</div><div class="chip" style="background:#fef9c3;color:#854d0e;font-size:11px;margin-top:6px">预警 25min</div></div>
+      <div class="stn-card" style="border-left:3px solid #f59e0b"><div class="text-xs text-slate-500">小菜园 (4/2)</div><div class="text-lg font-bold mt-1" style="color:#f59e0b">2.9 人/㎡</div><div class="text-xs text-slate-500 mt-1">站厅 · 换乘高峰</div><div class="chip" style="background:#dcfce7;color:#15803d;font-size:11px;margin-top:6px">监控中</div></div>
+      <div class="stn-card" style="border-left:3px solid #16a34a"><div class="text-xs text-slate-500">金桂街 (4)</div><div class="text-lg font-bold mt-1" style="color:#16a34a">1.9 人/㎡</div><div class="text-xs text-slate-500 mt-1">正常</div><div class="chip" style="background:#dcfce7;color:#15803d;font-size:11px;margin-top:6px">正常</div></div>
+      <div class="stn-card" style="border-left:3px solid #16a34a"><div class="text-xs text-slate-500">白龙路 (4)</div><div class="text-lg font-bold mt-1" style="color:#16a34a">1.5 人/㎡</div><div class="text-xs text-slate-500 mt-1">正常</div><div class="chip" style="background:#dcfce7;color:#15803d;font-size:11px;margin-top:6px">正常</div></div>
+      <div class="stn-card" style="border-left:3px solid #16a34a"><div class="text-xs text-slate-500">中台 (4)</div><div class="text-lg font-bold mt-1" style="color:#16a34a">1.2 人/㎡</div><div class="text-xs text-slate-500 mt-1">正常</div><div class="chip" style="background:#dcfce7;color:#15803d;font-size:11px;margin-top:6px">正常</div></div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-4 mb-3">
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">分级措施模板</div><div class="ws-actions"><span class="ws-link">查看全部预案 →</span></div></div>
+      <div class="ws-list">
+        <div class="ws-list-row head" style="grid-template-columns:60px 1fr 100px"><div>等级</div><div>触发措施</div><div>状态</div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px"><div><span class="chip" style="background:#dcfce7;color:#15803d">蓝色</span></div><div>密度 ≥ 2.5 人/㎡ · 现场广播 + 巡视</div><div><span class="chip" style="background:#f1f5f9;color:#475569">就绪</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px"><div><span class="chip" style="background:#fef9c3;color:#854d0e">黄色</span></div><div>≥ 3.0 · 加车 + 部分入口限流</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">已激活</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px"><div><span class="chip" style="background:#fed7aa;color:#9a3412">橙色</span></div><div>≥ 4.0 · 全面限流 + 备车补强</div><div><span class="chip" style="background:#f1f5f9;color:#475569">就绪</span></div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px"><div><span class="chip" style="background:#fef2f2;color:#991b1b">红色</span></div><div>≥ 5.0 · 跳站通过 + 公安支援</div><div><span class="chip" style="background:#f1f5f9;color:#475569">就绪</span></div></div>
+      </div>
+    </div>
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">本月大客流复盘</div><span class="ws-count">5 次</span></div>
+      <div class="activity-list">
+        <div class="activity-item"><div class="act-time">04-29</div><span class="act-tag ok">闭环</span><div class="act-text">04-29 16:40 高铁脉冲，<b>提前 18min 预警</b>，加车 2 列，最大密度 3.7（vs 历史同场景 4.4 ↓ 17%）</div></div>
+        <div class="activity-item"><div class="act-time">04-23</div><span class="act-tag ok">闭环</span><div class="act-text">04-23 周末旅游高峰，提前 25min 预警，措施分级到位，无客流积压</div></div>
+        <div class="activity-item"><div class="act-time">04-18</div><span class="act-tag warn">部分</span><div class="act-text">04-18 大学城开学日，提前 30min 预警，但局部站点限流时长偏长 18min（措施模板已优化）</div></div>
+        <div class="activity-item"><div class="act-time">04-12</div><span class="act-tag ok">闭环</span><div class="act-text">04-12 演唱会散场，预警 + 加密发车，措施完整</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subview" data-sub="overview">
   <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
