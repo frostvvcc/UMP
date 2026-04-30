@@ -69,6 +69,25 @@
   .page-header .ph-kpi .ph-kpi-num .unit{font-size:13px;font-weight:500;margin-left:1px}
   .page-header .ph-kpi .ph-kpi-label{font-size:11.5px;color:#64748b;margin-top:4px}
 
+  /* Sub-navigation (in-page tabs under page header) */
+  .subnav{display:flex;align-items:center;gap:2px;background:#fff;border-bottom:1px solid #e2e8f0;padding:0 28px;position:sticky;top:53px;z-index:40;overflow-x:auto;scrollbar-width:none}
+  .subnav::-webkit-scrollbar{display:none}
+  .subnav-item{padding:11px 16px;font-size:13.5px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;font-weight:500;white-space:nowrap;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px}
+  .subnav-item:hover{color:#0f172a}
+  .subnav-item.active{color:var(--accent,#0f172a);border-bottom-color:var(--accent,#3b82f6);font-weight:600}
+  .subnav-item .step-num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:#f1f5f9;color:#64748b;border-radius:50%;font-size:10.5px;font-weight:700}
+  .subnav-item.active .step-num{background:var(--accent-soft-bg,#eff6ff);color:var(--accent,#1d4ed8)}
+
+  .subview{display:none;padding:18px 28px 28px}
+  .subview.active{display:block}
+  .subview > section{margin-bottom:18px}
+  .subview > section:last-child{margin-bottom:0}
+
+  /* Sub-section group title — used inside a subview to label a card group */
+  .sv-group-title{font-size:13px;font-weight:600;color:#475569;margin:4px 0 12px;display:flex;align-items:center;gap:8px;letter-spacing:.02em}
+  .sv-group-title::before{content:"";width:3px;height:13px;background:var(--accent,#3b82f6);border-radius:2px}
+  .sv-group-title .gt-desc{font-weight:400;color:#94a3b8;font-size:12px;margin-left:4px}
+
   /* Model page styles - dynamic accent via CSS vars */
   .model-page{display:none}
   .model-page.active{display:block}
@@ -76,9 +95,7 @@
   .model-page .accent-bg{background:var(--accent)}
   .model-page .accent-soft{background:var(--accent-soft-bg);color:var(--accent-soft-text)}
   .model-page .ribbon{position:absolute;top:0;left:0;width:4px;height:100%;border-radius:10px 0 0 10px;background:var(--accent)}
-  .model-page main{padding:20px 28px 28px;max-width:none;margin:0}
-  .model-page main > section{margin-bottom:18px}
-  .model-page main > section:last-child{margin-bottom:0}
+  .model-page main{padding:0;max-width:none;margin:0}
 
   .health-cell{display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:600;border-radius:5px;height:38px}
   .case-card{border-left:3px solid #ea580c;background:#fff7ed;padding:12px 14px;border-radius:0 8px 8px 0}
@@ -399,7 +416,14 @@
     </div>
   </div>
 </div>
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m1','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m1','data')"><span class="step-num">2</span>数据分析</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m1','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
   <section class="card p-6 lg:p-8">
     <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><h2 class="section-title accent">模型工作原理 · 一图速览</h2><p class="text-sm text-slate-500 mt-1">数据输入 · 模型引擎 · 输出 · 业务决策</p></div><span class="chip accent-soft">分层组合 · 端到端 pipeline</span></div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -414,10 +438,18 @@
     <div class="card p-6"><h2 class="section-title accent">模型分层</h2><ol class="mt-4 space-y-3 text-sm"><li class="flex gap-3"><span class="accent-soft chip">L1</span><div><b>STL 趋势/周期分解</b><div class="text-slate-500 text-xs">剥离趋势 + 周周期 + 年季节</div></div></li><li class="flex gap-3"><span class="accent-soft chip">L2</span><div><b>LightGBM 多因子校正</b><div class="text-slate-500 text-xs">气象 / 高铁 / 事件 / 换乘特征</div></div></li><li class="flex gap-3"><span class="accent-soft chip">L3</span><div><b>轻量化 LSTM/Transformer</b><div class="text-slate-500 text-xs">15 分钟级脉冲快速波动</div></div></li></ol></div>
   </section>
   <section><h2 class="section-title accent mb-5">三大决策场景</h2><div class="grid md:grid-cols-3 gap-5"><div class="card p-6 relative overflow-hidden"><div class="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-blue-50"></div><div class="relative"><div class="chip accent-soft mb-3">场景 1 · 周/季度</div><div class="font-bold text-lg">运行图修订</div><p class="text-sm text-slate-600 mt-2 leading-relaxed">从「高峰图 / 平峰图」二档模板，升级为基于客流连续变化的精细化时段划分。</p></div></div><div class="card p-6 relative overflow-hidden"><div class="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-blue-50"></div><div class="relative"><div class="chip accent-soft mb-3">场景 2 · 日度</div><div class="font-bold text-lg">次日运力安排</div><p class="text-sm text-slate-600 mt-2 leading-relaxed">每日下午确定次日上线列车数与备用车，提前预判异常客流事件。</p></div></div><div class="card p-6 relative overflow-hidden"><div class="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-blue-50"></div><div class="relative"><div class="chip accent-soft mb-3">场景 3 · 实时</div><div class="font-bold text-lg">实时运力调整</div><p class="text-sm text-slate-600 mt-2 leading-relaxed">从「看到拥挤再加车」转为「预见拥挤提前加车」，基于未来 15-30min 走势预判。</p></div></div></div></section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">预测结果 <span class="gt-desc">日 / 时段 / 15 分钟三粒度</span></div>
   <section class="grid lg:grid-cols-3 gap-6"><div class="card p-6 lg:col-span-2"><div class="flex justify-between items-end mb-3"><div><h2 class="section-title">日级预测 · 全线进站客流（模拟）</h2><p class="text-sm text-slate-500 mt-1">2026-04-21 至 2026-04-27 · 含 80% 置信带</p></div><span class="chip tag-ok">MAPE 6.2%</span></div><div id="m1-c-daily" class="h-chart"></div></div><div class="card p-6"><div class="flex justify-between items-end mb-3"><div><h2 class="section-title">影响因子贡献度</h2><p class="text-sm text-slate-500 mt-1">本周 vs 历史同期偏差归因</p></div></div><div id="m1-c-factors" class="h-chart"></div></div></section>
   <section class="grid lg:grid-cols-2 gap-6"><div class="card p-6"><div class="flex justify-between items-end mb-3"><div><h2 class="section-title">时段级预测 · 重点站对比（模拟）</h2><p class="text-sm text-slate-500 mt-1">2026-04-27 全日 06:00–23:00</p></div><span class="chip tag-ok">MAPE 9.8%</span></div><div id="m1-c-hourly" class="h-chart"></div></div><div class="card p-6"><div class="flex justify-between items-end mb-3"><div><h2 class="section-title">15 分钟级 · 昆明南站高铁脉冲（模拟）</h2><p class="text-sm text-slate-500 mt-1">高铁 G1373 / G2987 到达后 15min 换乘脉冲</p></div><span class="chip tag-ok">MAPE 14.5%</span></div><div id="m1-c-pulse" class="h-chart"></div></div></section>
+  <div class="sv-group-title" style="margin-top:18px">数据输入 <span class="gt-desc">支撑模型的数据源</span></div>
   <section class="card p-6"><h2 class="section-title accent mb-4">核心数据输入</h2><div class="overflow-x-auto"><table class="df w-full"><thead><tr><th>数据项</th><th>来源系统</th><th>更新频率</th><th>就绪度</th><th>说明</th></tr></thead><tbody><tr><td>历史 AFC 进出站记录</td><td>AFC / 金龙云</td><td>日批 + 实时流</td><td><span class="chip tag-ok">5+ 年积累</span></td><td>模型最核心输入</td></tr><tr><td>ATS 列车运行实绩</td><td>ATS / 金龙云</td><td>实时</td><td><span class="chip tag-ok">已有</span></td><td>到/离站时刻</td></tr><tr><td>昆明气象</td><td>气象数据接口</td><td>小时级</td><td><span class="chip tag-new">需新建接入</span></td><td>对接气象局</td></tr><tr><td>昆明南站高铁到发</td><td>铁路接口</td><td>日+实时</td><td><span class="chip tag-warn">部分</span></td><td>实时数据接入难度较高</td></tr><tr><td>日历与事件特征</td><td>人工+外部日历</td><td>月度维护</td><td><span class="chip tag-new">需新建</span></td><td>含大型活动日</td></tr><tr><td>换乘线路运营状态</td><td>线网数据共享</td><td>实时</td><td><span class="chip tag-warn">待协调</span></td><td>2/5/6 号线状态</td></tr></tbody></table></div></section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">技术与业务指标 <span class="gt-desc">如何衡量模型成功</span></div>
   <section class="grid lg:grid-cols-2 gap-6"><div class="card p-6"><h2 class="section-title accent mb-4">技术评估指标</h2><table class="df w-full"><thead><tr><th>预测粒度</th><th>评估指标</th><th>目标</th><th>基线对照</th></tr></thead><tbody><tr><td>日级</td><td>全线日客流 MAPE</td><td><b class="accent">≤ 8%</b></td><td>调度员人工预判</td></tr><tr><td>时段级</td><td>各站各时段 MAPE</td><td><b class="accent">≤ 12%</b></td><td>固定运行图假设</td></tr><tr><td>15 分钟级</td><td>各站 15 分钟 MAPE</td><td><b class="accent">≤ 18%</b></td><td>随机游走基线</td></tr></tbody></table></div><div class="card p-6"><h2 class="section-title accent mb-4">业务效果指标</h2><ul class="space-y-3 text-sm"><li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">▲</span><div><b>运行图与实际客流匹配度</b>：改善 <b class="accent">≥ 20%</b></div></li><li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">●</span><div><b>客流预警命中率 ≥ 80%</b>，漏报率 <b class="accent">≤ 10%</b></div></li><li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">$</span><div><b>调度决策效率</b>：编图工作量降低 <b class="accent">50%</b></div></li></ul></div></section>
+</div>
 </main>
 </div>
 
@@ -444,7 +476,14 @@
   </div>
 </div>
 
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m2','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m2','data')"><span class="step-num">2</span>数据分析</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m2','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
   <section class="card p-6 lg:p-8">
@@ -579,6 +618,9 @@
       </div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">优化结果 <span class="gt-desc">运行图方案对比与敏感性分析</span></div>
 
   <section class="grid lg:grid-cols-3 gap-6">
     <div class="card p-6 lg:col-span-2">
@@ -638,6 +680,9 @@
       </table>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">特色适配与指标 <span class="gt-desc">4 号线场景适配 + 评估指标</span></div>
 
   <section>
     <h2 class="section-title accent mb-5">4 号线特色适配</h2>
@@ -692,8 +737,7 @@
       </ul>
     </div>
   </section>
-
-  
+</div>
 </main>
 </div>
 
@@ -720,7 +764,14 @@
   </div>
 </div>
 
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m3','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m3','data')"><span class="step-num">2</span>数据分析</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m3','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
   <section class="card p-6 lg:p-8">
@@ -852,6 +903,9 @@
       </div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">健康监测数据 <span class="gt-desc">三类设备健康度趋势与预警</span></div>
 
   <section class="grid lg:grid-cols-3 gap-6">
     <div class="card p-6 lg:col-span-2">
@@ -909,6 +963,9 @@
       </table>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">特色适配与指标 <span class="gt-desc">4 号线场景适配 + 评估指标</span></div>
 
   <section>
     <h2 class="section-title accent mb-5">4 号线特色适配</h2>
@@ -967,8 +1024,7 @@
       </ul>
     </div>
   </section>
-
-  
+</div>
 </main>
 </div>
 
@@ -995,7 +1051,14 @@
   </div>
 </div>
 
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m4','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m4','data')"><span class="step-num">2</span>诊断分析</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m4','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
   <section class="card p-6 lg:p-8">
@@ -1099,6 +1162,9 @@
       </ol>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">实时诊断 <span class="gt-desc">告警实时诊断 · 决策场景 · 历史趋势</span></div>
 
   <!-- 实时诊断卡片 - 模拟 -->
   <section class="card p-6">
@@ -1229,6 +1295,9 @@
     <p class="text-sm text-slate-500 mb-4">蓄电池系统 2026-Q1 故障样本 (148 起)</p>
     <div id="m4-c-sankey" style="height:420px"></div>
   </section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">特色适配与指标 <span class="gt-desc">4 号线场景适配 + 评估指标</span></div>
 
   <!-- 适配 -->
   <section>
@@ -1285,8 +1354,7 @@
       </ul>
     </div>
   </section>
-
-  
+</div>
 </main>
 </div>
 
@@ -1313,7 +1381,14 @@
   </div>
 </div>
 
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m5','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m5','data')"><span class="step-num">2</span>能耗分析</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m5','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
   <section class="card p-6 lg:p-8">
@@ -1437,6 +1512,9 @@
       </div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">能耗实测与归因 <span class="gt-desc">基线偏差 · SHAP 归因 · 全线热力图</span></div>
 
   <section class="grid lg:grid-cols-3 gap-6">
     <div class="card p-6 lg:col-span-2">
@@ -1517,6 +1595,9 @@
       </div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">特色适配与指标 <span class="gt-desc">4 号线场景适配 + 评估指标</span></div>
 
   <section>
     <h2 class="section-title accent mb-5">4 号线特色适配</h2>
@@ -1575,8 +1656,7 @@
       </ul>
     </div>
   </section>
-
-  
+</div>
 </main>
 </div>
 
@@ -1603,7 +1683,14 @@
   </div>
 </div>
 
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m6','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m6','data')"><span class="step-num">2</span>能耗优化</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m6','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
   <section class="card p-6 lg:p-8">
@@ -1729,6 +1816,9 @@
       </div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">优化结果 <span class="gt-desc">速度策略 · 再生能量 · 高原修正</span></div>
 
   <section class="grid lg:grid-cols-3 gap-6">
     <div class="card p-6 lg:col-span-2">
@@ -1789,6 +1879,9 @@
       <div id="m6-c-davis" class="h-chart"></div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">特色适配与指标 <span class="gt-desc">4 号线场景适配 + 评估指标</span></div>
 
   <section>
     <h2 class="section-title accent mb-5">4 号线特色适配</h2>
@@ -1838,8 +1931,7 @@
       </ul>
     </div>
   </section>
-
-  
+</div>
 </main>
 </div>
 
@@ -1866,7 +1958,14 @@
   </div>
 </div>
 
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m7','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m7','data')"><span class="step-num">2</span>风险态势</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m7','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
   <section class="card p-6 lg:p-8">
@@ -1969,6 +2068,9 @@
       </ol>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">实时安全态势 <span class="gt-desc">综合指数 · 四板块评分 · 活跃预警</span></div>
 
   <!-- 综合安全指数仪表 + 雷达 -->
   <section class="grid lg:grid-cols-3 gap-6">
@@ -2063,6 +2165,9 @@
       <div id="m7-c-ext" class="h-chart"></div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">特色适配与指标 <span class="gt-desc">4 号线场景适配 + 评估指标</span></div>
 
   <!-- 适配 -->
   <section>
@@ -2116,8 +2221,7 @@
       </ul>
     </div>
   </section>
-
-  
+</div>
 </main>
 </div>
 
@@ -2144,7 +2248,14 @@
   </div>
 </div>
 
-<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+<div class="subnav">
+  <div class="subnav-item active" data-sub="overview" onclick="switchSub('m8','overview')"><span class="step-num">1</span>业务概览</div>
+  <div class="subnav-item" data-sub="data" onclick="switchSub('m8','data')"><span class="step-num">2</span>实时态势与预警</div>
+  <div class="subnav-item" data-sub="metrics" onclick="switchSub('m8','metrics')"><span class="step-num">3</span>指标体系</div>
+</div>
+<main>
+<div class="subview active" data-sub="overview">
+  <div class="sv-group-title">业务背景与方法 <span class="gt-desc">为什么要做、怎么做</span></div>
 
   <!-- 模型工作原理 · 一图速览 -->
   <section class="card p-6 lg:p-8">
@@ -2251,6 +2362,9 @@
       </ol>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="data">
+  <div class="sv-group-title">实时监控与预警 <span class="gt-desc">重点站态势 · 密度预测 · 复盘 · 措施模板</span></div>
 
   <!-- 重点站监控网格 -->
   <section>
@@ -2384,6 +2498,9 @@
       </div>
     </div>
   </section>
+</div>
+<div class="subview" data-sub="metrics">
+  <div class="sv-group-title">特色适配与指标 <span class="gt-desc">4 号线场景适配 + 评估指标</span></div>
 
   <!-- 适配 -->
   <section>
@@ -2438,8 +2555,7 @@
       </ul>
     </div>
   </section>
-
-
+</div>
 </main>
 </div>
 
@@ -3287,6 +3403,25 @@ echarts.init(document.getElementById('m8-c-balance')).setOption({
 });
 
 
+}
+
+// Sub-tab switching within a function page
+function switchSub(page, sub) {
+  const root = document.getElementById('page-' + page);
+  if (!root) return;
+  root.querySelectorAll(':scope > .subnav .subnav-item').forEach(t => t.classList.remove('active'));
+  root.querySelectorAll(':scope > main > .subview').forEach(s => s.classList.remove('active'));
+  const navEl = root.querySelector(':scope > .subnav .subnav-item[data-sub="'+sub+'"]');
+  const viewEl = root.querySelector(':scope > main > .subview[data-sub="'+sub+'"]');
+  if (navEl) navEl.classList.add('active');
+  if (viewEl) viewEl.classList.add('active');
+  // Resize echarts in newly-visible subview (charts hidden via display:none don't size correctly)
+  setTimeout(() => {
+    if (!viewEl) return;
+    viewEl.querySelectorAll('[id]').forEach(el => {
+      try { const c = echarts.getInstanceByDom(el); if (c) c.resize(); } catch(e){}
+    });
+  }, 60);
 }
 
 // Hash routing — open the requested page on load and on hash change
