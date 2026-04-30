@@ -200,6 +200,142 @@
   /* Apple-like bg gradient for body to make platform feel premium */
   body{background:linear-gradient(180deg,#f8faf9 0%,#f1f5f9 200px)}
 
+  /* === 全景管理 dashboard components === */
+  /* 综合得分 + 6 维度进度环 */
+  .pano-score-card{background:linear-gradient(135deg,#0f5d4d 0%,#13705c 100%);color:#fff;border-radius:14px;padding:22px 24px;display:flex;align-items:center;gap:24px;position:relative;overflow:hidden}
+  .pano-score-card::before{content:"";position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 70%)}
+  .pano-score-num{font-size:56px;font-weight:800;font-feature-settings:"tnum" 1;line-height:1;letter-spacing:-.02em}
+  .pano-score-info{flex:1;position:relative}
+  .pano-score-info .ps-label{font-size:13px;color:#a7f3d0;margin-bottom:6px;letter-spacing:.04em}
+  .pano-score-info .ps-title{font-size:18px;font-weight:600;margin-bottom:10px}
+  .pano-score-info .ps-desc{font-size:12.5px;color:#d1fae5;line-height:1.6;max-width:520px}
+  .pano-score-info .ps-trend{margin-top:12px;display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(16,185,129,.25);border-radius:9999px;font-size:12px;color:#a7f3d0;border:1px solid rgba(167,243,208,.25)}
+
+  .target-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+  .target-tile{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s;position:relative;overflow:hidden}
+  .target-tile:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(15,23,42,.07);border-color:var(--tt-color,#10b981)}
+  .target-tile .tt-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .target-tile .tt-name{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#0f172a}
+  .target-tile .tt-name::before{content:"";width:4px;height:14px;background:var(--tt-color,#10b981);border-radius:2px}
+  .target-tile .tt-pct{font-size:18px;font-weight:700;color:var(--tt-color,#10b981);font-feature-settings:"tnum" 1}
+  .target-tile .tt-bar{height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;margin-bottom:6px}
+  .target-tile .tt-bar-fg{height:100%;background:linear-gradient(90deg,var(--tt-color,#10b981),color-mix(in srgb,var(--tt-color,#10b981) 60%,#fff));border-radius:3px}
+  .target-tile .tt-meta{display:flex;justify-content:space-between;font-size:11px;color:#94a3b8}
+
+  /* 核心运营指标 with 同比/环比 trend */
+  .core-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+  .core-kpi{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;cursor:pointer;transition:all .15s;position:relative}
+  .core-kpi:hover{border-color:#10b981;box-shadow:0 2px 8px rgba(16,185,129,.08)}
+  .core-kpi .ck-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .core-kpi .ck-label{font-size:12px;color:#64748b;font-weight:500;display:inline-flex;align-items:center;gap:5px}
+  .core-kpi .ck-info-icon{width:14px;height:14px;border-radius:50%;background:#f1f5f9;color:#94a3b8;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+  .core-kpi .ck-value{font-size:24px;font-weight:700;color:#0f172a;line-height:1;font-feature-settings:"tnum" 1}
+  .core-kpi .ck-value .ck-unit{font-size:13px;color:#94a3b8;font-weight:500;margin-left:2px}
+  .core-kpi .ck-trends{display:flex;gap:10px;margin-top:8px;font-size:11px}
+  .core-kpi .ck-trend{display:inline-flex;align-items:center;gap:3px;color:#64748b}
+  .core-kpi .ck-trend b{font-feature-settings:"tnum" 1;font-weight:600}
+  .core-kpi .ck-trend.up b{color:#16a34a}
+  .core-kpi .ck-trend.down b{color:#dc2626}
+  .core-kpi .ck-trend.flat b{color:#64748b}
+
+  /* 问题统计与整改 (按线路柱状图) */
+  .problem-bars{display:flex;align-items:flex-end;gap:14px;padding:8px 0;height:160px}
+  .problem-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .problem-bar .pb-stack{flex:1;width:100%;max-width:48px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+  .problem-bar .pb-segment{width:100%;border-radius:3px 3px 0 0}
+  .problem-bar .pb-segment + .pb-segment{margin-top:1px;border-radius:0}
+  .problem-bar .pb-segment.solved{background:#10b981}
+  .problem-bar .pb-segment.pending{background:#f59e0b}
+  .problem-bar .pb-segment.overdue{background:#dc2626}
+  .problem-bar .pb-num{font-size:11px;color:#475569;font-weight:600;font-feature-settings:"tnum" 1}
+  .problem-bar .pb-name{font-size:11px;color:#94a3b8}
+
+  /* 工作动态 滚动 */
+  .news-list{max-height:260px;overflow-y:auto;scrollbar-width:thin}
+  .news-list::-webkit-scrollbar{width:5px}
+  .news-list::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:3px}
+  .news-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:13px;cursor:pointer;transition:background .15s;padding-left:6px;padding-right:6px}
+  .news-item:hover{background:#f8fafc}
+  .news-item:last-child{border-bottom:none}
+  .news-item .ni-tag{flex-shrink:0;padding:2px 8px;font-size:10.5px;font-weight:600;border-radius:4px;height:20px;align-self:flex-start;letter-spacing:.04em}
+  .news-item .ni-tag.an{background:#fef2f2;color:#991b1b}
+  .news-item .ni-tag.gao{background:#eff6ff;color:#1e40af}
+  .news-item .ni-tag.lv{background:#f0fdf4;color:#15803d}
+  .news-item .ni-tag.zhi{background:#f5f3ff;color:#5b21b6}
+  .news-item .ni-tag.he{background:#fff7ed;color:#9a3412}
+  .news-item .ni-text{flex:1;color:#475569;line-height:1.55}
+  .news-item .ni-text b{color:#0f172a;font-weight:500}
+  .news-item .ni-time{flex-shrink:0;color:#94a3b8;font-size:11px;font-feature-settings:"tnum" 1}
+
+  /* === 指标档案弹窗 === */
+  .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:14px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(15,23,42,.25);animation:modalIn .15s ease-out}
+  @keyframes modalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .modal-head{padding:18px 22px;border-bottom:1px solid #e2e8f0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .modal-head .mh-title{font-size:16px;font-weight:600;color:#0f172a}
+  .modal-head .mh-sub{font-size:12px;color:#94a3b8;margin-top:3px}
+  .modal-close{background:none;border:none;font-size:20px;color:#94a3b8;cursor:pointer;padding:0;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;line-height:1}
+  .modal-close:hover{background:#f1f5f9;color:#475569}
+  .modal-body{padding:18px 22px;font-size:13.5px;line-height:1.7;color:#475569}
+  .modal-body .mb-section{margin-bottom:16px}
+  .modal-body .mb-section:last-child{margin-bottom:0}
+  .modal-body .mb-section-title{font-size:11.5px;font-weight:600;color:#94a3b8;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+  .modal-body .mb-formula{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-family:"SF Mono",Menlo,monospace;font-size:12.5px;color:#0f172a}
+  .modal-body .mb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;font-size:13px}
+  .modal-body .mb-grid div span{color:#94a3b8;font-size:11.5px;display:block;margin-bottom:2px}
+  .modal-body .mb-grid div b{color:#0f172a;font-weight:500}
+
+  /* === AI 助手 floating panel === */
+  .ai-fab{position:fixed;right:24px;bottom:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#10b981,#047857);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(16,185,129,.4);z-index:150;font-size:22px;border:none;transition:transform .15s,box-shadow .15s}
+  .ai-fab:hover{transform:scale(1.05);box-shadow:0 12px 30px rgba(16,185,129,.5)}
+  .ai-fab .fab-pulse{position:absolute;inset:-2px;border-radius:50%;border:2px solid #10b981;animation:fabPulse 2s infinite;opacity:0}
+  @keyframes fabPulse{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(1.4)}}
+
+  .ai-panel{position:fixed;right:24px;bottom:96px;width:420px;max-width:calc(100vw - 48px);height:600px;max-height:calc(100vh - 140px);background:#fff;border-radius:14px;box-shadow:0 16px 50px rgba(15,23,42,.2);z-index:151;display:none;flex-direction:column;overflow:hidden;border:1px solid #e2e8f0}
+  .ai-panel.open{display:flex}
+  .ai-panel-head{padding:14px 18px;background:linear-gradient(135deg,#0f5d4d,#13705c);color:#fff;display:flex;align-items:center;justify-content:space-between}
+  .ai-panel-head .aph-title{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+  .ai-panel-head .aph-title .aph-icon{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:14px}
+  .ai-panel-head .aph-sub{font-size:11px;color:#a7f3d0;font-weight:400;margin-top:2px}
+  .ai-panel-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:14px;line-height:1}
+  .ai-panel-body{flex:1;padding:14px 16px;overflow-y:auto;background:#f8fafc;display:flex;flex-direction:column;gap:10px}
+  .ai-msg{max-width:88%;padding:10px 13px;border-radius:10px;font-size:13px;line-height:1.6}
+  .ai-msg.bot{background:#fff;border:1px solid #e2e8f0;color:#475569;align-self:flex-start;border-bottom-left-radius:3px}
+  .ai-msg.user{background:#10b981;color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+  .ai-msg .ai-msg-section{margin-top:10px;padding-top:10px;border-top:1px dashed #e2e8f0}
+  .ai-msg .ai-msg-section:first-child{margin-top:0;padding-top:0;border:none}
+  .ai-msg .ai-msg-title{font-size:11.5px;font-weight:600;color:#10b981;letter-spacing:.04em;margin-bottom:4px}
+  .ai-msg b{color:#0f172a;font-weight:600}
+  .ai-msg ul{padding-left:18px;margin:4px 0}
+  .ai-quick-chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 16px;border-top:1px solid #e2e8f0;background:#fff}
+  .ai-quick-chip{padding:5px 10px;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;border-radius:9999px;font-size:11.5px;cursor:pointer;transition:background .15s}
+  .ai-quick-chip:hover{background:#dcfce7}
+  .ai-input-row{padding:10px 14px;border-top:1px solid #e2e8f0;display:flex;gap:8px;background:#fff}
+  .ai-input-row input{flex:1;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:13.5px;outline:none;transition:border-color .15s}
+  .ai-input-row input:focus{border-color:#10b981}
+  .ai-input-row button{padding:0 16px;background:#10b981;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13.5px;font-weight:500}
+  .ai-input-row button:hover{filter:brightness(1.05)}
+
+  /* === 系统监控 / 场景管理 components === */
+  .sys-matrix{width:100%;border-collapse:separate;border-spacing:4px}
+  .sys-matrix th,.sys-matrix td{padding:8px 10px;font-size:12.5px;text-align:center;border-radius:6px}
+  .sys-matrix thead th{background:#f1f5f9;color:#475569;font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+  .sys-matrix tbody td:first-child{background:#f8fafc;font-weight:600;text-align:left;padding-left:14px;color:#0f172a}
+  .sys-cell{display:inline-flex;align-items:center;justify-content:center;min-width:46px;padding:3px 8px;border-radius:4px;font-weight:600;font-size:11.5px;font-feature-settings:"tnum" 1}
+  .sys-cell.ok{background:#dcfce7;color:#15803d}
+  .sys-cell.warn{background:#fef9c3;color:#854d0e}
+  .sys-cell.bad{background:#fef2f2;color:#991b1b}
+  .sys-cell.na{background:#f1f5f9;color:#94a3b8}
+
+  .scenario-pipe{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .pipe-stage{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;border-top:3px solid var(--ps-color,#3b82f6);position:relative}
+  .pipe-stage::after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:#cbd5e1;font-size:18px;font-weight:700;z-index:1}
+  .pipe-stage:last-child::after{display:none}
+  .pipe-stage .ps-label{font-size:11px;color:var(--ps-color,#3b82f6);font-weight:700;letter-spacing:.06em}
+  .pipe-stage .ps-count{font-size:24px;font-weight:700;color:#0f172a;line-height:1;margin:6px 0;font-feature-settings:"tnum" 1}
+  .pipe-stage .ps-list{font-size:12px;color:#475569;line-height:1.6;margin-top:8px}
+
   /* === Business workstation components === */
   /* WS section header: title + count badge + actions */
   .ws-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px;flex-wrap:wrap}
@@ -517,6 +653,12 @@
       <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-safeguard" onclick="switchTab('gov-safeguard')">
         <span class="nav-icon">◆</span><span>保障措施</span>
       </div>
+      <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-system" onclick="switchTab('gov-system')">
+        <span class="nav-icon">◌</span><span>系统监控</span>
+      </div>
+      <div class="nav-item" style="--item-color:#475569;--accent:#334155;--accent-soft-bg:#f1f5f9" data-tab="gov-scenario" onclick="switchTab('gov-scenario')">
+        <span class="nav-icon">▷</span><span>场景管理</span>
+      </div>
     </div>
 
   </nav>
@@ -540,46 +682,95 @@
 
   <div class="content">
 
-<!-- ==================== HOME / OVERVIEW PAGE ==================== -->
-<div class="model-page active" id="page-overview" data-title="首页">
+<!-- ==================== HOME / 全景管理 PAGE ==================== -->
+<div class="model-page active" id="page-overview" data-title="全景管理">
   <div class="page-header">
     <div class="ph-breadcrumb">
-      <span>工作台</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">首页</span>
+      <span>工作台</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">全景管理</span>
     </div>
     <div class="ph-row">
       <div style="flex:1;min-width:280px">
-        <h1>运营管理系统 · 工作台</h1>
-        <p class="ph-subtitle">覆盖<b>运输组织、设备运维、能耗管理、安全管理</b>四大业务域，集中查看关键指标、待处理事项与各功能入口。</p>
+        <h1>全景管理 · 综合决策驾驶舱</h1>
+        <p class="ph-subtitle">面向公司管理层的<b>全线级运营决策视图</b>，自下而上汇聚四大决策域的实时指标，<b>1600+ 可量化指标</b>多级穿透，触发动态评价与诊断报告。</p>
       </div>
     </div>
   </div>
 
   <div style="padding:18px 28px 28px">
-    <!-- Stat strip -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-      <div class="ov-stat-card">
-        <div class="ov-stat-label">决策模型</div>
-        <div class="ov-stat-num">8</div>
-        <div class="ov-stat-trend">3 已上线 · 5 规划中</div>
+
+    <!-- 综合得分 + 目标体系完成情况 -->
+    <div class="grid lg:grid-cols-3 gap-3 mb-4">
+      <div class="pano-score-card lg:col-span-1">
+        <div class="pano-score-num">86.83</div>
+        <div class="pano-score-info">
+          <div class="ps-label">2026-04-30 · 综合得分</div>
+          <div class="ps-title">"一流目标体系" 完成度</div>
+          <div class="ps-desc">基于 1600+ 可量化指标自下而上汇聚，自动触发上层评价分数变动</div>
+          <div class="ps-trend">↗ 较月初 +1.2 分 · 优于年度目标 ≥ 85</div>
+        </div>
       </div>
-      <div class="ov-stat-card">
-        <div class="ov-stat-label">决策域</div>
-        <div class="ov-stat-num">4</div>
-        <div class="ov-stat-trend" style="color:#475569">运输 · 设备 · 能耗 · 安全</div>
-      </div>
-      <div class="ov-stat-card">
-        <div class="ov-stat-label">车站覆盖</div>
-        <div class="ov-stat-num">29</div>
-        <div class="ov-stat-trend" style="color:#475569">全线 · 含昆明南枢纽</div>
-      </div>
-      <div class="ov-stat-card">
-        <div class="ov-stat-label">列车编组</div>
-        <div class="ov-stat-num">48</div>
-        <div class="ov-stat-trend" style="color:#475569">B 型车 · 6 节编组</div>
+      <div class="lg:col-span-2">
+        <div class="ov-section-title" style="margin-bottom:10px">六大目标维度完成情况 <span style="font-weight:400;color:#94a3b8;font-size:12px;margin-left:6px">点击查看穿透</span></div>
+        <div class="target-grid">
+          <div class="target-tile" style="--tt-color:#dc2626" onclick="switchTab('m7')"><div class="tt-head"><div class="tt-name">安全管理</div><div class="tt-pct">88.5</div></div><div class="tt-bar"><div class="tt-bar-fg" style="width:88.5%"></div></div><div class="tt-meta"><span>247 项指标</span><span>↗ +0.8</span></div></div>
+          <div class="target-tile" style="--tt-color:#0ea5e9" onclick="switchTab('gov-safeguard')"><div class="tt-head"><div class="tt-name">优培管理</div><div class="tt-pct">82.1</div></div><div class="tt-bar"><div class="tt-bar-fg" style="width:82.1%"></div></div><div class="tt-meta"><span>156 项指标</span><span>↗ +1.4</span></div></div>
+          <div class="target-tile" style="--tt-color:#2563eb" onclick="switchTab('m1')"><div class="tt-head"><div class="tt-name">高效管理</div><div class="tt-pct">90.2</div></div><div class="tt-bar"><div class="tt-bar-fg" style="width:90.2%"></div></div><div class="tt-meta"><span>312 项指标</span><span>↗ +2.1</span></div></div>
+          <div class="target-tile" style="--tt-color:#16a34a" onclick="switchTab('m5')"><div class="tt-head"><div class="tt-name">绿色管理</div><div class="tt-pct">85.4</div></div><div class="tt-bar"><div class="tt-bar-fg" style="width:85.4%"></div></div><div class="tt-meta"><span>198 项指标</span><span>↗ +0.6</span></div></div>
+          <div class="target-tile" style="--tt-color:#a855f7" onclick="switchTab('hub-cockpit')"><div class="tt-head"><div class="tt-name">智慧管理</div><div class="tt-pct">87.6</div></div><div class="tt-bar"><div class="tt-bar-fg" style="width:87.6%"></div></div><div class="tt-meta"><span>423 项指标</span><span>↗ +1.9</span></div></div>
+          <div class="target-tile" style="--tt-color:#f97316" onclick="switchTab('m8')"><div class="tt-head"><div class="tt-name">和谐管理</div><div class="tt-pct">87.2</div></div><div class="tt-bar"><div class="tt-bar-fg" style="width:87.2%"></div></div><div class="tt-meta"><span>264 项指标</span><span>↗ +0.5</span></div></div>
+        </div>
       </div>
     </div>
-    <!-- Function modules -->
-    <div class="ov-section-title">业务功能模块</div>
+
+    <!-- 核心运营指标 (with 同比/环比) -->
+    <div class="ov-section-title">核心运营指标 · 实时</div>
+    <div class="core-kpi-row mb-5">
+      <div class="core-kpi" onclick="showMetric('zhengdianlv')"><div class="ck-head"><span class="ck-label">列车正点率<span class="ck-info-icon">i</span></span></div><div class="ck-value">99.74<span class="ck-unit">%</span></div><div class="ck-trends"><span class="ck-trend down"><b>−0.07pp</b> 环比</span><span class="ck-trend up"><b>+0.05pp</b> 同比</span></div></div>
+      <div class="core-kpi" onclick="showMetric('duixianlv')"><div class="ck-head"><span class="ck-label">运行图兑现率<span class="ck-info-icon">i</span></span></div><div class="ck-value">99.92<span class="ck-unit">%</span></div><div class="ck-trends"><span class="ck-trend up"><b>+0.02pp</b> 环比</span><span class="ck-trend up"><b>+0.18pp</b> 同比</span></div></div>
+      <div class="core-kpi" onclick="showMetric('keyunliang')"><div class="ck-head"><span class="ck-label">日均客运量<span class="ck-info-icon">i</span></span></div><div class="ck-value">30.8<span class="ck-unit">万</span></div><div class="ck-trends"><span class="ck-trend up"><b>+2.0%</b> 环比</span><span class="ck-trend up"><b>+8.5%</b> 同比</span></div></div>
+      <div class="core-kpi" onclick="showMetric('mantai')"><div class="ck-head"><span class="ck-label">高峰满载率<span class="ck-info-icon">i</span></span></div><div class="ck-value">87.3<span class="ck-unit">%</span></div><div class="ck-trends"><span class="ck-trend up"><b>+1.8pp</b> 环比</span><span class="ck-trend up"><b>+3.2pp</b> 同比</span></div></div>
+      <div class="core-kpi" onclick="showMetric('chegongli')"><div class="ck-head"><span class="ck-label">单位车公里电耗<span class="ck-info-icon">i</span></span></div><div class="ck-value">4.18<span class="ck-unit">kWh</span></div><div class="ck-trends"><span class="ck-trend up"><b>−3.2%</b> 环比</span><span class="ck-trend up"><b>−5.1%</b> 同比</span></div></div>
+      <div class="core-kpi" onclick="showMetric('mttr')"><div class="ck-head"><span class="ck-label">非计划停时<span class="ck-info-icon">i</span></span></div><div class="ck-value">2.3<span class="ck-unit">分钟</span></div><div class="ck-trends"><span class="ck-trend up"><b>−25.8%</b> 环比</span><span class="ck-trend up"><b>−18.4%</b> 同比</span></div></div>
+      <div class="core-kpi" onclick="showMetric('anquan')"><div class="ck-head"><span class="ck-label">综合安全指数<span class="ck-info-icon">i</span></span></div><div class="ck-value">82.5</div><div class="ck-trends"><span class="ck-trend down"><b>−2.1</b> 环比</span><span class="ck-trend up"><b>+1.5</b> 同比</span></div></div>
+      <div class="core-kpi" onclick="showMetric('manyidu')"><div class="ck-head"><span class="ck-label">乘客满意度<span class="ck-info-icon">i</span></span></div><div class="ck-value">92.1<span class="ck-unit">分</span></div><div class="ck-trends"><span class="ck-trend up"><b>+0.3</b> 环比</span><span class="ck-trend up"><b>+1.2</b> 同比</span></div></div>
+    </div>
+
+    <!-- 问题统计与整改 + 工作动态 -->
+    <div class="grid lg:grid-cols-2 gap-3 mb-5">
+      <div class="card p-5">
+        <div class="ws-head"><div class="ws-title">问题统计与整改 · 本周（按业务线）</div><div class="ws-actions"><span style="font-size:11.5px;color:#94a3b8">单位：项</span></div></div>
+        <div class="problem-bars">
+          <div class="problem-bar"><div class="pb-stack"><div class="pb-segment overdue" style="height:5%"></div><div class="pb-segment pending" style="height:15%"></div><div class="pb-segment solved" style="height:80%"></div></div><div class="pb-num">42</div><div class="pb-name">运输组织</div></div>
+          <div class="problem-bar"><div class="pb-stack"><div class="pb-segment overdue" style="height:8%"></div><div class="pb-segment pending" style="height:22%"></div><div class="pb-segment solved" style="height:70%"></div></div><div class="pb-num">68</div><div class="pb-name">设备运维</div></div>
+          <div class="problem-bar"><div class="pb-stack"><div class="pb-segment overdue" style="height:0%"></div><div class="pb-segment pending" style="height:10%"></div><div class="pb-segment solved" style="height:90%"></div></div><div class="pb-num">21</div><div class="pb-name">能耗管理</div></div>
+          <div class="problem-bar"><div class="pb-stack"><div class="pb-segment overdue" style="height:12%"></div><div class="pb-segment pending" style="height:25%"></div><div class="pb-segment solved" style="height:63%"></div></div><div class="pb-num">35</div><div class="pb-name">安全管理</div></div>
+          <div class="problem-bar"><div class="pb-stack"><div class="pb-segment overdue" style="height:3%"></div><div class="pb-segment pending" style="height:12%"></div><div class="pb-segment solved" style="height:85%"></div></div><div class="pb-num">28</div><div class="pb-name">客运服务</div></div>
+          <div class="problem-bar"><div class="pb-stack"><div class="pb-segment overdue" style="height:0%"></div><div class="pb-segment pending" style="height:8%"></div><div class="pb-segment solved" style="height:92%"></div></div><div class="pb-num">14</div><div class="pb-name">人员培训</div></div>
+        </div>
+        <div class="flex gap-4 text-xs text-slate-500 mt-2 pt-2 border-t border-slate-100">
+          <span class="flex items-center gap-1.5"><span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px"></span>已整改</span>
+          <span class="flex items-center gap-1.5"><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:2px"></span>处理中</span>
+          <span class="flex items-center gap-1.5"><span style="display:inline-block;width:10px;height:10px;background:#dc2626;border-radius:2px"></span>已超期</span>
+          <span class="ml-auto">总计 208 项 · 整改率 <b style="color:#16a34a">79.8%</b></span>
+        </div>
+      </div>
+
+      <div class="card p-5">
+        <div class="ws-head"><div class="ws-title">工作动态</div><div class="ws-actions"><span class="ws-link" style="color:#10b981">全部 →</span></div></div>
+        <div class="news-list">
+          <div class="news-item"><span class="ni-tag an">安全</span><div class="ni-text"><b>04-30</b> 安全管理部下发《2026 年度蓄电池系统专项检查实施方案》，本周启动 17# 列车专项整治</div><div class="ni-time">14:25</div></div>
+          <div class="news-item"><span class="ni-tag gao">高效</span><div class="ni-text"><b>04-30</b> 调度部完成本月运行图修订评审，模型推荐方案采纳率 73%，预估车公里节约 3.4%</div><div class="ni-time">11:08</div></div>
+          <div class="news-item"><span class="ni-tag lv">绿色</span><div class="ni-text"><b>04-29</b> 能源管理部空调温度策略 +1°C 试点结果验证：3 个站点节能 4.2%，无投诉，建议全线推广</div><div class="ni-time">04-29 18:00</div></div>
+          <div class="news-item"><span class="ni-tag zhi">智慧</span><div class="ni-text"><b>04-29</b> 数据治理工作组发布全量数据资源台账 v1.0，覆盖 5 大类数据源，标识可入表数据资产 12 项</div><div class="ni-time">04-29 16:30</div></div>
+          <div class="news-item"><span class="ni-tag he">和谐</span><div class="ni-text"><b>04-29</b> 客运服务部完成 4 月乘客投诉分析，<b>"高峰拥挤"</b>类同比下降 28%，受益于运力优化</div><div class="ni-time">04-29 10:15</div></div>
+          <div class="news-item"><span class="ni-tag an">安全</span><div class="ni-text"><b>04-28</b> 大客流预警模型在 04-28 高铁脉冲场景中提前 18min 触发预警，加车 2 列后最大密度 ↓ 17%</div><div class="ni-time">04-28 22:00</div></div>
+          <div class="news-item"><span class="ni-tag gao">高效</span><div class="ni-text"><b>04-28</b> 4 号线月度业绩简报：客运量、正点率、兑现率三项关键指标全部达标</div><div class="ni-time">04-28 17:00</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 业务功能模块 -->
+    <div class="ov-section-title">业务功能模块 <span style="font-weight:400;color:#94a3b8;font-size:12px;margin-left:6px">点击进入对应角色工作台</span></div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
 
       <div class="func-tile" style="--tile-color:#2563eb;--tile-soft:#eff6ff" onclick="switchTab('m1')">
@@ -4099,9 +4290,215 @@
   </div></main>
 </div>
 
+<!-- ==================== GOVERNANCE · 系统监控 ==================== -->
+<div class="model-page" id="page-gov-system" data-title="系统监控" style="--accent:#475569;--accent-soft-bg:#f1f5f9;--accent-soft-text:#334155;--accent-soft-border:#cbd5e1">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>项目治理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">系统监控</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>底层系统运行监控</h1>
+        <p class="ph-subtitle">监控 4 号线信息化底层软硬件运行的稳定性，覆盖 <b>金龙云 / TCMS / AFC / ATS / 安全风险隐患系统</b> 等核心系统的健康状态、完好率与故障告警。</p>
+        <div class="ph-tags"><span class="chip" style="background:#f1f5f9;color:#475569">项目治理</span><span class="chip accent-soft">实时监控 · 完好率统计</span></div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">42</div><div class="ph-kpi-label">已建系统总数</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">39</div><div class="ph-kpi-label">正常运行</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">2</div><div class="ph-kpi-label">系统故障</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="kpi-tiles">
+      <div class="kpi-tile" style="--tile-color:#16a34a;--tile-soft:#f0fdf4"><div class="kt-icon">✓</div><div class="kt-info"><div class="kt-label">正常运行</div><div class="kt-value">39<span class="kt-unit">/42</span></div><div class="kt-trend">完好率 92.9%</div></div></div>
+      <div class="kpi-tile warn"><div class="kt-icon">⚠</div><div class="kt-info"><div class="kt-label">系统故障</div><div class="kt-value">2<span class="kt-unit">套</span></div><div class="kt-trend">PIS B + 安防视频拼接</div></div></div>
+      <div class="kpi-tile neutral"><div class="kt-icon">○</div><div class="kt-info"><div class="kt-label">停用 / 维护</div><div class="kt-value">1<span class="kt-unit">套</span></div><div class="kt-trend">车站广播改造</div></div></div>
+      <div class="kpi-tile info"><div class="kt-icon">⊞</div><div class="kt-info"><div class="kt-label">本月新建</div><div class="kt-value">3<span class="kt-unit">套</span></div><div class="kt-trend">含外部气象/高铁接口</div></div></div>
+    </div>
+
+    <div class="card p-5 mb-3">
+      <div class="ws-head"><div class="ws-title">线路子系统完好率矩阵 · 当前</div></div>
+      <div style="overflow-x:auto">
+        <table class="sys-matrix">
+          <thead><tr><th></th><th>智慧车辆</th><th>智慧供电</th><th>智慧机房</th><th>智慧客流</th><th>智慧安防</th><th>智慧能源</th><th>智慧调度</th></tr></thead>
+          <tbody>
+            <tr><td>4 号线</td><td><span class="sys-cell ok">99.4%</span></td><td><span class="sys-cell ok">99.8%</span></td><td><span class="sys-cell ok">98.2%</span></td><td><span class="sys-cell ok">99.6%</span></td><td><span class="sys-cell warn">87.5%</span></td><td><span class="sys-cell ok">96.3%</span></td><td><span class="sys-cell ok">99.9%</span></td></tr>
+            <tr><td>2 号线（参考）</td><td><span class="sys-cell ok">98.9%</span></td><td><span class="sys-cell ok">99.5%</span></td><td><span class="sys-cell ok">97.8%</span></td><td><span class="sys-cell ok">99.4%</span></td><td><span class="sys-cell ok">96.2%</span></td><td><span class="sys-cell warn">88.1%</span></td><td><span class="sys-cell ok">99.7%</span></td></tr>
+            <tr><td>5 号线（参考）</td><td><span class="sys-cell ok">99.1%</span></td><td><span class="sys-cell ok">99.7%</span></td><td><span class="sys-cell ok">98.5%</span></td><td><span class="sys-cell ok">98.9%</span></td><td><span class="sys-cell ok">95.4%</span></td><td><span class="sys-cell ok">95.8%</span></td><td><span class="sys-cell ok">99.6%</span></td></tr>
+            <tr><td>线网级</td><td><span class="sys-cell ok">99.1%</span></td><td><span class="sys-cell ok">99.6%</span></td><td><span class="sys-cell ok">98.2%</span></td><td><span class="sys-cell ok">99.3%</span></td><td><span class="sys-cell warn">93.0%</span></td><td><span class="sys-cell ok">93.4%</span></td><td><span class="sys-cell ok">99.7%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-xs text-slate-500 mt-3">数值为 <b>30 天滚动完好率</b>。低于 90% 标黄。当前 4 号线智慧安防 87.5% 受 PIS B 故障影响，已派工。</div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-3">
+      <div class="card p-5">
+        <div class="ws-head"><div class="ws-title">本月活跃系统告警</div><span class="ws-count">7 起</span></div>
+        <div class="ws-list">
+          <div class="ws-list-row head" style="grid-template-columns:90px 1fr 100px 80px"><div>时间</div><div>系统 / 现象</div><div>影响</div><div>状态</div></div>
+          <div class="ws-list-row" style="grid-template-columns:90px 1fr 100px 80px"><div class="row-id">04-30 09:12</div><div class="row-name">PIS B · 视频流推送中断</div><div>站台显示</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">处理中</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:90px 1fr 100px 80px"><div class="row-id">04-29 21:30</div><div class="row-name">安防视频拼接 · 4 路丢帧</div><div>4 站监视</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">处理中</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:90px 1fr 100px 80px"><div class="row-id">04-28 14:00</div><div class="row-name">气象数据接口 · 拉取超时</div><div>客流模型</div><div><span class="chip" style="background:#dcfce7;color:#15803d">已恢复</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:90px 1fr 100px 80px"><div class="row-id">04-26 03:00</div><div class="row-name">金龙云 · 数据回传延迟 12min</div><div>实时监控</div><div><span class="chip" style="background:#dcfce7;color:#15803d">已恢复</span></div></div>
+        </div>
+      </div>
+      <div class="card p-5">
+        <div class="ws-head"><div class="ws-title">数据接口与外部联通</div></div>
+        <div class="ws-list">
+          <div class="ws-list-row head" style="grid-template-columns:1fr 100px 80px 90px"><div>接口</div><div>更新频率</div><div>就绪度</div><div>状态</div></div>
+          <div class="ws-list-row" style="grid-template-columns:1fr 100px 80px 90px"><div class="row-name">AFC 进出站记录</div><div>实时 + 日批</div><div class="row-score ok">99.6%</div><div><span class="chip" style="background:#dcfce7;color:#15803d">正常</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:1fr 100px 80px 90px"><div class="row-name">ATS 列车实绩</div><div>实时</div><div class="row-score ok">99.9%</div><div><span class="chip" style="background:#dcfce7;color:#15803d">正常</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:1fr 100px 80px 90px"><div class="row-name">TCMS 车辆状态</div><div>实时</div><div class="row-score ok">96.4%</div><div><span class="chip" style="background:#dcfce7;color:#15803d">正常</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:1fr 100px 80px 90px"><div class="row-name">昆明气象（高原修正）</div><div>小时级</div><div class="row-score warn">85.0%</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">间歇异常</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:1fr 100px 80px 90px"><div class="row-name">昆明南站高铁到发</div><div>实时</div><div class="row-score warn">72.3%</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">部分接入</span></div></div>
+          <div class="ws-list-row" style="grid-template-columns:1fr 100px 80px 90px"><div class="row-name">2/5/6 号线运营状态</div><div>实时</div><div class="row-score warn">—</div><div><span class="chip" style="background:#f1f5f9;color:#475569">待协调</span></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div></main>
+</div>
+
+<!-- ==================== GOVERNANCE · 场景管理 ==================== -->
+<div class="model-page" id="page-gov-scenario" data-title="场景管理" style="--accent:#475569;--accent-soft-bg:#f1f5f9;--accent-soft-text:#334155;--accent-soft-border:#cbd5e1">
+  <div class="page-header">
+    <div class="ph-breadcrumb"><span>项目治理</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">场景管理</span></div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1>数字化场景全生命周期管理</h1>
+        <p class="ph-subtitle">追踪业务数字化场景从<b>需求孵化 → 模型建设 → 生产运营</b>的全生命周期流转，统计需求实施率、影子模式转正率、上线后业务采纳率。</p>
+        <div class="ph-tags"><span class="chip" style="background:#f1f5f9;color:#475569">项目治理</span><span class="chip accent-soft">需求-建设-运营 三阶段</span></div>
+      </div>
+      <div class="ph-kpis">
+        <div class="ph-kpi"><div class="ph-kpi-num">23</div><div class="ph-kpi-label">累计场景</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">68<span class="unit">%</span></div><div class="ph-kpi-label">需求实施率</div></div>
+        <div class="ph-kpi"><div class="ph-kpi-num">9</div><div class="ph-kpi-label">已上线</div></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px">
+
+    <div class="ov-section-title" style="--accent:#475569">场景流转 · 三阶段</div>
+    <div class="scenario-pipe mb-5">
+      <div class="pipe-stage" style="--ps-color:#0ea5e9"><div class="ps-label">阶段 01 · 需求孵化</div><div class="ps-count">7</div><div style="font-size:12px;color:#475569">业务部门提交，待数据评估</div><div class="ps-list">
+        <div>· 智慧车厂调度优化（车辆段）</div>
+        <div>· 客票运营票务弹性分析</div>
+        <div>· 自助服务终端节能联动</div>
+        <div>· 维修知识库语义检索</div>
+        <div style="color:#94a3b8">… 还有 3 项</div>
+      </div></div>
+      <div class="pipe-stage" style="--ps-color:#f59e0b"><div class="ps-label">阶段 02 · 建设中</div><div class="ps-count">7</div><div style="font-size:12px;color:#475569">模型开发或影子模式运行</div><div class="ps-list">
+        <div>· 运力优化 (M2)</div>
+        <div>· 故障智能诊断 (M4) · 影子</div>
+        <div>· 站级能耗 (M5) · 影子</div>
+        <div>· 牵引能耗 (M6)</div>
+        <div>· 安全风险 (M7)</div>
+        <div>· 大客流预警 (M8)</div>
+        <div>· 跨域影响中枢</div>
+      </div></div>
+      <div class="pipe-stage" style="--ps-color:#16a34a"><div class="ps-label">阶段 03 · 已上线</div><div class="ps-count">9</div><div style="font-size:12px;color:#475569">正式接入生产决策流程</div><div class="ps-list">
+        <div>· 客流预测 (M1) · 已转正</div>
+        <div>· 设备健康监测 (M3) · 已转正</div>
+        <div>· 综合驾驶舱 v1.0</div>
+        <div>· 调度员工作台</div>
+        <div>· 设备工程师工作台</div>
+        <div>· 数据资产盘点系统</div>
+        <div>· 4 号线分时段客流指数（数据产品）</div>
+        <div style="color:#94a3b8">… 还有 2 项</div>
+      </div></div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-3 mb-3">
+      <div class="card p-4"><div class="text-xs text-slate-500">需求实施率</div><div class="text-2xl font-bold mt-1" style="color:#16a34a">68%</div><div class="text-xs text-slate-500 mt-2">23 个需求 / 16 个进入建设</div></div>
+      <div class="card p-4"><div class="text-xs text-slate-500">影子模式转正率</div><div class="text-2xl font-bold mt-1" style="color:#16a34a">85.7%</div><div class="text-xs text-slate-500 mt-2">7 个影子 / 6 个达成转正标准</div></div>
+      <div class="card p-4"><div class="text-xs text-slate-500">上线后业务采纳率</div><div class="text-2xl font-bold mt-1" style="color:#16a34a">73%</div><div class="text-xs text-slate-500 mt-2">月度建议 187 条 / 采纳 137 条</div></div>
+    </div>
+
+    <div class="card p-5">
+      <div class="ws-head"><div class="ws-title">场景明细清单</div><span class="ws-count">23 项</span><div class="ws-actions"><span class="ws-link" style="color:#10b981">+ 新增需求</span></div></div>
+      <div class="ws-list">
+        <div class="ws-list-row head" style="grid-template-columns:60px 1fr 100px 90px 100px 90px"><div>编号</div><div>场景名称</div><div>所属域</div><div>阶段</div><div>负责人</div><div>预估上线</div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 90px"><div class="row-id">SC-23</div><div class="row-name">智慧车厂调度优化</div><div>设备运维</div><div><span class="chip" style="background:#e0f2fe;color:#0369a1">孵化</span></div><div>李工</div><div>—</div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 90px"><div class="row-id">SC-22</div><div class="row-name">维修知识库语义检索</div><div>设备运维</div><div><span class="chip" style="background:#e0f2fe;color:#0369a1">孵化</span></div><div>王工</div><div>—</div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 90px"><div class="row-id">SC-19</div><div class="row-name">大客流预警 (M8)</div><div>安全管理</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">建设中</span></div><div>陈工</div><div>2026-Q3</div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 90px"><div class="row-id">SC-15</div><div class="row-name">站级能耗基线 (M5)</div><div>能耗管理</div><div><span class="chip" style="background:#fef9c3;color:#854d0e">影子模式</span></div><div>张工</div><div>2026-Q2</div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 90px"><div class="row-id">SC-08</div><div class="row-name">客流预测 (M1)</div><div>运输组织</div><div><span class="chip" style="background:#dcfce7;color:#15803d">已转正</span></div><div>李主任</div><div>已上线</div></div>
+        <div class="ws-list-row" style="grid-template-columns:60px 1fr 100px 90px 100px 90px"><div class="row-id">SC-03</div><div class="row-name">蓄电池健康度 (M3)</div><div>设备运维</div><div><span class="chip" style="background:#dcfce7;color:#15803d">已转正</span></div><div>王主任</div><div>已上线</div></div>
+      </div>
+    </div>
+
+  </div></main>
+</div>
+
   </div><!-- /.content -->
 </div><!-- /.main-area -->
 </div><!-- /.app -->
+
+<!-- ==================== 指标档案弹窗 ==================== -->
+<div class="modal-overlay" id="metricModal" onclick="if(event.target===this)closeMetric()">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="mh-title" id="mmTitle">—</div>
+        <div class="mh-sub" id="mmSub">—</div>
+      </div>
+      <button class="modal-close" onclick="closeMetric()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-section">
+        <div class="mb-section-title">指标定义</div>
+        <div id="mmDef">—</div>
+      </div>
+      <div class="mb-section">
+        <div class="mb-section-title">计算公式</div>
+        <div class="mb-formula" id="mmFormula">—</div>
+      </div>
+      <div class="mb-section">
+        <div class="mb-section-title">管理属性</div>
+        <div class="mb-grid" id="mmAttrs">—</div>
+      </div>
+      <div class="mb-section">
+        <div class="mb-section-title">穿透下钻</div>
+        <div id="mmDrill" style="font-size:13px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== AI 助手 ==================== -->
+<button class="ai-fab" id="aiFab" onclick="toggleAI()" title="AI 评价助手">
+  <span class="fab-pulse"></span>
+  <span style="font-size:18px;font-weight:700;letter-spacing:.04em">AI</span>
+</button>
+
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-panel-head">
+    <div class="aph-title">
+      <div class="aph-icon">AI</div>
+      <div>
+        <div>智能评价助手</div>
+        <div class="aph-sub">基于 1600+ 指标自动生成报告</div>
+      </div>
+    </div>
+    <button class="ai-panel-close" onclick="toggleAI()">×</button>
+  </div>
+  <div class="ai-panel-body" id="aiMessages">
+    <div class="ai-msg bot">
+      您好！我是 4 号线智能评价助手。可以为您生成<b>综合评价 / 关键异常发现 / 指导建议</b>三段式报告。试试下方快捷指令，或直接输入您想分析的时段或主题。
+    </div>
+  </div>
+  <div class="ai-quick-chips">
+    <span class="ai-quick-chip" onclick="askAI('生成本周运营综合评价')">本周综合评价</span>
+    <span class="ai-quick-chip" onclick="askAI('分析今日异常指标')">今日异常分析</span>
+    <span class="ai-quick-chip" onclick="askAI('对比上月安全指数变化')">月度安全对比</span>
+    <span class="ai-quick-chip" onclick="askAI('生成 4 月月度报告')">月度报告</span>
+  </div>
+  <div class="ai-input-row">
+    <input id="aiInput" placeholder="输入指令，如：生成本周运营评价报告..." onkeydown="if(event.key==='Enter'){askAI(this.value);this.value=''}" />
+    <button onclick="const i=document.getElementById('aiInput');askAI(i.value);i.value=''">发送</button>
+  </div>
+</div>
 
 <script>
 // Tab switching
@@ -4118,7 +4515,8 @@ const TAB_DOMAIN = {
   'asset-overview': 'assets', 'asset-inventory': 'assets', 'asset-products': 'assets',
   'asset-booking': 'assets', 'asset-compliance': 'assets',
   'gov-pain': 'governance', 'gov-arch': 'governance', 'gov-roadmap': 'governance',
-  'gov-roi': 'governance', 'gov-safeguard': 'governance'
+  'gov-roi': 'governance', 'gov-safeguard': 'governance',
+  'gov-system': 'governance', 'gov-scenario': 'governance'
 };
 const DOMAIN_LABEL = {
   home: '工作台', transport: '运输组织', equipment: '设备运维',
@@ -5000,17 +5398,77 @@ function switchSub(page, sub) {
   }, 60);
 }
 
+// ===== 指标档案弹窗 =====
+const METRIC_DICT = {
+  zhengdianlv: {title:'列车正点率',sub:'Train Punctuality Rate',def:'统计周期内未发生晚点超过 2 分钟的列车次数占该周期总开行列车次数的比例。',formula:'正点率 = (未晚点列车数 ÷ 开行列车总数) × 100%',attrs:{单位:'%',归口部门:'运营保障部 / 调度科',数据源:'ATS 系统 / 金龙云平台',更新频率:'实时滚动 + 日级汇总',目标值:'≥ 99.5%'},drill:'按线路 / 区段 / 时段 / 单列车四级穿透 · 关联模型：客流预测 (M1) · 运行图编制 (M2)'},
+  duixianlv: {title:'运行图兑现率',sub:'Schedule Compliance Rate',def:'实际运行车次与计划运行图车次的吻合程度，反映运行图执行能力。',formula:'兑现率 = (实际运行车次 ÷ 计划运行车次) × 100%',attrs:{单位:'%',归口部门:'运营保障部 / 运行图科',数据源:'ATS 实绩 + 运行图模板',更新频率:'日级',目标值:'≥ 99.8%'},drill:'按运行图版本 / 司机 / 列车号穿透 · 关联模型：运力调度 (M2)'},
+  keyunliang: {title:'日均客运量',sub:'Average Daily Passenger Volume',def:'统计周期内全线总进站客流量除以运营天数所得的日平均值。',formula:'日均客运量 = 总进站量 ÷ 运营天数',attrs:{单位:'万人次',归口部门:'客运服务部',数据源:'AFC 系统',更新频率:'实时 + 日级',目标值:'≥ 28.0 万人次'},drill:'按车站 / 时段 / 票种 / 客流类型穿透 · 关联模型：客流预测 (M1) · 大客流预警 (M8)'},
+  mantai: {title:'高峰满载率',sub:'Peak Load Factor',def:'早晚高峰时段最大区段断面客流量与设计运能的比值。',formula:'满载率 = 区段断面客流量 ÷ 设计运能 × 100%',attrs:{单位:'%',归口部门:'运营保障部',数据源:'AFC + ATS 联合计算',更新频率:'15 分钟级',目标值:'≤ 95%'},drill:'按区段 / 时段 / 列车号穿透 · 关联模型：运力调度 (M2)'},
+  chegongli: {title:'单位车公里电耗',sub:'Energy Consumption per Train·km',def:'列车牵引系统每行驶 1 车公里消耗的电能。',formula:'单位车公里电耗 = 总牵引电耗 ÷ 列车运营公里数',attrs:{单位:'kWh/车公里',归口部门:'机电部 / 能源科',数据源:'供电系统 + TCMS',更新频率:'日级',目标值:'≤ 4.50 kWh'},drill:'按区段 / 列车 / 司机 / 时段穿透 · 关联模型：牵引能耗 (M6) · 站级能耗 (M5)'},
+  mttr: {title:'非计划停时',sub:'Unplanned Downtime',def:'列车因非计划性故障停止运行的累计时长（分钟/列·天）。',formula:'非计划停时 = ∑(故障开始 → 恢复) ÷ 列车数',attrs:{单位:'分钟/列·天',归口部门:'检修部',数据源:'故障工单 + ATS',更新频率:'日级',目标值:'≤ 5.0 分钟'},drill:'按设备类型 / 故障类别 / 列车号穿透 · 关联模型：设备健康 (M3) · 故障诊断 (M4)'},
+  anquan: {title:'综合安全指数',sub:'Composite Safety Index',def:'四板块安全要素加权合成的 0-100 评分。',formula:'综合 = 行车安全×30% + 设备安全×25% + 客运安全×25% + 外部环境×20%',attrs:{单位:'分（0-100）',归口部门:'安全监察部',数据源:'安全风险隐患系统 + 各业务系统',更新频率:'≤ 30 分钟',目标值:'≥ 85'},drill:'按板块 / 子维度穿透 · 关联模型：安全风险 (M7)'},
+  manyidu: {title:'乘客满意度',sub:'Passenger Satisfaction Score',def:'通过乘客回访 / 投诉数据 / NPS 调查综合形成的满意度评分。',formula:'满意度 = 0.6×回访均分 + 0.3×投诉处理满意度 + 0.1×NPS 分数',attrs:{单位:'分',归口部门:'客运服务部',数据源:'12345 投诉系统 + 月度调查',更新频率:'月级',目标值:'≥ 90 分'},drill:'按车站 / 投诉类型 / 时段穿透'}
+};
+function showMetric(key){
+  const m=METRIC_DICT[key];if(!m)return;
+  document.getElementById('mmTitle').textContent=m.title;
+  document.getElementById('mmSub').textContent=m.sub;
+  document.getElementById('mmDef').textContent=m.def;
+  document.getElementById('mmFormula').textContent=m.formula;
+  document.getElementById('mmAttrs').innerHTML=Object.entries(m.attrs).map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('');
+  document.getElementById('mmDrill').innerHTML=m.drill;
+  document.getElementById('metricModal').classList.add('open');
+}
+function closeMetric(){document.getElementById('metricModal').classList.remove('open')}
+
+// ===== AI 助手 =====
+function toggleAI(){
+  const p=document.getElementById('aiPanel');
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    document.querySelector('.fab-pulse').style.animation='none';
+  }
+}
+function askAI(q){
+  if(!q||!q.trim())return;
+  const msgs=document.getElementById('aiMessages');
+  const u=document.createElement('div');u.className='ai-msg user';u.textContent=q;msgs.appendChild(u);
+  const b=document.createElement('div');b.className='ai-msg bot';b.innerHTML='<div style="color:#94a3b8;font-size:12px">正在分析中...</div>';msgs.appendChild(b);
+  msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    let report='';
+    if(q.includes('本周')||q.includes('综合评价')){
+      report=`<div class="ai-msg-section"><div class="ai-msg-title">综合评价</div>本周（04-23 ~ 04-29）4 号线运营整体平稳，<b>综合得分 86.83 分</b>，较上周 +0.4 分。六大维度中，<b>高效管理 (90.2)</b> 表现最佳，主要得益于运行图编制采纳率达 73%；<b>安全管理 (88.5)</b> 受 17# 列车蓄电池组事件影响小幅下降。</div><div class="ai-msg-section"><div class="ai-msg-title">关键异常发现</div><ul><li>17# 列车蓄电池组 A 健康度连续 3 天下降至 71，需本周内启动状态修</li><li>小菜园站 14:00-17:00 持续能耗偏高 +18%，归因为 AHU-3 风阀效率下降</li><li>火车北站 PSD-A12 健康度急降至 55，已生成本周必修工单</li></ul></div><div class="ai-msg-section"><div class="ai-msg-title">指导建议</div><ul><li>设备运维：本周天窗内集中处置 PSD-A12 + 火车北站 3#-12 道岔</li><li>能耗管控：推广空调温度策略 +1°C 至全线（试点节能 4.2%）</li><li>调度安排：周日加车 12% 应对旅游客流，已生成预案</li></ul></div>`;
+    }else if(q.includes('异常')||q.includes('今日')){
+      report=`<div class="ai-msg-section"><div class="ai-msg-title">综合评价</div>今日 (2026-04-30) 截至 14:25，运营整体正常。<b>3 项指标偏离基准</b>：综合安全指数 82.5 (黄色)、PSD-A12 健康度 55、小菜园站能耗 +18%。</div><div class="ai-msg-section"><div class="ai-msg-title">关键异常发现</div><ul><li><b>设备板块 ↓ 4 分</b>：17# 列车蓄电池组 A 异常 + PSD-A12</li><li><b>能耗偏离</b>：小菜园站 14:00-17:00 持续偏高，主因风阀效率</li><li><b>16:40 高峰预警</b>：昆明南站高铁脉冲，已建议加车 2 列</li></ul></div><div class="ai-msg-section"><div class="ai-msg-title">指导建议</div><ul><li>立即：调度采纳 16:40 加车建议（截止 16:10）</li><li>本周：完成 PSD-A12 滑轮组更换 + 道岔润滑</li><li>下季度：17# 列车蓄电池组单体更换计划</li></ul></div>`;
+    }else if(q.includes('安全')){
+      report=`<div class="ai-msg-section"><div class="ai-msg-title">综合评价</div>4 月综合安全指数月均 84.2，较 3 月 (82.8) ↑ 1.4。四板块中行车 / 客运 / 外部环境均稳中有升，<b>设备安全 76.5</b> 受蓄电池衰减事件拉低。</div><div class="ai-msg-section"><div class="ai-msg-title">关键异常发现</div><ul><li>04-29 14:25 综合指数 84.6→82.5 (黄色)，主驱动设备板块 ↓ 4.2 分</li><li>沿线施工监测：三市街区段路面下沉，已转工务部核实</li><li>客运板块本月平均较上月 +1.5，受益于大客流预警提前响应</li></ul></div><div class="ai-msg-section"><div class="ai-msg-title">指导建议</div><ul><li>启动蓄电池组专项整治 (17# / 23# 列车)</li><li>沿线保护区监测频次提升至每日 1 次</li><li>大型活动预案库扩充：增加沿线高校开学日预案</li></ul></div>`;
+    }else{
+      report=`<div class="ai-msg-section"><div class="ai-msg-title">综合评价</div>已为您生成 <b>${q}</b> 主题的分析报告。本期数据显示运营整体稳健，关键指标达成率 79.8%。</div><div class="ai-msg-section"><div class="ai-msg-title">关键异常发现</div>3 项指标需重点关注：设备板块、小菜园站能耗、PSD-A12 健康度。</div><div class="ai-msg-section"><div class="ai-msg-title">指导建议</div>建议本周天窗集中处置设备问题，推广能耗优化策略。详细数据可点击各模块工作台查看。</div>`;
+    }
+    b.innerHTML=report;
+    msgs.scrollTop=msgs.scrollHeight;
+  },800);
+}
+
 // Hash routing — open the requested page on load and on hash change
 function applyHashRoute(){
   const h=(location.hash||'').replace('#','').trim();
   const valid=['overview','m1','m2','m3','m4','m5','m6','m7','m8',
     'hub-cockpit','hub-impact','hub-scenario',
     'asset-overview','asset-inventory','asset-products','asset-booking','asset-compliance',
-    'gov-pain','gov-arch','gov-roadmap','gov-roi','gov-safeguard'];
+    'gov-pain','gov-arch','gov-roadmap','gov-roi','gov-safeguard',
+    'gov-system','gov-scenario'];
   if(valid.includes(h)) switchTab(h);
 }
 window.addEventListener('hashchange', applyHashRoute);
 document.addEventListener('DOMContentLoaded', applyHashRoute);
+// Debug helper: ?ai=1 auto-opens AI panel with sample, ?metric=KEY opens modal
+document.addEventListener('DOMContentLoaded', ()=>{
+  const sp=new URLSearchParams(location.search);
+  if(sp.get('ai')==='1'){setTimeout(()=>{toggleAI();askAI('生成本周运营综合评价')},200)}
+  const mk=sp.get('metric');if(mk){setTimeout(()=>showMetric(mk),200)}
+});
 
 window.addEventListener('resize', function() {
   ['m1-c-daily','m1-c-factors','m1-c-hourly','m1-c-pulse','m2-c-trains','m2-c-load','m2-c-realtime','m2-c-shortturn','m3-c-soh','m3-c-radar','m3-c-switch','m3-c-psd','m4-c-cover','m4-c-mttr','m4-c-sankey','m5-c-baseline','m5-c-shap','m5-c-heatmap','m5-c-pie','m5-c-decomp','m6-c-speed','m6-c-regen','m6-c-segs','m6-c-timing','m6-c-track','m6-c-davis','m7-c-gauge','m7-c-radar','m7-c-trend','m7-c-equip','m7-c-ext','m8-c-density','m8-c-source','m8-c-pulse','m8-c-replay','m8-c-balance'].forEach(function(id) {
