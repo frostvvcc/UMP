@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型 3 · 关键设备健康度评估与剩余寿命预测模型｜昆明地铁 4 号线</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#f8fafc;color:#0f172a}
+  .accent{color:#ea580c}
+  .accent-bg{background:#ea580c}
+  .accent-soft{background:#fff7ed;color:#9a3412}
+  .gradient-hero{background:linear-gradient(135deg,#7c2d12 0%,#c2410c 50%,#f97316 100%)}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:500}
+  .kpi-num{font-feature-settings:"tnum" 1, "lnum" 1; font-variant-numeric:tabular-nums}
+  .section-title{font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .ribbon{position:absolute;top:0;left:0;width:6px;height:100%;border-radius:14px 0 0 14px;background:#ea580c}
+  table.df th,table.df td{padding:.55rem .8rem;font-size:13.5px}
+  table.df thead th{background:#f1f5f9;color:#334155;font-weight:600;text-align:left}
+  table.df tbody tr:nth-child(odd){background:#f8fafc}
+  .tag-ok{background:#dcfce7;color:#166534}
+  .tag-warn{background:#fef9c3;color:#854d0e}
+  .tag-new{background:#fee2e2;color:#991b1b}
+  .h-chart{height:340px}
+  .health-cell{display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:600;border-radius:5px;height:38px}
+</style>
+</head>
+<body>
+
+<header class="gradient-hero text-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-10 pb-12">
+    <div class="flex items-center gap-3 mb-5 text-orange-100/90 text-sm">
+      <span>昆明地铁 4 号线 · 大数据决策模型方案</span><span>›</span>
+      <span>设备运维决策域</span><span>›</span><span class="text-white">模型 3</span>
+    </div>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="chip bg-white/15 text-white">设备运维 · Equipment</span>
+          <span class="chip bg-white/15 text-white">异常检测 + RUL 预测</span>
+          <span class="chip bg-emerald-400/20 text-emerald-100">优先建设 · 第一批</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">关键设备健康度评估与 RUL 预测模型</h1>
+        <p class="mt-3 text-orange-100/95 max-w-3xl text-[15px] leading-relaxed">
+          建立<b>蓄电池牵引 / 道岔 / 屏蔽门</b>三类关键设备的量化健康度评分体系与剩余使用寿命 (RUL) 预测能力，
+          支撑维修策略从「计划修」逐步转向「<b>状态修</b>」。
+        </p>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">3</div>
+          <div class="text-xs text-orange-100/80 mt-1">第一批设备类型</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">≥30<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-orange-100/80 mt-1">非计划停机降幅</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">≥40<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-orange-100/80 mt-1">蓄电池停机目标</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+
+  <!-- 模型工作原理 · 一图速览 -->
+  <section class="card p-6 lg:p-8">
+    <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
+      <div>
+        <h2 class="section-title accent">模型工作原理 · 一图速览</h2>
+        <p class="text-sm text-slate-500 mt-1">原始信号 · 健康度评分 · RUL 预测 · 检修工单闭环</p>
+      </div>
+      <span class="chip accent-soft">指标→评分→趋势 三层范式</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fed7aa;background:#fff7ed">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#ea580c">1</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">原始信号采集</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span><b>蓄电池</b> · BMS/TCMS 充放电</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span><b>道岔</b> · 转换电流曲线</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span><b>屏蔽门</b> · 电机电流/时间</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span>维修工单 / 检修历史</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span>高原环境因子 (81kPa)</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #fb923c"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fdba74;background:#ffedd5">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#7c2d12">2</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">三层处理引擎</span>
+        </div>
+        <div class="space-y-1.5">
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-orange-200"><b class="text-orange-700">L1</b> 物理可解释指标提取</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-orange-200"><b class="text-orange-700">L2</b> 健康度评分 0-100</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-orange-200"><b class="text-orange-700">L3</b> RUL 趋势预测</div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-orange-200 text-[11px] text-slate-500 leading-relaxed">
+          权重: 专家先验 + 数据修正<br>RUL: 贝叶斯 / SPC / 生存分析
+        </div>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #fb923c"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fdba74;background:#ffedd5">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#7c2d12">3</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">输出</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>设备健康度看板 (实时)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>RUL 预测报告 (含置信)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>预防性<b>维修建议工单</b></span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>全线红/黄/绿三色排名</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #fb923c"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fed7aa;background:#fff7ed">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#ea580c">4</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">检修工单闭环</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span>⚠️</span><span>阈值预警自动触发</span></li>
+          <li class="flex items-start gap-1.5"><span>📝</span><span>预防性工单一键派发</span></li>
+          <li class="flex items-start gap-1.5"><span>🔧</span><span>检修执行+复测录入</span></li>
+          <li class="flex items-start gap-1.5"><span>🔁</span><span>评分更新+效果验证</span></li>
+          <li class="flex items-start gap-1.5"><span>🔗</span><span>联动模型 7 设备安全板块</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2 relative">
+      <div class="ribbon"></div>
+      <h2 class="section-title accent">业务目标</h2>
+      <p class="mt-3 text-slate-700 leading-relaxed">
+        当前 4 号线设备维修以<b>计划预防修</b>为主，存在「<b>过度维修</b> + <b>维修不足</b>」两难。
+        模型同时改善两个方向：减少不必要的检修人工与停运成本，并在两次计划检修间的窗口内提前感知加速劣化。
+      </p>
+      <div class="grid sm:grid-cols-3 gap-4 mt-5">
+        <div class="bg-orange-50 rounded-lg p-4">
+          <div class="text-xs text-orange-700 mb-1">第一批 · 蓄电池</div>
+          <div class="font-semibold text-slate-800">行业首创 · 缺乏经验</div>
+        </div>
+        <div class="bg-orange-50 rounded-lg p-4">
+          <div class="text-xs text-orange-700 mb-1">第一批 · 道岔</div>
+          <div class="font-semibold text-slate-800">行车安全关键</div>
+        </div>
+        <div class="bg-orange-50 rounded-lg p-4">
+          <div class="text-xs text-orange-700 mb-1">第一批 · 屏蔽门</div>
+          <div class="font-semibold text-slate-800">高频故障</div>
+        </div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent">三层架构范式</h2>
+      <ol class="mt-4 space-y-3 text-sm">
+        <li class="flex gap-3"><span class="accent-soft chip">L1</span><div><b>指标提取</b><div class="text-slate-500 text-xs">物理可解释特征优先</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L2</span><div><b>健康度评分 (0-100)</b><div class="text-slate-500 text-xs">专家先验 + 数据修正</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L3</span><div><b>RUL 趋势预测</b><div class="text-slate-500 text-xs">贝叶斯 / 生存分析 / 线性外推</div></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title accent mb-5">三大决策场景</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card p-6 relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-orange-50"></div>
+        <div class="relative">
+          <div class="chip accent-soft mb-3">场景 1 · 月/季度</div>
+          <div class="font-bold text-lg">中长期检修计划</div>
+          <p class="text-sm text-slate-600 mt-2 leading-relaxed">未来季度内哪些设备健康度可能降至阈值？应在哪个天窗期检修最经济？</p>
+        </div>
+      </div>
+      <div class="card p-6 relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-orange-50"></div>
+        <div class="relative">
+          <div class="chip accent-soft mb-3">场景 2 · 周度</div>
+          <div class="font-bold text-lg">检修优先级排序</div>
+          <p class="text-sm text-slate-600 mt-2 leading-relaxed">天窗时间有限时，优先检修哪些设备？基于劣化速度 + 距阈值距离的量化排序。</p>
+        </div>
+      </div>
+      <div class="card p-6 relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-orange-50"></div>
+        <div class="relative">
+          <div class="chip accent-soft mb-3">场景 3 · 实时</div>
+          <div class="font-bold text-lg">实时健康度预警</div>
+          <p class="text-sm text-slate-600 mt-2 leading-relaxed">在早期劣化阶段给出提前预警，避免硬阈值报警的「报警疲劳」。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">蓄电池 SOH 衰减轨迹（48 列编组 · 模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">贝叶斯退化模型预测剩余循环次数，红色 = SOH&lt;75%</p>
+        </div>
+        <span class="chip tag-ok">RUL MAPE 12.4%</span>
+      </div>
+      <div id="c-soh" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title">蓄电池健康度雷达</h2>
+      <p class="text-sm text-slate-500 mt-1">04 号车组 · 多维指标</p>
+      <div id="c-radar" class="h-chart"></div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">道岔转换电流曲线（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">3#-12 道岔 · 与基准曲线 DTW 距离 = 8.4 (异常)</p>
+        </div>
+        <span class="chip" style="background:#fee2e2;color:#991b1b">⚠ 已偏离</span>
+      </div>
+      <div id="c-switch" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">屏蔽门健康度热力图</h2>
+          <p class="text-sm text-slate-500 mt-1">火车北站 · 站台两侧 24 樘门 (颜色越深越异常)</p>
+        </div>
+      </div>
+      <div id="c-psd" class="h-chart"></div>
+    </div>
+  </section>
+
+  <!-- 重点关注设备表 -->
+  <section class="card p-6">
+    <h2 class="section-title accent mb-4">需关注设备清单（模拟）</h2>
+    <div class="overflow-x-auto">
+      <table class="df w-full">
+        <thead><tr><th>设备</th><th>类型</th><th>健康度</th><th>30 天趋势</th><th>预计 RUL</th><th>建议措施</th></tr></thead>
+        <tbody>
+          <tr><td>04# 列车 · 电池组 B</td><td>蓄电池</td><td><b style="color:#dc2626">62</b></td><td>↓ 8 分</td><td>~ 580 次循环 / ~ 95 天</td><td>下次架修专项检测</td></tr>
+          <tr><td>17# 列车 · 电池组 A</td><td>蓄电池</td><td><b style="color:#f59e0b">71</b></td><td>↓ 4 分</td><td>~ 1100 次 / ~ 180 天</td><td>纳入下季度计划</td></tr>
+          <tr><td>火车北站 3#-12 道岔</td><td>道岔</td><td><b style="color:#dc2626">58</b></td><td>↓ 12 分</td><td>10-15 天 (润滑过期)</td><td>本周天窗安排润滑</td></tr>
+          <tr><td>金桂街站 1#-08 道岔</td><td>道岔</td><td><b style="color:#f59e0b">74</b></td><td>↓ 5 分</td><td>~ 30 天</td><td>日常巡检关注</td></tr>
+          <tr><td>火车北站站台 PSD-A12</td><td>屏蔽门</td><td><b style="color:#dc2626">55</b></td><td>↓ 15 分</td><td>~ 7 天</td><td>预防性更换滑轮组</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title accent mb-5">4 号线特色适配</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">蓄电池牵引 · 行业首创</div>
+        <div class="font-bold mt-1">退化基准从零构建</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          无行业可参考数据，仅依赖 4 号线 5 年自有运营数据。<b>无架空线区段深放电工况</b>需专门建模，
+          安全裕度更保守。
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">高原环境系统纳入</div>
+        <div class="font-bold mt-1">81kPa · 大昼夜温差</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          低气压降低空气对流散热效率，电池温升更高。道岔尖轨日内热胀冷缩需作为电流曲线协变量，
+          区分正常波动 vs 机械劣化。
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">运维团队年轻化</div>
+        <div class="font-bold mt-1">自然语言化解释</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          每条评分附自然语言说明：「内阻增长率为同批均值 1.8 倍，建议下次架修专项检测」，
+          降低非资深工程师的理解门槛。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">技术评估指标</h2>
+      <table class="df w-full">
+        <thead><tr><th>评估维度</th><th>指标</th><th>目标</th></tr></thead>
+        <tbody>
+          <tr><td>预警准确性</td><td>命中率 (N 天内确认劣化)</td><td><b class="accent">≥ 75%</b></td></tr>
+          <tr><td>预警及时性</td><td>平均预警提前时间</td><td><b class="accent">≥ 7 天 (蓄电池 ≥ 30 天)</b></td></tr>
+          <tr><td>预警精度</td><td>误报率</td><td><b class="accent">≤ 25%</b></td></tr>
+          <tr><td>RUL 预测精度</td><td>平均相对误差</td><td><b class="accent">≤ 20% (蓄电池 ≤ 15%)</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">业务效果指标</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">↓</span>
+          <div><b>非计划故障停机率</b>降低 <b class="accent">≥ 30%</b>，蓄电池系统 <b class="accent">≥ 40%</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">¥</span>
+          <div><b>检修工时降低 ≥ 20%</b>，备件消耗费用降低 <b class="accent">≥ 15%</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">▲</span>
+          <div><b>设备综合可用率</b>提升 <b class="accent">≥ 2 个百分点</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">📦</span>
+          <div><b>关键备件库存周转</b>缩短 <b class="accent">≥ 15%</b></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pt-6 border-t border-slate-200">
+    <div>昆明地铁 4 号线 · 运营生产决策大数据模型规划 | 模型 3 / 8</div>
+    <div class="mt-1">本页面为方案演示稿，可视化数据均为模拟示意</div>
+  </footer>
+</main>
+
+<script>
+const accent='#ea580c',accent2='#fb923c',orange3='#7c2d12',green='#16a34a',red='#dc2626';
+
+// 1. SOH degradation - 48 trains over 5 years (mock)
+const months=Array.from({length:60},(_,i)=>i+1);
+function decay(start,rate,noise){return months.map(m=>{const v=start-rate*m+(Math.random()-0.5)*noise;return Math.max(60,Math.min(100,v))})}
+const trains=[];
+for(let i=0;i<48;i++){
+  const r=0.18+Math.random()*0.20;
+  trains.push({name:'#'+(i+1).toString().padStart(2,'0'),data:decay(99,r,1.5)});
+}
+// pick a few standout cases
+const opt={
+  grid:{top:30,right:20,bottom:35,left:55},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:months,name:'月',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8',interval:11}},
+  yAxis:{type:'value',name:'SOH %',min:60,max:100,nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:trains.map(t=>{
+    const last=t.data[t.data.length-1];
+    const color=last<75?'rgba(220,38,38,.7)':last<82?'rgba(245,158,11,.5)':'rgba(234,88,12,.25)';
+    return{name:t.name,type:'line',data:t.data,smooth:true,symbol:'none',lineStyle:{color,width:1.2}};
+  }).concat([{
+    name:'安全阈值 75%',type:'line',data:months.map(()=>75),lineStyle:{color:'#dc2626',type:'dashed',width:2},symbol:'none',
+    markLine:{symbol:'none',data:[{yAxis:75,label:{formatter:'更换阈值 75%',color:'#dc2626'},lineStyle:{color:'#dc2626',type:'dashed'}}]}
+  }])
+};
+echarts.init(document.getElementById('c-soh')).setOption(opt);
+
+// 2. Battery health radar
+echarts.init(document.getElementById('c-radar')).setOption({
+  tooltip:{},
+  radar:{
+    indicator:[
+      {name:'容量保持',max:100},{name:'内阻增长(逆)',max:100},{name:'单体一致性',max:100},
+      {name:'温升正常',max:100},{name:'充放电效率',max:100},{name:'高温暴露',max:100}
+    ],
+    center:['50%','55%'],radius:'62%',
+    splitArea:{show:false},axisName:{color:'#475569',fontSize:11},
+    splitLine:{lineStyle:{color:'#e2e8f0'}},
+  },
+  series:[{type:'radar',data:[
+    {value:[85,90,92,88,89,91],name:'同批次均值',itemStyle:{color:'#cbd5e1'},lineStyle:{color:'#94a3b8',width:2,type:'dashed'},areaStyle:{color:'rgba(148,163,184,.15)'}},
+    {value:[68,55,62,72,71,65],name:'04# B 组 (异常)',itemStyle:{color:accent},lineStyle:{color:accent,width:2.5},areaStyle:{color:'rgba(234,88,12,.25)'}}
+  ]}],
+  legend:{bottom:0,textStyle:{color:'#475569'}}
+});
+
+// 3. Switch current curve
+const sLen=80;
+const sx=Array.from({length:sLen},(_,i)=>i*0.05);
+function refCurve(){
+  return sx.map(t=>{
+    if(t<0.4)return 6.5+Math.exp(-Math.pow(t-0.2,2)/0.005)*0.5;  // unlock spike
+    if(t<3.0)return 3.2+0.3*Math.sin(t*8);  // transition
+    if(t<3.8)return 5.5+Math.exp(-Math.pow(t-3.4,2)/0.005)*0.8;  // lock
+    return 0.2;
+  });
+}
+function abnCurve(){
+  const r=refCurve();
+  return r.map((v,i)=>{
+    const t=sx[i];
+    if(t>=0.4&&t<3.0)return v+1.2+0.6*Math.sin(t*5);  // higher transition current
+    if(t>=3.0&&t<3.8)return v*0.7;  // weak lock spike
+    return v;
+  });
+}
+echarts.init(document.getElementById('c-switch')).setOption({
+  grid:{top:30,right:20,bottom:35,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:sx.map(t=>t.toFixed(1)),name:'时间 (s)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8',interval:9}},
+  yAxis:{type:'value',name:'电流 (A)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'基准曲线',type:'line',data:refCurve(),smooth:true,lineStyle:{color:'#94a3b8',width:2,type:'dashed'},symbol:'none'},
+    {name:'当次转换',type:'line',data:abnCurve(),smooth:true,lineStyle:{color:accent,width:2.5},symbol:'none',areaStyle:{color:'rgba(234,88,12,.15)'}}
+  ]
+});
+
+// 4. PSD heatmap
+const sides=['A 侧','B 侧'];
+const doors=Array.from({length:24},(_,i)=>'D'+(i+1).toString().padStart(2,'0'));
+const psdData=[];
+for(let i=0;i<2;i++){for(let j=0;j<24;j++){
+  let v=15+Math.random()*40;
+  if(i===0&&j===11)v=85; // A12 abnormal
+  if(i===1&&j===6)v=72;
+  if(i===0&&j===17)v=65;
+  psdData.push([j,i,Math.round(v)]);
+}}
+echarts.init(document.getElementById('c-psd')).setOption({
+  grid:{top:35,right:25,bottom:40,left:60,height:'45%'},
+  tooltip:{position:'top',formatter:p=>'门 '+doors[p.value[0]]+' / '+sides[p.value[1]]+'<br/>异常评分: '+p.value[2]},
+  xAxis:{type:'category',data:doors,axisLabel:{color:'#64748b',fontSize:10,interval:1},splitArea:{show:true}},
+  yAxis:{type:'category',data:sides,axisLabel:{color:'#475569',fontSize:11},splitArea:{show:true}},
+  visualMap:{min:0,max:100,calculable:true,orient:'horizontal',left:'center',bottom:0,inRange:{color:['#dcfce7','#fef9c3','#fed7aa','#fb923c','#dc2626']},textStyle:{color:'#475569'}},
+  series:[{name:'异常评分',type:'heatmap',data:psdData,label:{show:true,color:'#000',fontSize:10,formatter:p=>p.value[2]>50?p.value[2]:''}}]
+});
+
+window.addEventListener('resize',()=>['c-soh','c-radar','c-switch','c-psd'].forEach(id=>echarts.getInstanceByDom(document.getElementById(id)).resize()));
+</script>
+</body>
+</html>

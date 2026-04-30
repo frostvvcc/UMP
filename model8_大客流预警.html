@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型 8 · 车站大客流安全预警模型｜昆明地铁 4 号线</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#f8fafc;color:#0f172a}
+  .accent{color:#dc2626}
+  .accent-bg{background:#dc2626}
+  .accent-soft{background:#fef2f2;color:#991b1b}
+  .gradient-hero{background:linear-gradient(135deg,#7f1d1d 0%,#b91c1c 50%,#ef4444 100%)}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:500}
+  .kpi-num{font-feature-settings:"tnum" 1, "lnum" 1; font-variant-numeric:tabular-nums}
+  .section-title{font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .ribbon{position:absolute;top:0;left:0;width:6px;height:100%;border-radius:14px 0 0 14px;background:#dc2626}
+  table.df th,table.df td{padding:.55rem .8rem;font-size:13.5px}
+  table.df thead th{background:#f1f5f9;color:#334155;font-weight:600;text-align:left}
+  table.df tbody tr:nth-child(odd){background:#f8fafc}
+  .h-chart{height:340px}
+  .lvl-blue{background:#3b82f6}.lvl-yellow{background:#f59e0b}.lvl-orange{background:#f97316}.lvl-red{background:#dc2626}
+  .stn-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px}
+</style>
+</head>
+<body>
+
+<header class="gradient-hero text-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-10 pb-12">
+    <div class="flex items-center gap-3 mb-5 text-red-100/90 text-sm">
+      <span>昆明地铁 4 号线 · 大数据决策模型方案</span><span>›</span>
+      <span>安全生产决策域</span><span>›</span><span class="text-white">模型 8</span>
+    </div>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="chip bg-white/15 text-white">安全生产 · Safety</span>
+          <span class="chip bg-white/15 text-white">短时预测 + 阈值</span>
+          <span class="chip bg-emerald-400/20 text-emerald-100">远期推进</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">车站大客流安全预警模型</h1>
+        <p class="mt-3 text-red-100/95 max-w-3xl text-[15px] leading-relaxed">
+          基于实时 AFC + 模型 1 客流预测，对重点站<b>站台/站厅客流密度</b>进行超前预测，
+          在大客流到达前 <b>15-30 分钟</b>触发分级预警，为客流控制措施争取决策窗口。
+        </p>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">15-30<span class="text-base font-medium ml-0.5">m</span></div>
+          <div class="text-xs text-red-100/80 mt-1">超前预警窗口</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">≥85<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-red-100/80 mt-1">检测召回率</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">2-5<span class="text-base font-medium ml-0.5">m</span></div>
+          <div class="text-xs text-red-100/80 mt-1">滚动更新频率</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+
+  <!-- 模型工作原理 · 一图速览 -->
+  <section class="card p-6 lg:p-8">
+    <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
+      <div>
+        <h2 class="section-title accent">模型工作原理 · 一图速览</h2>
+        <p class="text-sm text-slate-500 mt-1">实时输入 · 动态平衡 · 短时预测 · 分级措施</p>
+      </div>
+      <span class="chip accent-soft">动态平衡方程 + 脉冲叠加</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fecaca;background:#fef2f2">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#dc2626">1</span>
+          <span class="font-semibold text-sm" style="color:#7f1d1d">实时输入</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#f87171">●</span><span>AFC 实时刷卡 (秒级)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#f87171">●</span><span><b>模型 1</b> 客流预测</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#f87171">●</span><span>列车 ATS 到站时刻</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#f87171">●</span><span>高铁脉冲检测/计划</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#f87171">●</span><span>气象/活动外部触发</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#f87171">●</span><span>站台物理参数 (面积/通道)</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #f87171"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fca5a5;background:#fee2e2">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#7f1d1d">2</span>
+          <span class="font-semibold text-sm" style="color:#7f1d1d">三层架构</span>
+        </div>
+        <div class="space-y-1.5">
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-red-200"><b class="text-red-700">L1</b> 站台动态平衡方程</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-red-200"><b class="text-red-700">L2</b> 短时密度预测 (EWMA+脉冲)</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-red-200"><b class="text-red-700">L3</b> 阈值判断 + 措施推荐</div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-red-200 text-[11px] text-slate-500 leading-relaxed">
+          人数 = 进站 + 下车 + 换乘 - 上车<br>每 2-5 min 滚动更新
+        </div>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #f87171"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fca5a5;background:#fee2e2">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#7f1d1d">3</span>
+          <span class="font-semibold text-sm" style="color:#7f1d1d">输出</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#dc2626">▸</span><span>未来 30min <b>密度滚动预测</b></span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#dc2626">▸</span><span>客流来源构成可视化</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#dc2626">▸</span><span>预警卡片 (站/时/源/措施)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#dc2626">▸</span><span>事前仿真报告 (大型活动)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#dc2626">▸</span><span>事件复盘分析</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #f87171"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fecaca;background:#fef2f2">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#dc2626">4</span>
+          <span class="font-semibold text-sm" style="color:#7f1d1d">分级措施</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span class="px-1.5 rounded text-white text-[10px] font-bold" style="background:#3b82f6">蓝</span><span>PIS 引导分散</span></li>
+          <li class="flex items-start gap-1.5"><span class="px-1.5 rounded text-white text-[10px] font-bold" style="background:#f59e0b">黄</span><span>站内限流 + 评估加车</span></li>
+          <li class="flex items-start gap-1.5"><span class="px-1.5 rounded text-white text-[10px] font-bold" style="background:#f97316">橙</span><span>站外限流 + <b>调用模型 2</b></span></li>
+          <li class="flex items-start gap-1.5"><span class="px-1.5 rounded text-white text-[10px] font-bold" style="background:#dc2626">红</span><span>全站 + 跳站 + 公安支援</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2 relative">
+      <div class="ribbon"></div>
+      <h2 class="section-title accent">业务目标 · 时间窗口换决策窗口</h2>
+      <p class="mt-3 text-slate-700 leading-relaxed">
+        客流控制措施 (启动站外限流 / 增开闸机 / 调配人员 / 增发列车) 需要 <b>3-15 分钟准备时间</b>。
+        若到密度逼近危险水平才反应必然被动。模型超前预警将决策窗口前移至措施仍能从容实施的阶段，
+        从「<b>被动应急</b>」转为「<b>主动防控</b>」。
+      </p>
+      <div class="grid sm:grid-cols-3 gap-4 mt-5">
+        <div class="bg-red-50 rounded-lg p-4">
+          <div class="text-xs text-red-700 mb-1">vs 模型 1 区别</div>
+          <div class="font-semibold text-slate-800">微观预警</div>
+          <p class="text-xs text-slate-500 mt-1">分钟级密度 · 单站</p>
+        </div>
+        <div class="bg-red-50 rounded-lg p-4">
+          <div class="text-xs text-red-700 mb-1">服务对象</div>
+          <div class="font-semibold text-slate-800">现场决策</div>
+          <p class="text-xs text-slate-500 mt-1">站长 + 客运调度员</p>
+        </div>
+        <div class="bg-red-50 rounded-lg p-4">
+          <div class="text-xs text-red-700 mb-1">关联模型</div>
+          <div class="font-semibold text-slate-800">模型 1 → 8 → 2</div>
+          <p class="text-xs text-slate-500 mt-1">客流 → 预警 → 加车</p>
+        </div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent">三层架构</h2>
+      <ol class="mt-4 space-y-3 text-sm">
+        <li class="flex gap-3"><span class="accent-soft chip">L1</span><div><b>站台客流动态平衡</b><div class="text-slate-500 text-xs">流入 = 进站 + 下车 + 换乘 / 流出 = 上车</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L2</span><div><b>短时密度预测</b><div class="text-slate-500 text-xs">EWMA + 历史模式 + 外部脉冲</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L3</span><div><b>分级预警 + 措施推荐</b><div class="text-slate-500 text-xs">蓝/黄/橙/红四级，逐级措施模板</div></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 重点站监控网格 -->
+  <section>
+    <div class="flex justify-between items-end mb-4">
+      <h2 class="section-title accent">重点站实时监控（模拟）</h2>
+      <span class="text-xs text-slate-500">2026-04-27 14:25 · 滚动更新</span>
+    </div>
+    <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="stn-card" style="border-left:3px solid #dc2626">
+        <div class="text-xs text-slate-500">火车北站 (4/2/5)</div>
+        <div class="font-bold text-lg">4.6<span class="text-xs font-normal text-slate-500"> 人/m²</span></div>
+        <span class="chip lvl-red text-white">橙·报警</span>
+        <div class="text-xs text-slate-500">↑ 30min 预测峰值 4.9</div>
+      </div>
+      <div class="stn-card" style="border-left:3px solid #f97316">
+        <div class="text-xs text-slate-500">昆明南站 (高铁)</div>
+        <div class="font-bold text-lg">3.8<span class="text-xs font-normal text-slate-500"> 人/m²</span></div>
+        <span class="chip lvl-orange text-white">黄·预警</span>
+        <div class="text-xs text-slate-500">G2987 18:30 抵达</div>
+      </div>
+      <div class="stn-card" style="border-left:3px solid #f59e0b">
+        <div class="text-xs text-slate-500">大树营 (4/3)</div>
+        <div class="font-bold text-lg">3.1<span class="text-xs font-normal text-slate-500"> 人/m²</span></div>
+        <span class="chip lvl-yellow text-white">黄·预警</span>
+        <div class="text-xs text-slate-500">商圈晚高峰</div>
+      </div>
+      <div class="stn-card" style="border-left:3px solid #3b82f6">
+        <div class="text-xs text-slate-500">联大街 (4/1)</div>
+        <div class="font-bold text-lg">2.6<span class="text-xs font-normal text-slate-500"> 人/m²</span></div>
+        <span class="chip lvl-blue text-white">蓝·关注</span>
+        <div class="text-xs text-slate-500">学生晚归</div>
+      </div>
+      <div class="stn-card" style="border-left:3px solid #22c55e">
+        <div class="text-xs text-slate-500">菊华站 (4/6)</div>
+        <div class="font-bold text-lg">1.8<span class="text-xs font-normal text-slate-500"> 人/m²</span></div>
+        <span class="chip" style="background:#dcfce7;color:#166534">舒适</span>
+        <div class="text-xs text-slate-500">机场方向</div>
+      </div>
+      <div class="stn-card" style="border-left:3px solid #22c55e">
+        <div class="text-xs text-slate-500">金桂街 (4/1)</div>
+        <div class="font-bold text-lg">2.1<span class="text-xs font-normal text-slate-500"> 人/m²</span></div>
+        <span class="chip" style="background:#dcfce7;color:#166534">舒适</span>
+        <div class="text-xs text-slate-500">花卉市场</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 火车北站 detail -->
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">火车北站 · 站台密度滚动预测（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">过去 1h 实测 + 未来 30min 预测</p>
+        </div>
+        <span class="chip" style="background:#fee2e2;color:#991b1b">⚠ 预测峰值 4.9 人/m²</span>
+      </div>
+      <div id="c-density" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title">客流来源构成</h2>
+      <p class="text-sm text-slate-500 mt-1">14:25 当前来源占比</p>
+      <div id="c-source" class="h-chart"></div>
+    </div>
+  </section>
+
+  <!-- 昆明南站高铁脉冲 -->
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">昆明南站 · 高铁脉冲叠加预测（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">未来 4h 高铁列车计划到达 → 换乘脉冲</p>
+        </div>
+      </div>
+      <div id="c-pulse" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">大客流复盘 · 措施效果（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">2026-04-15 国博中心展会散场</p>
+        </div>
+      </div>
+      <div id="c-replay" class="h-chart"></div>
+    </div>
+  </section>
+
+  <!-- 站台动态平衡示意 -->
+  <section class="card p-6">
+    <h2 class="section-title accent mb-3">站台客流动态平衡 · 模型示意</h2>
+    <p class="text-sm text-slate-500 mb-4">站台当前人数 = 前一时刻 + 流入 (进站+下车+换乘) - 流出 (上车)</p>
+    <div id="c-balance" style="height:320px"></div>
+  </section>
+
+  <!-- 预警措施分级表 -->
+  <section class="card p-6">
+    <h2 class="section-title accent mb-4">分级预警与措施模板</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="rounded-lg overflow-hidden border border-blue-200">
+        <div class="lvl-blue text-white px-4 py-2 font-semibold flex justify-between items-center"><span>蓝色 · 关注</span><span class="text-xs">≥ 3.5 人/m²</span></div>
+        <div class="p-4 text-sm space-y-1.5 text-slate-700">
+          <div>· PIS 广播分散候车</div>
+          <div>· 站务员到位待命</div>
+          <div>· 通知调度关注</div>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden border border-yellow-200">
+        <div class="lvl-yellow text-white px-4 py-2 font-semibold flex justify-between items-center"><span>黄色 · 预警</span><span class="text-xs">≥ 4.0 人/m²</span></div>
+        <div class="p-4 text-sm space-y-1.5 text-slate-700">
+          <div>· 站内限流 (关闭部分扶梯)</div>
+          <div>· 增派站务员</div>
+          <div>· 通知调度评估加车</div>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden border border-orange-200">
+        <div class="lvl-orange text-white px-4 py-2 font-semibold flex justify-between items-center"><span>橙色 · 报警</span><span class="text-xs">≥ 5.0 人/m²</span></div>
+        <div class="p-4 text-sm space-y-1.5 text-slate-700">
+          <div>· 启动站外限流</div>
+          <div>· 调度加开列车</div>
+          <div>· 通知相邻站联动</div>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden border border-red-200">
+        <div class="lvl-red text-white px-4 py-2 font-semibold flex justify-between items-center"><span>红色 · 紧急</span><span class="text-xs">≥ 6.0 人/m²</span></div>
+        <div class="p-4 text-sm space-y-1.5 text-slate-700">
+          <div>· 全站限流</div>
+          <div>· 必要时跳站通过</div>
+          <div>· 公安 + 街道办支援</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 适配 -->
+  <section>
+    <h2 class="section-title accent mb-5">4 号线特色适配</h2>
+    <div class="grid md:grid-cols-4 gap-5">
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">火车北站</div>
+        <div class="font-bold mt-1">三线换乘叠加</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">2/4/5 号线换乘 + 昆明站铁路客流。其他线路异常时自动降低预警阈值一级，更早触发。</p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">昆明南站</div>
+        <div class="font-bold mt-1">高铁脉冲检测</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">无高铁数据时：5min 滑窗 &gt; 历史 150% → 判定脉冲。有数据后前置预警 15-20min。</p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">旅游季节</div>
+        <div class="font-bold mt-1">行李等效密度放大</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">旅客大件行李占用更大空间，旺季基线上调 10-15% + 安全阈值下调 0.3 人/m²。</p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">突发暴雨</div>
+        <div class="font-bold mt-1">高度警戒模式</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">监测暴雨开始 → 全线 2 分钟一次更新 + 历史暴雨增幅自动上调预测基线。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">技术评估指标</h2>
+      <table class="df w-full">
+        <thead><tr><th>评估维度</th><th>指标</th><th>目标</th></tr></thead>
+        <tbody>
+          <tr><td>15min 预测精度</td><td>密度 MAE</td><td><b class="accent">≤ 0.5 人/m²</b></td></tr>
+          <tr><td>30min 预测精度</td><td>密度 MAE</td><td><b class="accent">≤ 0.8 人/m²</b></td></tr>
+          <tr><td>预警提前量</td><td>实际达标前提前时间</td><td><b class="accent">≥ 15 分钟</b></td></tr>
+          <tr><td>预警检测率</td><td>召回率（最优先指标）</td><td><b class="accent">≥ 85%</b></td></tr>
+          <tr><td>预警精确度</td><td>修正自否定后精确率</td><td><b class="accent">≥ 65%</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">业务效果指标</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">⏱</span>
+          <div><b>大客流应对准备时间</b>延长 <b class="accent">≥ 10 分钟</b> (3-5min → 15-20min)</div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">↓</span>
+          <div><b>站台最大密度</b>降低 <b class="accent">15-20%</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">⚖</span>
+          <div><b>限流不必要持续时间</b>缩短 <b class="accent">≥ 50%</b>，避免过度管控</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pt-6 border-t border-slate-200">
+    <div>昆明地铁 4 号线 · 运营生产决策大数据模型规划 | 模型 8 / 8</div>
+    <div class="mt-1">本页面为方案演示稿，可视化数据均为模拟示意</div>
+  </footer>
+</main>
+
+<script>
+const accent='#dc2626',accent2='#fb7185';
+
+// 1. Density rolling forecast
+const tD=Array.from({length:48},(_,i)=>{const t=13*60+25-30+i*2.5;const m=Math.floor(t);return Math.floor(m/60).toString().padStart(2,'0')+':'+(m%60).toString().padStart(2,'0')});
+const past=Array.from({length:24},(_,i)=>2.5+1.0*Math.sin(i/4)+(Math.random()-0.5)*0.3);
+const future=Array.from({length:24},(_,i)=>{
+  const t=i;
+  const trend=3.5+0.6*(t/24)+0.5*Math.sin(t/3);
+  const peak=t>14&&t<22?0.8*Math.exp(-Math.pow(t-18,2)/8):0;
+  return trend+peak;
+});
+const futureH=future.map(v=>v+0.4);
+const futureL=future.map(v=>v-0.4);
+echarts.init(document.getElementById('c-density')).setOption({
+  grid:{top:35,right:20,bottom:40,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis',valueFormatter:v=>v?v.toFixed(1)+' 人/m²':''},
+  xAxis:{type:'category',data:tD,axisLabel:{color:'#94a3b8',interval:5,fontSize:10},
+    axisPointer:{label:{show:false}}},
+  yAxis:{type:'value',name:'人/m²',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'实测',type:'line',data:[...past.map(v=>v.toFixed(2)),...Array(24).fill(null)],smooth:true,lineStyle:{color:'#0f172a',width:2.5},itemStyle:{color:'#0f172a'},symbol:'circle',symbolSize:4},
+    {name:'预测下界',type:'line',data:[...Array(24).fill(null),...futureL.map(v=>v.toFixed(2))],lineStyle:{opacity:0},stack:'b',symbol:'none'},
+    {name:'95% 置信带',type:'line',data:[...Array(24).fill(null),...futureH.map((v,i)=>(v-futureL[i]).toFixed(2))],lineStyle:{opacity:0},stack:'b',areaStyle:{color:'rgba(220,38,38,.18)'},symbol:'none'},
+    {name:'预测',type:'line',data:[...Array(24).fill(null),...future.map(v=>v.toFixed(2))],smooth:true,lineStyle:{color:accent,width:2.5,type:'dashed'},itemStyle:{color:accent},symbol:'diamond',symbolSize:5,
+     markLine:{symbol:'none',data:[
+       {yAxis:3.5,label:{formatter:'蓝 3.5',color:'#3b82f6'},lineStyle:{color:'#3b82f6',type:'dashed'}},
+       {yAxis:4.0,label:{formatter:'黄 4.0',color:'#f59e0b'},lineStyle:{color:'#f59e0b',type:'dashed'}},
+       {yAxis:5.0,label:{formatter:'橙 5.0',color:'#f97316'},lineStyle:{color:'#f97316',type:'dashed'}},
+       {xAxis:'13:25',lineStyle:{color:'#94a3b8',type:'solid'},label:{formatter:'now',color:'#94a3b8'}}
+     ]}}
+  ]
+});
+
+// 2. Source pie
+echarts.init(document.getElementById('c-source')).setOption({
+  tooltip:{trigger:'item',formatter:'{b}: {c}% '},
+  legend:{bottom:0,textStyle:{color:'#475569',fontSize:11}},
+  series:[{
+    type:'pie',radius:['42%','72%'],center:['50%','42%'],
+    itemStyle:{borderColor:'#fff',borderWidth:2,borderRadius:4},
+    label:{show:true,formatter:'{b}\n{d}%',color:'#475569',fontSize:11},
+    data:[
+      {name:'4 号线进站',value:42,itemStyle:{color:accent}},
+      {name:'2 号线换乘',value:24,itemStyle:{color:'#f97316'}},
+      {name:'5 号线换乘',value:18,itemStyle:{color:'#fb923c'}},
+      {name:'昆明火车站',value:11,itemStyle:{color:'#fcd34d'}},
+      {name:'下车留台',value:5,itemStyle:{color:'#fef3c7'}}
+    ]
+  }]
+});
+
+// 3. HSR pulse
+const tP=Array.from({length:48},(_,i)=>{const t=14*60+i*5;return Math.floor(t/60).toString().padStart(2,'0')+':'+(t%60).toString().padStart(2,'0')});
+const baseP=tP.map(()=>180+Math.random()*30);
+const arrivals=[
+  {idx:6,name:'G1373',amp:480},
+  {idx:14,name:'G2841',amp:380},
+  {idx:25,name:'G2987',amp:560},
+  {idx:36,name:'D8771',amp:280}
+];
+const pred=baseP.map((b,i)=>{
+  let v=b;
+  arrivals.forEach(a=>{v+=a.amp*Math.exp(-Math.pow(i-a.idx,2)/(2*1.5*1.5))});
+  return Math.round(v);
+});
+echarts.init(document.getElementById('c-pulse')).setOption({
+  grid:{top:40,right:20,bottom:40,left:55},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:tP,axisLabel:{color:'#94a3b8',interval:5,fontSize:10}},
+  yAxis:{type:'value',name:'5min 进站',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[{
+    name:'预测进站',type:'line',data:pred,smooth:true,lineStyle:{color:accent,width:2.5},itemStyle:{color:accent},symbol:'none',areaStyle:{color:'rgba(220,38,38,.20)'},
+    markLine:{symbol:'none',data:arrivals.map(a=>({xAxis:tP[a.idx],label:{formatter:a.name,color:'#dc2626',fontSize:11},lineStyle:{color:'#dc2626',type:'dashed'}}))}
+  }]
+});
+
+// 4. Replay - measures effectiveness
+const tR=Array.from({length:36},(_,i)=>{const t=20*60+i*5;return Math.floor(t/60).toString().padStart(2,'0')+':'+(t%60).toString().padStart(2,'0')});
+const noModel=tR.map((_,i)=>{return 2.5+3.0*Math.exp(-Math.pow(i-18,2)/40)+(Math.random()-0.5)*0.15});
+const withModel=tR.map((_,i)=>{return 2.5+2.2*Math.exp(-Math.pow(i-18,2)/35)+(Math.random()-0.5)*0.15});
+echarts.init(document.getElementById('c-replay')).setOption({
+  grid:{top:35,right:20,bottom:40,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis',valueFormatter:v=>v.toFixed(2)+' 人/m²'},
+  xAxis:{type:'category',data:tR,axisLabel:{color:'#94a3b8',interval:4,fontSize:10}},
+  yAxis:{type:'value',name:'人/m²',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'无模型 (历史)',type:'line',data:noModel.map(v=>v.toFixed(2)),smooth:true,lineStyle:{color:'#94a3b8',width:2,type:'dashed'},symbol:'none'},
+    {name:'有模型 (本次)',type:'line',data:withModel.map(v=>v.toFixed(2)),smooth:true,lineStyle:{color:accent,width:3},itemStyle:{color:accent},symbol:'circle',symbolSize:4,areaStyle:{color:'rgba(220,38,38,.15)'},
+     markPoint:{data:[{name:'峰值',type:'max',label:{formatter:'4.7',color:'#fff',fontSize:11},itemStyle:{color:accent}}]}}
+  ]
+});
+
+// 5. Dynamic balance flow (simple stacked area sample)
+const tB=Array.from({length:24},(_,i)=>i*2.5+'min');
+const inflow=tB.map((_,i)=>40+30*Math.sin(i/3));
+const inflow2=tB.map((_,i)=>i%5===0?180:0);  // train arrivals
+const outflow=tB.map((_,i)=>i%5===1?-220:-30);
+const popular=[];
+let pop=180;
+for(let i=0;i<24;i++){pop=Math.max(0,pop+inflow[i]+inflow2[i]+outflow[i]);popular.push(pop)}
+echarts.init(document.getElementById('c-balance')).setOption({
+  grid:{top:35,right:55,bottom:40,left:60},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:tB,axisLabel:{color:'#94a3b8',interval:1,fontSize:10}},
+  yAxis:[
+    {type:'value',name:'流量 (人)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+    {type:'value',name:'站台人数',nameTextStyle:{color:accent,fontSize:11},axisLabel:{color:accent},max:600}
+  ],
+  series:[
+    {name:'进站流入',type:'bar',stack:'flow',data:inflow,itemStyle:{color:'#22c55e'}},
+    {name:'下车流入',type:'bar',stack:'flow',data:inflow2,itemStyle:{color:'#0ea5e9'}},
+    {name:'上车流出',type:'bar',stack:'flow',data:outflow,itemStyle:{color:'#94a3b8'}},
+    {name:'站台人数',type:'line',yAxisIndex:1,data:popular,smooth:true,lineStyle:{color:accent,width:3},itemStyle:{color:accent},symbol:'circle',symbolSize:5}
+  ]
+});
+
+window.addEventListener('resize',()=>['c-density','c-source','c-pulse','c-replay','c-balance'].forEach(id=>echarts.getInstanceByDom(document.getElementById(id)).resize()));
+</script>
+</body>
+</html>

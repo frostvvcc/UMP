@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型 6 · 牵引能耗优化模型｜昆明地铁 4 号线</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#f8fafc;color:#0f172a}
+  .accent{color:#16a34a}
+  .accent-bg{background:#16a34a}
+  .accent-soft{background:#f0fdf4;color:#15803d}
+  .gradient-hero{background:linear-gradient(135deg,#14532d 0%,#15803d 50%,#22c55e 100%)}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:500}
+  .kpi-num{font-feature-settings:"tnum" 1, "lnum" 1; font-variant-numeric:tabular-nums}
+  .section-title{font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .ribbon{position:absolute;top:0;left:0;width:6px;height:100%;border-radius:14px 0 0 14px;background:#16a34a}
+  table.df th,table.df td{padding:.55rem .8rem;font-size:13.5px}
+  table.df thead th{background:#f1f5f9;color:#334155;font-weight:600;text-align:left}
+  table.df tbody tr:nth-child(odd){background:#f8fafc}
+  .tag-ok{background:#dcfce7;color:#166534}
+  .tag-warn{background:#fef9c3;color:#854d0e}
+  .h-chart{height:340px}
+</style>
+</head>
+<body>
+
+<header class="gradient-hero text-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-10 pb-12">
+    <div class="flex items-center gap-3 mb-5 text-emerald-100/90 text-sm">
+      <span>昆明地铁 4 号线 · 大数据决策模型方案</span><span>›</span>
+      <span>能耗管控决策域</span><span>›</span><span class="text-white">模型 6</span>
+    </div>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="chip bg-white/15 text-white">能耗管控 · Energy</span>
+          <span class="chip bg-white/15 text-white">优化决策 · 物理仿真</span>
+          <span class="chip bg-emerald-400/20 text-emerald-100">远期推进</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">牵引能耗优化模型</h1>
+        <p class="mt-3 text-emerald-100/95 max-w-3xl text-[15px] leading-relaxed">
+          通过<b>区间速度策略优化</b>与<b>运行图能耗协同</b>，降低 4 号线全线牵引能耗、提升再生制动利用率。
+          牵引能耗占总能耗 40-50%，是降本杠杆最大的单项。
+        </p>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">3-5<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-emerald-100/80 mt-1">年牵引电耗降幅</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">≥3-5<span class="text-base font-medium ml-0.5">pp</span></div>
+          <div class="text-xs text-emerald-100/80 mt-1">再生能量直接吸收率</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">81<span class="text-base font-medium ml-0.5">kPa</span></div>
+          <div class="text-xs text-emerald-100/80 mt-1">高原 Davis 修正</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+
+  <!-- 模型工作原理 · 一图速览 -->
+  <section class="card p-6 lg:p-8">
+    <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
+      <div>
+        <h2 class="section-title accent">模型工作原理 · 一图速览</h2>
+        <p class="text-sm text-slate-500 mt-1">物理基础 · 三层优化 · 方案输出 · 安全审核</p>
+      </div>
+      <span class="chip accent-soft">物理仿真 + 动态规划</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#bbf7d0;background:#f0fdf4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#16a34a">1</span>
+          <span class="font-semibold text-sm" style="color:#14532d">物理基础</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>线路纵断面 (坡度/曲线)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>列车牵引/制动特性曲线</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span><b>高原 81kPa Davis 修正</b></span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>蓄电池 SOC 约束</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>供电分区/回馈装置</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #4ade80"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#86efac;background:#dcfce7">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#14532d">2</span>
+          <span class="font-semibold text-sm" style="color:#14532d">三层优化</span>
+        </div>
+        <div class="space-y-1.5">
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-green-200"><b class="text-green-700">L1</b> 列车运行仿真引擎</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-green-200"><b class="text-green-700">L2</b> 区间速度策略 DP</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-green-200"><b class="text-green-700">L3</b> 运行图能耗协同</div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-green-200 text-[11px] text-slate-500 leading-relaxed">
+          目标: 净能耗最小<br>策略: 惰行切入 + 邻车吸收
+        </div>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #4ade80"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#86efac;background:#dcfce7">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#14532d">3</span>
+          <span class="font-semibold text-sm" style="color:#14532d">方案输出</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>区间最优<b>速度策略表</b></span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>ATO 参数文件</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>运行图微调建议 (秒级)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>能耗对标报告 (日)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>再生能量利用率分析</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #4ade80"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#bbf7d0;background:#f0fdf4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#16a34a">4</span>
+          <span class="font-semibold text-sm" style="color:#14532d">安全审核 + 采纳</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span>🛡️</span><span>限速/最小间隔校验</span></li>
+          <li class="flex items-start gap-1.5"><span>🔋</span><span>SOC ≥ 30% 安全裕度</span></li>
+          <li class="flex items-start gap-1.5"><span>👷</span><span>车辆+信号专业审核</span></li>
+          <li class="flex items-start gap-1.5"><span>🔁</span><span>与<b>模型 2</b> 协同迭代</span></li>
+          <li class="flex items-start gap-1.5"><span>✅</span><span>调度审核后实施</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2 relative">
+      <div class="ribbon"></div>
+      <h2 class="section-title accent">业务目标 · 4 号线硬件优势</h2>
+      <p class="mt-3 text-slate-700 leading-relaxed">
+        4 号线在牵引能耗优化方面具备<b>两项硬件优势 + 一项独特优化空间</b>：
+      </p>
+      <div class="grid sm:grid-cols-3 gap-4 mt-4">
+        <div class="bg-emerald-50 rounded-lg p-4">
+          <div class="text-xs text-emerald-700 mb-1">硬件优势 1</div>
+          <div class="font-semibold text-slate-800">取消车载制动电阻</div>
+          <p class="text-xs text-slate-500 mt-1">从系统层面杜绝电阻耗散</p>
+        </div>
+        <div class="bg-emerald-50 rounded-lg p-4">
+          <div class="text-xs text-emerald-700 mb-1">硬件优势 2</div>
+          <div class="font-semibold text-slate-800">地面能量回馈装置</div>
+          <p class="text-xs text-slate-500 mt-1">兜底回收逆变至中压配电网</p>
+        </div>
+        <div class="bg-emerald-50 rounded-lg p-4">
+          <div class="text-xs text-emerald-700 mb-1">优化空间</div>
+          <div class="font-semibold text-slate-800">运行图未做能耗协同</div>
+          <p class="text-xs text-slate-500 mt-1">让制动列车的再生能量被邻车吸收</p>
+        </div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent">三层架构</h2>
+      <ol class="mt-4 space-y-3 text-sm">
+        <li class="flex gap-3"><span class="accent-soft chip">L1</span><div><b>列车运行仿真引擎</b><div class="text-slate-500 text-xs">Davis 公式 + 81kPa 高原修正</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L2</span><div><b>区间速度策略优化 (DP)</b><div class="text-slate-500 text-xs">惰行切入点 + 终止速度</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L3</span><div><b>运行图能耗协同优化</b><div class="text-slate-500 text-xs">发车时刻微调最大化邻车吸收</div></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title accent mb-5">三大决策场景</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 1 · 离线</div>
+        <div class="font-bold text-lg">运行图能耗协同优化</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">在编图后做牵引能耗仿真评估，对发车时刻微调（秒-十秒级），最大化制动-牵引时间重叠。</p>
+      </div>
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 2 · 离线辅助</div>
+        <div class="font-bold text-lg">区间速度策略优化</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">基于线路纵断面 + 高原空气阻力，输出每个站间区间的「推荐驾驶操纵曲线 / ATO 参数表」。</p>
+      </div>
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 3 · 在线监测</div>
+        <div class="font-bold text-lg">能耗对标与归因</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">实际牵引能耗 vs 仿真基线，分析偏差是运行图调整、限速、列车性能还是驾驶差异。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">区间速度策略优化前后对比（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">小菜园站 → 火车北站区间 · 1.6km · 87s 运行时分</p>
+        </div>
+        <span class="chip tag-ok">能耗 ↓ 7.2%</span>
+      </div>
+      <div id="c-speed" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title">再生能量利用率</h2>
+      <p class="text-sm text-slate-500 mt-1">优化前 vs 优化后</p>
+      <div id="c-regen" class="h-chart"></div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">28 区间能耗分布（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">优化潜力排序，深绿 = 节能空间最大</p>
+        </div>
+      </div>
+      <div id="c-segs" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">运行图微调 · 邻车吸收时间窗（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">同一供电区段内列车制动-牵引时序</p>
+        </div>
+      </div>
+      <div id="c-timing" class="h-chart"></div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">日内牵引能耗 · 实际 vs 仿真基线</h2>
+          <p class="text-sm text-slate-500 mt-1">2026-04-26 全日 · 偏差归因</p>
+        </div>
+      </div>
+      <div id="c-track" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">高原修正影响（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">81kPa 空气密度 → 阻力降低 ≈ 20%</p>
+        </div>
+      </div>
+      <div id="c-davis" class="h-chart"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title accent mb-5">4 号线特色适配</h2>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">蓄电池牵引特殊性</div>
+        <div class="font-bold mt-1">能量约束维度</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          无架空线区段优化变为<b>带能量约束的优化问题</b>：「区间能耗不超过电池能量」+「到达有架空线区段时 SOC ≥ 30%」。
+          避免激进节能策略加速电池衰减，与模型 3 联动。
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">回馈装置容量约束</div>
+        <div class="font-bold mt-1">峰值错开优化</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          多车同时制动 + 回馈装置接近满载时，优先级从「邻车吸收率」升级为<b>「错开制动峰值」</b>，
+          避免回馈装置过载导致制动方式切换。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">技术评估指标</h2>
+      <table class="df w-full">
+        <thead><tr><th>评估维度</th><th>指标</th><th>目标</th></tr></thead>
+        <tbody>
+          <tr><td>仿真精度</td><td>区间能耗 MAPE</td><td><b class="accent">≤ 5%</b></td></tr>
+          <tr><td>速度策略节能</td><td>较当前策略降幅</td><td><b class="accent">5-8%</b></td></tr>
+          <tr><td>运行图协同</td><td>再生利用率提升</td><td><b class="accent">≥ 3-5pp</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">业务效果指标</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">¥</span>
+          <div><b>全线牵引能耗降低</b> <b class="accent">3%-5%</b>，年度电费节省可观</div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">♻</span>
+          <div><b>再生能量综合利用率</b>稳定在较高水平（直接吸收 + 回馈）</div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">🔋</span>
+          <div><b>电池健康度正向协同</b>：避免极端深放电，1-2 年后可观察衰减改善</div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">📐</span>
+          <div><b>驾驶能耗标准化</b>：区间能耗变异系数降低 <b class="accent">≥ 20%</b></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pt-6 border-t border-slate-200">
+    <div>昆明地铁 4 号线 · 运营生产决策大数据模型规划 | 模型 6 / 8</div>
+    <div class="mt-1">本页面为方案演示稿，可视化数据均为模拟示意</div>
+  </footer>
+</main>
+
+<script>
+const accent='#16a34a',accent2='#4ade80';
+
+// 1. Speed strategy curve - position vs speed
+const pos=Array.from({length:80},(_,i)=>i/80*1.6);  // 0-1.6km
+function curBaseline(){
+  return pos.map(x=>{
+    if(x<0.25)return Math.min(80,90*(x/0.25));   // accel
+    if(x<1.35)return 80;                          // cruise
+    return Math.max(0,80*(1-(x-1.35)/0.25));     // brake
+  });
+}
+function curOpt(){
+  return pos.map(x=>{
+    if(x<0.22)return Math.min(82,95*(x/0.22));   // strong accel
+    if(x<0.55)return 82;                          // brief cruise
+    if(x<1.30)return 82-(x-0.55)/0.75*22;        // coasting
+    return Math.max(0,60*(1-(x-1.30)/0.30));     // brake
+  });
+}
+echarts.init(document.getElementById('c-speed')).setOption({
+  grid:{top:35,right:20,bottom:40,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:pos.map(p=>p.toFixed(2)),name:'里程 (km)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8',interval:9}},
+  yAxis:{type:'value',name:'速度 (km/h)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'当前策略',type:'line',data:curBaseline(),smooth:true,lineStyle:{color:'#94a3b8',width:2,type:'dashed'},symbol:'none',areaStyle:{color:'rgba(148,163,184,.10)'}},
+    {name:'优化策略 (惰行)',type:'line',data:curOpt(),smooth:true,lineStyle:{color:accent,width:3},symbol:'none',areaStyle:{color:'rgba(34,197,94,.18)'},
+     markPoint:{data:[{name:'惰行切入',xAxis:'0.55',yAxis:82,symbolSize:50,itemStyle:{color:accent},label:{formatter:'惰行段',color:'#fff',fontSize:10,fontWeight:600}}]}}
+  ]
+});
+
+// 2. Regen utilization donut
+echarts.init(document.getElementById('c-regen')).setOption({
+  tooltip:{trigger:'item',formatter:'{b}: {c}% '},
+  legend:{bottom:0,textStyle:{color:'#475569',fontSize:11}},
+  series:[
+    {type:'pie',radius:['28%','40%'],center:['50%','42%'],
+     itemStyle:{borderColor:'#fff',borderWidth:2},
+     label:{position:'inside',formatter:'{d}%',color:'#fff',fontSize:11,fontWeight:600},
+     data:[
+       {name:'优化前-邻车吸收',value:38,itemStyle:{color:'#94a3b8'}},
+       {name:'优化前-回馈装置',value:42,itemStyle:{color:'#cbd5e1'}},
+       {name:'优化前-损耗',value:20,itemStyle:{color:'#e2e8f0'}}
+     ]},
+    {type:'pie',radius:['52%','72%'],center:['50%','42%'],
+     itemStyle:{borderColor:'#fff',borderWidth:2},
+     label:{position:'outside',formatter:'{b}\n{d}%',color:'#475569',fontSize:11},
+     data:[
+       {name:'邻车直接吸收',value:46,itemStyle:{color:accent}},
+       {name:'回馈装置回收',value:38,itemStyle:{color:accent2}},
+       {name:'线路损耗',value:16,itemStyle:{color:'#bbf7d0'}}
+     ]}
+  ]
+});
+
+// 3. Segment energy bars
+const segs=Array.from({length:14},(_,i)=>'区间'+(i+1));
+const e1=segs.map(()=>180+Math.random()*120);
+const opt=e1.map(v=>v*(0.92+Math.random()*0.05));
+const saving=e1.map((v,i)=>v-opt[i]);
+echarts.init(document.getElementById('c-segs')).setOption({
+  grid:{top:35,right:20,bottom:50,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:segs,axisLabel:{color:'#64748b',fontSize:10,rotate:30}},
+  yAxis:{type:'value',name:'kWh',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'优化后能耗',type:'bar',stack:'e',data:opt.map(v=>Math.round(v)),itemStyle:{color:accent,borderRadius:[0,0,0,0]}},
+    {name:'节约',type:'bar',stack:'e',data:saving.map(v=>Math.round(v)),itemStyle:{color:'#bbf7d0',borderRadius:[4,4,0,0]}}
+  ]
+});
+
+// 4. Timing alignment
+const tl=Array.from({length:60},(_,i)=>i*5);
+function tractionPower(off,dur){
+  return tl.map(t=>{
+    const x=t-off;
+    if(x<0||x>dur)return 0;
+    if(x<dur*0.3)return 1200*(x/(dur*0.3));
+    if(x<dur*0.6)return 1200;
+    return 1200*(1-(x-dur*0.6)/(dur*0.4));
+  });
+}
+function brake(off,dur,amp){
+  return tl.map(t=>{
+    const x=t-off;
+    if(x<0||x>dur)return 0;
+    return -amp*Math.sin(Math.PI*x/dur);
+  });
+}
+const trA=tractionPower(20,40);
+const brB_orig=brake(80,40,1100);
+const brB_opt=brake(40,40,1100);
+echarts.init(document.getElementById('c-timing')).setOption({
+  grid:{top:35,right:20,bottom:35,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:tl.map(t=>t+'s'),axisLabel:{color:'#94a3b8',fontSize:10,interval:5}},
+  yAxis:{type:'value',name:'功率 (kW)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'A 车牵引',type:'line',data:trA,smooth:true,lineStyle:{color:accent,width:2.5},symbol:'none',areaStyle:{color:'rgba(34,197,94,.20)'}},
+    {name:'B 车制动 · 优化前',type:'line',data:brB_orig,smooth:true,lineStyle:{color:'#94a3b8',width:2,type:'dashed'},symbol:'none'},
+    {name:'B 车制动 · 优化后',type:'line',data:brB_opt,smooth:true,lineStyle:{color:'#0ea5e9',width:2.5},symbol:'none',areaStyle:{color:'rgba(14,165,233,.20)'}}
+  ]
+});
+
+// 5. Track day energy
+const hh=Array.from({length:18},(_,i)=>(i+6).toString().padStart(2,'0')+':00');
+const sim=hh.map((_,i)=>{const h=i+6;return 800+1200*Math.exp(-Math.pow(h-8,2)/4)+1100*Math.exp(-Math.pow(h-18,2)/4)+150*Math.random()});
+const act=sim.map(v=>v*(0.96+Math.random()*0.10));
+echarts.init(document.getElementById('c-track')).setOption({
+  grid:{top:35,right:20,bottom:40,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:hh,axisLabel:{color:'#64748b'}},
+  yAxis:{type:'value',name:'kWh/h',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'仿真基线',type:'line',data:sim.map(Math.round),smooth:true,lineStyle:{color:accent,width:2.5,type:'dashed'},symbol:'none',areaStyle:{color:'rgba(34,197,94,.10)'}},
+    {name:'实际能耗',type:'line',data:act.map(Math.round),smooth:true,lineStyle:{color:'#0f172a',width:3},itemStyle:{color:'#0f172a'},symbol:'circle',symbolSize:5}
+  ]
+});
+
+// 6. Davis comparison
+const v=Array.from({length:9},(_,i)=>20+i*10);
+const fStd=v.map(s=>0.8+0.0028*s+0.000077*s*s);   // standard atm
+const fHigh=v.map(s=>0.8+0.0028*s+0.000077*s*s*0.80);  // 81kPa air density
+echarts.init(document.getElementById('c-davis')).setOption({
+  grid:{top:35,right:20,bottom:40,left:60},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:v.map(s=>s+''),name:'速度 km/h',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'}},
+  yAxis:{type:'value',name:'阻力 (N/t)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'平原 (101.3kPa)',type:'line',data:fStd.map(v=>v.toFixed(2)),smooth:true,lineStyle:{color:'#94a3b8',width:2,type:'dashed'},symbol:'none'},
+    {name:'昆明 (81kPa)',type:'line',data:fHigh.map(v=>v.toFixed(2)),smooth:true,lineStyle:{color:accent,width:3},symbol:'circle',symbolSize:6,itemStyle:{color:accent}}
+  ]
+});
+
+window.addEventListener('resize',()=>['c-speed','c-regen','c-segs','c-timing','c-track','c-davis'].forEach(id=>echarts.getInstanceByDom(document.getElementById(id)).resize()));
+</script>
+</body>
+</html>

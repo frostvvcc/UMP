@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型 4 · 故障智能诊断与根因定位模型｜昆明地铁 4 号线</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#f8fafc;color:#0f172a}
+  .accent{color:#ea580c}
+  .accent-bg{background:#ea580c}
+  .accent-soft{background:#fff7ed;color:#9a3412}
+  .gradient-hero{background:linear-gradient(135deg,#7c2d12 0%,#c2410c 50%,#f97316 100%)}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:500}
+  .kpi-num{font-feature-settings:"tnum" 1, "lnum" 1; font-variant-numeric:tabular-nums}
+  .section-title{font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .ribbon{position:absolute;top:0;left:0;width:6px;height:100%;border-radius:14px 0 0 14px;background:#ea580c}
+  table.df th,table.df td{padding:.55rem .8rem;font-size:13.5px}
+  table.df thead th{background:#f1f5f9;color:#334155;font-weight:600;text-align:left}
+  table.df tbody tr:nth-child(odd){background:#f8fafc}
+  .tag-ok{background:#dcfce7;color:#166534}
+  .tag-warn{background:#fef9c3;color:#854d0e}
+  .tag-new{background:#fee2e2;color:#991b1b}
+  .h-chart{height:360px}
+  .case-card{border-left:3px solid #ea580c;background:#fff7ed;padding:12px 14px;border-radius:0 8px 8px 0}
+  .evidence{display:flex;justify-content:space-between;padding:8px 12px;background:#fff;border-radius:6px;border:1px solid #fde68a;font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="gradient-hero text-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-10 pb-12">
+    <div class="flex items-center gap-3 mb-5 text-orange-100/90 text-sm">
+      <span>昆明地铁 4 号线 · 大数据决策模型方案</span><span>›</span>
+      <span>设备运维决策域</span><span>›</span><span class="text-white">模型 4</span>
+    </div>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="chip bg-white/15 text-white">设备运维 · Equipment</span>
+          <span class="chip bg-white/15 text-white">知识推理 + 案例匹配</span>
+          <span class="chip bg-emerald-400/20 text-emerald-100">第一批</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">故障智能诊断与根因定位模型</h1>
+        <p class="mt-3 text-orange-100/95 max-w-3xl text-[15px] leading-relaxed">
+          辅助检修人员快速定位根因 / 匹配最优处置方案，缩短 MTTR、提高一次修复成功率。
+          沉淀<b>30 年 PPP 运营期</b>的设备故障知识资产，应对人员代际交替的经验断层。
+        </p>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">≥85<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-orange-100/80 mt-1">Top-3 覆盖率</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">≤30<span class="text-base font-medium ml-0.5">s</span></div>
+          <div class="text-xs text-orange-100/80 mt-1">端到端响应</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">↓25<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-orange-100/80 mt-1">MTTR 缩短</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+
+  <!-- 模型工作原理 · 一图速览 -->
+  <section class="card p-6 lg:p-8">
+    <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
+      <div>
+        <h2 class="section-title accent">模型工作原理 · 一图速览</h2>
+        <p class="text-sm text-slate-500 mt-1">报警触发 · 知识库三引擎 · 诊断报告 · 工单闭环</p>
+      </div>
+      <span class="chip accent-soft">规则推理 · 完全可追溯</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fed7aa;background:#fff7ed">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#ea580c">1</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">触发输入</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span>故障<b>报警代码</b></span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span>故障前 ±30min 状态时序</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span>该设备维修历史 6m</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span><b>模型 3</b> 健康度趋势</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span>同类设备故障统计</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#fb923c">●</span><span>当时环境参数</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #fb923c"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fdba74;background:#ffedd5">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#7c2d12">2</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">知识库三引擎</span>
+        </div>
+        <div class="space-y-1.5">
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-orange-200"><b class="text-orange-700">①</b> 知识库匹配 (FMEA+NLP)</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-orange-200"><b class="text-orange-700">②</b> 加权证据推理排序</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-orange-200"><b class="text-orange-700">③</b> DTW 案例检索 Top-5</div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-orange-200 text-[11px] text-slate-500 leading-relaxed">
+          推理过程可追溯，检修人员可看到完整证据链
+        </div>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #fb923c"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fdba74;background:#ffedd5">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#7c2d12">3</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">诊断报告</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>根因排序 +<b>置信度 %</b></span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>每条原因的支撑证据链</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>分步处置指引</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>所需备件/工具清单</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#ea580c">▸</span><span>Top-5 相似历史案例</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #fb923c"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#fed7aa;background:#fff7ed">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#ea580c">4</span>
+          <span class="font-semibold text-sm" style="color:#7c2d12">工单闭环</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span>📱</span><span>≤ 30s 移动端推送</span></li>
+          <li class="flex items-start gap-1.5"><span>📋</span><span>诊断卡嵌入工单</span></li>
+          <li class="flex items-start gap-1.5"><span>✍️</span><span>实际处置反馈录入</span></li>
+          <li class="flex items-start gap-1.5"><span>🧠</span><span>新模式自动入库建议</span></li>
+          <li class="flex items-start gap-1.5"><span>🎓</span><span>案例库 → 培训教材</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2 relative">
+      <div class="ribbon"></div>
+      <h2 class="section-title accent">业务目标 · 隐性知识结构化</h2>
+      <p class="mt-3 text-slate-700 leading-relaxed">
+        4 号线 5 年积累了大量故障工单与处置经验，但分散在<b>资深人员头脑中（隐性）</b>和<b>工单系统自由文本中（半结构化）</b>。
+        新人面对不熟悉故障时缺乏系统化决策支持。模型将经验固化为<b>可复用、可传承</b>的知识资产。
+      </p>
+      <div class="grid sm:grid-cols-3 gap-4 mt-5">
+        <div class="bg-orange-50 rounded-lg p-4">
+          <div class="text-xs text-orange-700 mb-1">在线诊断</div>
+          <div class="font-semibold text-slate-800">秒级根因排序</div>
+        </div>
+        <div class="bg-orange-50 rounded-lg p-4">
+          <div class="text-xs text-orange-700 mb-1">深度分析</div>
+          <div class="font-semibold text-slate-800">天窗期多源关联</div>
+        </div>
+        <div class="bg-orange-50 rounded-lg p-4">
+          <div class="text-xs text-orange-700 mb-1">知识传承</div>
+          <div class="font-semibold text-slate-800">案例库情景训练</div>
+        </div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent">三层架构</h2>
+      <ol class="mt-4 space-y-3 text-sm">
+        <li class="flex gap-3"><span class="accent-soft chip">L1</span><div><b>结构化故障知识库</b><div class="text-slate-500 text-xs">FMEA 骨架 + NLP 工单提取 + 专家萃取</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L2</span><div><b>多源关联推理引擎</b><div class="text-slate-500 text-xs">规则推理 + 加权证据评分（可追溯）</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L3</span><div><b>相似案例检索</b><div class="text-slate-500 text-xs">DTW + 多维相似度 → Top-5 案例</div></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 实时诊断卡片 - 模拟 -->
+  <section class="card p-6">
+    <h2 class="section-title accent mb-4">实时诊断结果卡片（模拟）</h2>
+    <div class="grid lg:grid-cols-3 gap-5">
+      <div class="lg:col-span-2 space-y-4">
+        <div class="case-card">
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="chip" style="background:#fee2e2;color:#991b1b">🚨 实时报警</span>
+              <span class="text-sm text-slate-500 ml-2">04:32:18 · 04# 列车 · 西山公园站</span>
+            </div>
+            <span class="text-xs text-slate-500">响应耗时 18s</span>
+          </div>
+          <div class="mt-2 font-semibold text-slate-800">报警: 蓄电池组 B 电压异常偏低 (BAT_LOW_VOLT)</div>
+          <div class="text-sm text-slate-600 mt-1">📍 影响范围: 04# 列车 · 当前牵引功率受限至 70%</div>
+        </div>
+
+        <div>
+          <div class="text-sm font-semibold text-slate-700 mb-2">候选根因排序（加权证据评分）</div>
+          <div class="space-y-2">
+            <div class="bg-white border border-orange-200 rounded-lg p-3">
+              <div class="flex justify-between items-center">
+                <div class="font-semibold text-slate-800">A · 电池单体内部短路</div>
+                <div class="flex items-center gap-2">
+                  <div class="w-32 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full" style="width:55%;background:#dc2626"></div></div>
+                  <span class="text-sm font-bold accent">55%</span>
+                </div>
+              </div>
+              <div class="text-xs text-slate-500 mt-1.5">证据: 模型 3 健康度近 30 天降 8 分 + 内阻同批均值 1.8 倍</div>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-lg p-3">
+              <div class="flex justify-between items-center">
+                <div class="font-semibold text-slate-800">C · 电池组深度放电后未充分恢复</div>
+                <div class="flex items-center gap-2">
+                  <div class="w-32 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full" style="width:30%;background:#f59e0b"></div></div>
+                  <span class="text-sm font-bold" style="color:#f59e0b">30%</span>
+                </div>
+              </div>
+              <div class="text-xs text-slate-500 mt-1.5">证据: 故障前 24h 完成 4 个无架空线区段交路</div>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-lg p-3">
+              <div class="flex justify-between items-center">
+                <div class="font-semibold text-slate-800">B · BMS 采样线路接触不良</div>
+                <div class="flex items-center gap-2">
+                  <div class="w-32 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full" style="width:15%;background:#94a3b8"></div></div>
+                  <span class="text-sm font-bold text-slate-500">15%</span>
+                </div>
+              </div>
+              <div class="text-xs text-slate-500 mt-1.5">证据: BMS vs TCMS 采样一致性偏差 &lt; 2%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-slate-50 rounded-lg p-4">
+          <div class="text-xs text-slate-500">推荐处置（按 A 原因）</div>
+          <ol class="text-sm text-slate-700 mt-2 space-y-1.5 list-decimal pl-5">
+            <li>列车安排<b>降级运行</b>至五华站换班</li>
+            <li>返车辆段安排电池组 B 离线检测</li>
+            <li>执行单体放电曲线测试 (预计 90min)</li>
+            <li>更换可疑单体 (备件库存: 8 组)</li>
+          </ol>
+          <div class="mt-3 pt-3 border-t border-slate-200 text-xs text-slate-500">
+            预计处置时间: <b class="text-slate-700">3.5h</b> · 影响列车: <b class="text-slate-700">04#</b>
+          </div>
+        </div>
+        <div class="bg-slate-50 rounded-lg p-4">
+          <div class="text-xs text-slate-500">相似历史案例</div>
+          <ul class="text-sm text-slate-700 mt-2 space-y-2">
+            <li class="flex justify-between"><span>2025-08 · 11# 同型故障</span><span class="text-xs text-slate-400">相似 92%</span></li>
+            <li class="flex justify-between"><span>2024-11 · 26# 单体短路</span><span class="text-xs text-slate-400">相似 84%</span></li>
+            <li class="flex justify-between"><span>2024-05 · 03# 类似处置</span><span class="text-xs text-slate-400">相似 78%</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 三大决策场景 -->
+  <section>
+    <h2 class="section-title accent mb-5">三大决策场景</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 1 · 实时</div>
+        <div class="font-bold text-lg">正线运营故障快速诊断</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">秒级返回根因排序 + 处置步骤 + 预计时间，调度员同步获取故障影响评估。</p>
+      </div>
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 2 · 离线</div>
+        <div class="font-bold text-lg">天窗期根因深度分析</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">整合故障前时间窗口全维度数据，多源关联输出根因概率排序与证据链。</p>
+      </div>
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">辅助场景</div>
+        <div class="font-bold text-lg">检修培训与知识传承</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">案例库支持「基于真实案例的情景模拟训练」，缩短新人独立上岗周期。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 知识库统计 + 模型表现 -->
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">知识库覆盖度（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">三类设备 vs 全量已知故障模式</p>
+        </div>
+      </div>
+      <div id="c-cover" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">MTTR 与一次修复率趋势（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">2025-10 上线 → 2026-04 半年表现</p>
+        </div>
+      </div>
+      <div id="c-mttr" class="h-chart"></div>
+    </div>
+  </section>
+
+  <!-- Sankey 故障流向 -->
+  <section class="card p-6">
+    <h2 class="section-title accent mb-3">故障流向 · 报警 → 根因 → 处置（模拟）</h2>
+    <p class="text-sm text-slate-500 mb-4">蓄电池系统 2026-Q1 故障样本 (148 起)</p>
+    <div id="c-sankey" style="height:420px"></div>
+  </section>
+
+  <!-- 适配 -->
+  <section>
+    <h2 class="section-title accent mb-5">4 号线特色适配</h2>
+    <div class="grid md:grid-cols-4 gap-5">
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">蓄电池系统</div>
+        <div class="font-bold mt-1">从零构建知识库</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">行业首创技术 → 自有 5 年案例为种子 + 制造商深度合作 + 「发现-记录-验证-入库」快速沉淀。</p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">多系统耦合</div>
+        <div class="font-bold mt-1">跨系统关联分析</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">电池低 SOC → 同时影响牵引 + 辅助 + 空调，识别共同根因避免反复排查。</p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">高原环境</div>
+        <div class="font-bold mt-1">先验概率修正</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">低气压 → 局部放电、绝缘击穿在昆明发生概率高于平原，知识库标注高原概率修正因子。</p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">运维团队年轻化</div>
+        <div class="font-bold mt-1">长期知识资产</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">知识贡献纳入绩效考核；30 年运营期内多轮人员交替，价值随时间增长。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">技术评估指标</h2>
+      <table class="df w-full">
+        <thead><tr><th>评估维度</th><th>指标</th><th>目标</th></tr></thead>
+        <tbody>
+          <tr><td>诊断准确性</td><td>Top-1 命中率</td><td><b class="accent">≥ 60%</b></td></tr>
+          <tr><td>诊断覆盖性</td><td>Top-3 覆盖率</td><td><b class="accent">≥ 85%</b></td></tr>
+          <tr><td>诊断时效</td><td>端到端响应时间</td><td><b class="accent">≤ 30 秒</b></td></tr>
+          <tr><td>知识库覆盖度</td><td>已收录故障模式占比</td><td><b class="accent">第一批 ≥ 80%</b></td></tr>
+          <tr><td>案例库规模</td><td>结构化有效案例数</td><td><b class="accent">上线 ≥ 500 / 年增 ≥ 200</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">业务效果指标</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">⏱</span>
+          <div><b>MTTR 缩短</b>：第一批三类设备 <b class="accent">≥ 25%</b>，正线故障 <b class="accent">≥ 30%</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">✓</span>
+          <div><b>一次修复成功率</b>提升 <b class="accent">≥ 15 个百分点</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">🎓</span>
+          <div><b>新人独立上岗周期</b>缩短 <b class="accent">≥ 30%</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">📚</span>
+          <div><b>知识库使用率</b>：上线 6 个月 <b class="accent">≥ 60%</b></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pt-6 border-t border-slate-200">
+    <div>昆明地铁 4 号线 · 运营生产决策大数据模型规划 | 模型 4 / 8</div>
+    <div class="mt-1">本页面为方案演示稿，可视化数据均为模拟示意</div>
+  </footer>
+</main>
+
+<script>
+const accent='#ea580c',accent2='#fb923c';
+
+// Coverage
+echarts.init(document.getElementById('c-cover')).setOption({
+  grid:{top:30,right:20,bottom:35,left:90},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  yAxis:{type:'category',data:['屏蔽门','道岔','蓄电池'],axisLabel:{color:'#475569'}},
+  series:[
+    {name:'已收录',type:'bar',data:[88,82,76],stack:'cov',itemStyle:{color:accent,borderRadius:[0,2,2,0]},label:{show:true,position:'inside',formatter:'{c}%',color:'#fff',fontWeight:600}},
+    {name:'待补充',type:'bar',data:[12,18,24],stack:'cov',itemStyle:{color:'#fed7aa',borderRadius:[0,4,4,0]},label:{show:true,position:'right',formatter:'{c}%',color:'#9a3412'}}
+  ]
+});
+
+// MTTR trend
+const months=['2025-10','11','12','2026-01','02','03','04'];
+const mttr=[185,170,158,145,132,118,108];   // minutes
+const fix=[58,62,68,72,76,80,82];           // first-fix %
+echarts.init(document.getElementById('c-mttr')).setOption({
+  grid:{top:35,right:55,bottom:40,left:55},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:months,axisLabel:{color:'#64748b'}},
+  yAxis:[
+    {type:'value',name:'MTTR (min)',nameTextStyle:{color:accent,fontSize:11},axisLabel:{color:accent},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+    {type:'value',name:'一次修复率 %',nameTextStyle:{color:'#16a34a',fontSize:11},axisLabel:{color:'#16a34a',formatter:'{value}%'}}
+  ],
+  series:[
+    {name:'平均 MTTR',type:'bar',data:mttr,itemStyle:{color:accent,borderRadius:[4,4,0,0]},barWidth:18},
+    {name:'一次修复率',type:'line',yAxisIndex:1,data:fix,smooth:true,lineStyle:{color:'#16a34a',width:3},itemStyle:{color:'#16a34a'},symbol:'circle',symbolSize:7}
+  ]
+});
+
+// Sankey: alarm -> root cause -> solution
+echarts.init(document.getElementById('c-sankey')).setOption({
+  tooltip:{trigger:'item'},
+  series:[{
+    type:'sankey',layout:'none',emphasis:{focus:'adjacency'},
+    nodeAlign:'left',
+    data:[
+      {name:'电压异常偏低',itemStyle:{color:'#dc2626'}},
+      {name:'温度异常',itemStyle:{color:'#f59e0b'}},
+      {name:'内阻告警',itemStyle:{color:'#ea580c'}},
+      {name:'SOC 不足',itemStyle:{color:'#fb923c'}},
+      {name:'单体内部短路',itemStyle:{color:'#7c2d12'}},
+      {name:'BMS 采样故障',itemStyle:{color:'#92400e'}},
+      {name:'深度放电后效',itemStyle:{color:'#9a3412'}},
+      {name:'冷却系统效率下降',itemStyle:{color:'#c2410c'}},
+      {name:'更换单体',itemStyle:{color:'#16a34a'}},
+      {name:'更换 BMS 采样板',itemStyle:{color:'#16a34a'}},
+      {name:'调整运行交路',itemStyle:{color:'#16a34a'}},
+      {name:'冷却风道清洁',itemStyle:{color:'#16a34a'}}
+    ],
+    links:[
+      {source:'电压异常偏低',target:'单体内部短路',value:42},
+      {source:'电压异常偏低',target:'BMS 采样故障',value:18},
+      {source:'电压异常偏低',target:'深度放电后效',value:11},
+      {source:'温度异常',target:'冷却系统效率下降',value:24},
+      {source:'温度异常',target:'单体内部短路',value:8},
+      {source:'内阻告警',target:'单体内部短路',value:21},
+      {source:'SOC 不足',target:'深度放电后效',value:24},
+      {source:'单体内部短路',target:'更换单体',value:71},
+      {source:'BMS 采样故障',target:'更换 BMS 采样板',value:18},
+      {source:'深度放电后效',target:'调整运行交路',value:35},
+      {source:'冷却系统效率下降',target:'冷却风道清洁',value:24}
+    ],
+    lineStyle:{color:'gradient',curveness:0.5,opacity:.6},
+    label:{color:'#0f172a',fontSize:12}
+  }]
+});
+
+window.addEventListener('resize',()=>['c-cover','c-mttr','c-sankey'].forEach(id=>echarts.getInstanceByDom(document.getElementById(id)).resize()));
+</script>
+</body>
+</html>

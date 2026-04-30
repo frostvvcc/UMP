@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型 5 · 站级能耗基线与异常诊断模型｜昆明地铁 4 号线</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#f8fafc;color:#0f172a}
+  .accent{color:#16a34a}
+  .accent-bg{background:#16a34a}
+  .accent-soft{background:#f0fdf4;color:#15803d}
+  .gradient-hero{background:linear-gradient(135deg,#14532d 0%,#15803d 50%,#22c55e 100%)}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:500}
+  .kpi-num{font-feature-settings:"tnum" 1, "lnum" 1; font-variant-numeric:tabular-nums}
+  .section-title{font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .ribbon{position:absolute;top:0;left:0;width:6px;height:100%;border-radius:14px 0 0 14px;background:#16a34a}
+  table.df th,table.df td{padding:.55rem .8rem;font-size:13.5px}
+  table.df thead th{background:#f1f5f9;color:#334155;font-weight:600;text-align:left}
+  table.df tbody tr:nth-child(odd){background:#f8fafc}
+  .tag-ok{background:#dcfce7;color:#166534}
+  .tag-warn{background:#fef9c3;color:#854d0e}
+  .tag-new{background:#fee2e2;color:#991b1b}
+  .h-chart{height:360px}
+</style>
+</head>
+<body>
+
+<header class="gradient-hero text-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-10 pb-12">
+    <div class="flex items-center gap-3 mb-5 text-emerald-100/90 text-sm">
+      <span>昆明地铁 4 号线 · 大数据决策模型方案</span><span>›</span>
+      <span>能耗管控决策域</span><span>›</span><span class="text-white">模型 5</span>
+    </div>
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="chip bg-white/15 text-white">能耗管控 · Energy</span>
+          <span class="chip bg-white/15 text-white">回归 + SHAP 归因</span>
+          <span class="chip bg-emerald-400/20 text-emerald-100">中期推进</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">站级能耗基线与异常诊断模型</h1>
+        <p class="mt-3 text-emerald-100/95 max-w-3xl text-[15px] leading-relaxed">
+          为 29 站建立<b>动态能耗合理区间</b>，实现「<b>实时监测 → 自动诊断 → 主动优化</b>」闭环管理。
+          区分「合理偏差」与「可优化偏差」，定位设备效率问题与运行策略问题。
+        </p>
+      </div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">29</div>
+          <div class="text-xs text-emerald-100/80 mt-1">独立站基线</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">3-5<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-emerald-100/80 mt-1">站务用电降幅</div>
+        </div>
+        <div class="bg-white/10 rounded-xl px-5 py-4 text-center backdrop-blur">
+          <div class="text-3xl font-bold kpi-num">↓90<span class="text-base font-medium ml-0.5">%</span></div>
+          <div class="text-xs text-emerald-100/80 mt-1">异常发现时效</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 lg:px-10 py-10 space-y-10">
+
+  <!-- 模型工作原理 · 一图速览 -->
+  <section class="card p-6 lg:p-8">
+    <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
+      <div>
+        <h2 class="section-title accent">模型工作原理 · 一图速览</h2>
+        <p class="text-sm text-slate-500 mt-1">多源特征 · 双模型基线 · 偏差归因 · 闭环推送</p>
+      </div>
+      <span class="chip accent-soft">XGBoost + SHAP 归因</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#bbf7d0;background:#f0fdf4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#16a34a">1</span>
+          <span class="font-semibold text-sm" style="color:#14532d">多源特征输入</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>能耗 PSCADA 分项</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>气象 (高原 + 干湿季)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>客流 (来自模型 1)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>时间周期编码</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>设备运行模式</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#4ade80">●</span><span>列车行车密度 (无排热)</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #4ade80"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#86efac;background:#dcfce7">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#14532d">2</span>
+          <span class="font-semibold text-sm" style="color:#14532d">双模型基线</span>
+        </div>
+        <div class="space-y-1.5">
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-green-200"><b class="text-green-700">A</b> 含运行模式特征</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-green-200"><b class="text-green-700">B</b> 不含运行模式</div>
+          <div class="bg-white rounded px-2.5 py-1.5 text-xs border border-green-200">XGBoost · 29 站独立训练</div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-green-200 text-[11px] text-slate-500 leading-relaxed">
+          A vs B 配合 → 区分<br>设备效率 / 策略问题
+        </div>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #4ade80"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#86efac;background:#dcfce7">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#14532d">3</span>
+          <span class="font-semibold text-sm" style="color:#14532d">偏差检测 + 归因</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>95/99% <b>动态阈值</b></span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>持续偏差累积检测</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>排除合理偏差 (气象/客流)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span>子系统定位 (环控/照明等)</span></li>
+          <li class="flex items-start gap-1.5"><span style="color:#16a34a">▸</span><span><b>SHAP</b> 量化各特征贡献</span></li>
+        </ul>
+        <div class="hidden lg:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10" style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:10px solid #4ade80"></div>
+      </div>
+      <div class="relative rounded-xl border-2 p-4" style="border-color:#bbf7d0;background:#f0fdf4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-7 h-7 rounded-md text-white text-xs font-bold flex items-center justify-center" style="background:#16a34a">4</span>
+          <span class="font-semibold text-sm" style="color:#14532d">输出推送</span>
+        </div>
+        <ul class="text-xs text-slate-700 space-y-1.5">
+          <li class="flex items-start gap-1.5"><span>📊</span><span>实时能耗监测看板</span></li>
+          <li class="flex items-start gap-1.5"><span>⚠️</span><span>异常诊断推送 (秒级)</span></li>
+          <li class="flex items-start gap-1.5"><span>📈</span><span>月度能耗分析报告</span></li>
+          <li class="flex items-start gap-1.5"><span>💡</span><span>运行策略优化建议</span></li>
+          <li class="flex items-start gap-1.5"><span>📅</span><span>年度预算量化支撑</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2 relative">
+      <div class="ribbon"></div>
+      <h2 class="section-title accent">业务目标 · 三层价值</h2>
+      <div class="grid sm:grid-cols-3 gap-4 mt-4">
+        <div class="bg-emerald-50 rounded-lg p-4">
+          <div class="text-xs text-emerald-700 mb-1">异常发现</div>
+          <div class="font-semibold text-slate-800">月度 → 小时级</div>
+          <p class="text-xs text-slate-500 mt-1">局部空调效率下降不再被月度总量淹没</p>
+        </div>
+        <div class="bg-emerald-50 rounded-lg p-4">
+          <div class="text-xs text-emerald-700 mb-1">量化决策支撑</div>
+          <div class="font-semibold text-slate-800">动态合理基线</div>
+          <p class="text-xs text-slate-500 mt-1">节能效果可精确剥离气象/客流影响</p>
+        </div>
+        <div class="bg-emerald-50 rounded-lg p-4">
+          <div class="text-xs text-emerald-700 mb-1">PPP 成本控制</div>
+          <div class="font-semibold text-slate-800">30 年累计可观</div>
+          <p class="text-xs text-slate-500 mt-1">每年 2-3% 节省 × 30 年的复利价值</p>
+        </div>
+      </div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent">三层架构</h2>
+      <ol class="mt-4 space-y-3 text-sm">
+        <li class="flex gap-3"><span class="accent-soft chip">L1</span><div><b>动态基线预测</b><div class="text-slate-500 text-xs">XGBoost · 双模型 (含/不含运行模式)</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L2</span><div><b>偏差检测</b><div class="text-slate-500 text-xs">动态阈值 · 95/99% 置信区间</div></div></li>
+        <li class="flex gap-3"><span class="accent-soft chip">L3</span><div><b>SHAP 归因诊断</b><div class="text-slate-500 text-xs">区分设备效率 vs 运行策略问题</div></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title accent mb-5">三大决策场景</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 1 · 实时</div>
+        <div class="font-bold text-lg">日内能耗监测与异常预警</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">每个「站×小时」与基线比对，超出动态阈值自动触发预警与诊断结论。</p>
+      </div>
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 2 · 月度</div>
+        <div class="font-bold text-lg">月度能耗分析与节能策略</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">分解气象/客流/设备效率/运行策略四类贡献，剥离外部因素噪声。</p>
+      </div>
+      <div class="card p-6">
+        <div class="chip accent-soft mb-3">场景 3 · 年度</div>
+        <div class="font-bold text-lg">年度能耗预算与节能目标</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">基于客流增长 + 气象统计预测下年度基线能耗，节能目标科学化。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-6">
+    <div class="card p-6 lg:col-span-2">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">小菜园站日内能耗实际 vs 基线（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">2026-04-26 24h · 含 95% 置信带</p>
+        </div>
+        <span class="chip" style="background:#fee2e2;color:#991b1b">⚠ 14:00-17:00 持续偏高</span>
+      </div>
+      <div id="c-baseline" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title">SHAP 偏差归因</h2>
+      <p class="text-sm text-slate-500 mt-1">14-17 时段 +18% 偏差分解</p>
+      <div id="c-shap" class="h-chart"></div>
+    </div>
+  </section>
+
+  <section class="card p-6">
+    <div class="flex justify-between items-end mb-3">
+      <div>
+        <h2 class="section-title">29 站能耗达标率热力图（模拟）</h2>
+        <p class="text-sm text-slate-500 mt-1">本月各站各时段实际 vs 基线偏差率，红色 = 持续偏高</p>
+      </div>
+    </div>
+    <div id="c-heatmap" style="height:480px"></div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">子系统能耗占比 · 月度（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">环控 / 照明 / 动力 / 弱电分项</p>
+        </div>
+      </div>
+      <div id="c-pie" class="h-chart"></div>
+    </div>
+    <div class="card p-6">
+      <div class="flex justify-between items-end mb-3">
+        <div>
+          <h2 class="section-title">月度偏差贡献分解（模拟）</h2>
+          <p class="text-sm text-slate-500 mt-1">2026-04 实际 vs 基线偏差 +260 MWh 拆分</p>
+        </div>
+      </div>
+      <div id="c-decomp" class="h-chart"></div>
+    </div>
+  </section>
+
+  <!-- 异常诊断卡片 -->
+  <section class="card p-6">
+    <h2 class="section-title accent mb-4">异常诊断推送（模拟）</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="rounded-lg border border-red-200 bg-red-50 p-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="chip" style="background:#fee2e2;color:#991b1b">⚠ 设备效率问题</span>
+          <span class="text-xs text-slate-500">小菜园站 · 14:00-17:00</span>
+        </div>
+        <div class="font-semibold text-slate-800">能耗偏高约 18% (~ 86 kWh)</div>
+        <div class="text-sm text-slate-700 mt-2 leading-relaxed">
+          主要原因: <b>环控系统能耗偏高</b>，同期客流和气象条件正常，
+          空调主机 COP 较基线下降约 14%。
+        </div>
+        <div class="text-sm font-semibold accent mt-2">建议: 安排空调系统效率检查 → 工单 #ENE-26042817</div>
+      </div>
+      <div class="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="chip" style="background:#dcfce7;color:#166534">✓ 合理偏差</span>
+          <span class="text-xs text-slate-500">昆明南站 · 18:00-19:00</span>
+        </div>
+        <div class="font-semibold text-slate-800">能耗偏高约 22% (~ 130 kWh)</div>
+        <div class="text-sm text-slate-700 mt-2 leading-relaxed">
+          主要原因: 客流量较基线假设增长 38% (高铁加开 G2987 等 4 列)，
+          导致环控负荷合理上升。
+        </div>
+        <div class="text-sm font-semibold accent mt-2">建议: 无需干预</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title accent mb-5">4 号线特色适配</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">春城气候 · 干湿季分明</div>
+        <div class="font-bold mt-1">季节性结构转变</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          旱季 (11-4 月) 几乎无除湿负荷，能耗主要由温度驱动；雨季 (5-10 月) 高湿增加除湿负荷。
+          模型自动捕捉两季能耗驱动因素的转变。
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">取消轨道排热系统</div>
+        <div class="font-bold mt-1">环控负荷构成不同</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          行业通用模型不适用——4 号线无排热风机能耗子项；列车行车密度对车站空调负荷的影响更直接显著，
+          需作为独立特征。
+        </p>
+      </div>
+      <div class="card p-5">
+        <div class="text-xs text-slate-500">旅游客流联动</div>
+        <div class="font-bold mt-1">季节性基线上调</div>
+        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+          旅游旺季部分站点客流结构变化 (大件行李 / 站内停留更长)，影响热负荷与设备负荷，
+          基线模型应季节性上调相关站点。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-2 gap-6">
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">技术评估指标</h2>
+      <table class="df w-full">
+        <thead><tr><th>评估维度</th><th>指标</th><th>目标</th></tr></thead>
+        <tbody>
+          <tr><td>基线预测精度</td><td>小时级 MAPE</td><td><b class="accent">≤ 10% (全站)</b></td></tr>
+          <tr><td>异常检测灵敏度</td><td>召回率</td><td><b class="accent">≥ 80%</b></td></tr>
+          <tr><td>异常检测精确度</td><td>精确率</td><td><b class="accent">≥ 70%</b></td></tr>
+          <tr><td>归因诊断准确性</td><td>归因结论一致率</td><td><b class="accent">≥ 75%</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card p-6">
+      <h2 class="section-title accent mb-4">业务效果指标</h2>
+      <ul class="space-y-3 text-sm">
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">¥</span>
+          <div><b>站务用电量</b>降低 <b class="accent">3%-5%</b> (按气象 / 客流校正口径)</div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">⏱</span>
+          <div><b>能耗异常发现时效</b>：数天 → 数小时，缩短 <b class="accent">≥ 90%</b></div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">🔧</span>
+          <div><b>环控系统运行策略优化率</b>：建议被采纳的站点比例</div></li>
+        <li class="flex items-start gap-3"><span class="accent-bg text-white rounded-md w-7 h-7 flex items-center justify-center text-xs font-bold flex-shrink-0">📊</span>
+          <div><b>能耗预算编制精度</b>：实际 vs 预算偏差缩小 <b class="accent">≥ 30%</b></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pt-6 border-t border-slate-200">
+    <div>昆明地铁 4 号线 · 运营生产决策大数据模型规划 | 模型 5 / 8</div>
+    <div class="mt-1">本页面为方案演示稿，可视化数据均为模拟示意</div>
+  </footer>
+</main>
+
+<script>
+const accent='#16a34a',accent2='#4ade80',green3='#14532d';
+
+// 1. Baseline vs actual w/ confidence band
+const hours=Array.from({length:24},(_,i)=>i.toString().padStart(2,'0')+':00');
+function bell(s,p,sig){return hours.map((_,i)=>s*Math.exp(-Math.pow(i-p,2)/(2*sig*sig)))}
+const base=hours.map((_,i)=>{return 280+bell(140,8,2)[i]+bell(180,18,2.4)[i]+(i>=14&&i<=17?40:0)});
+const actual=base.map((b,i)=>{const v=b*(0.98+Math.random()*0.04);return i>=14&&i<=17?v*1.18:v});
+const upper=base.map(v=>v*1.10);
+const lower=base.map(v=>v*0.90);
+echarts.init(document.getElementById('c-baseline')).setOption({
+  grid:{top:35,right:20,bottom:40,left:60},
+  legend:{top:0,right:0,textStyle:{color:'#475569'}},
+  tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:hours,axisLabel:{color:'#64748b',interval:2}},
+  yAxis:{type:'value',name:'kWh',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'下界',type:'line',data:lower,lineStyle:{opacity:0},stack:'b',symbol:'none'},
+    {name:'95% 置信带',type:'line',data:upper.map((v,i)=>v-lower[i]),lineStyle:{opacity:0},stack:'b',areaStyle:{color:'rgba(34,197,94,.18)'},symbol:'none'},
+    {name:'基线预测',type:'line',data:base,smooth:true,lineStyle:{color:accent,width:2.5,type:'dashed'},itemStyle:{color:accent},symbol:'none'},
+    {name:'实际能耗',type:'line',data:actual.map(v=>Math.round(v)),smooth:true,lineStyle:{color:'#0f172a',width:3},itemStyle:{color:'#0f172a'},symbol:'circle',symbolSize:5,
+     markArea:{itemStyle:{color:'rgba(220,38,38,.10)'},data:[[{xAxis:'14:00',label:{formatter:'异常',color:'#dc2626'}},{xAxis:'17:00'}]]}}
+  ]
+});
+
+// 2. SHAP attribution (waterfall horizontal)
+const shap=[
+  {name:'空调主机 COP 下降',v:9.6},
+  {name:'冷冻水温差异常',v:4.8},
+  {name:'扶梯频次↑',v:1.2},
+  {name:'气温 (合理)',v:1.4},
+  {name:'客流 (合理)',v:0.8},
+  {name:'其它',v:0.2}
+];
+echarts.init(document.getElementById('c-shap')).setOption({
+  grid:{top:10,right:30,bottom:30,left:130},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:v=>'+'+v.toFixed(1)+'%'},
+  xAxis:{type:'value',axisLabel:{formatter:'{value}%',color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  yAxis:{type:'category',data:shap.map(s=>s.name).reverse(),axisLabel:{color:'#475569',fontSize:11}},
+  series:[{
+    type:'bar',data:shap.map((s,i)=>{
+      const isStrategy=i>=3;
+      return{value:s.v,itemStyle:{color:isStrategy?'#a7f3d0':accent,borderRadius:[0,4,4,0]}};
+    }).reverse(),
+    label:{show:true,position:'right',formatter:p=>'+'+p.value.toFixed(1)+'%',color:'#334155',fontWeight:600}
+  }]
+});
+
+// 3. 29-station heatmap
+const stations=['金川路','金桂街','西山公园','马街','车家壁','梁家河','五一路','西站','大观楼','学府路',
+                '黄土坡','岷山公园','五华公园','春雨路','火车北站','穿金路','金星','小菜园','北辰大道',
+                '七彩云南','环城南','吴井路','巫家坝','广卫','斗南','花都海洋世界','花都北','呈贡北','昆明南'];
+const tslots=['06-08','08-10','10-12','12-14','14-16','16-18','18-20','20-22'];
+const heatData=[];
+stations.forEach((_,si)=>{
+  tslots.forEach((_,ti)=>{
+    let v=-3+(Math.random()-0.5)*6;
+    if(si===17&&ti>=3&&ti<=5)v=18+Math.random()*4;  // 小菜园 14-18 偏高
+    if(si===14&&ti===6)v=14;                          // 火车北站 18-20 偏高
+    if(si===28&&ti===4)v=12;                          // 昆明南 14-16 偏高
+    if(si===0&&ti<=1)v=-9;                            // 金川路低估
+    heatData.push([ti,si,Math.round(v*10)/10]);
+  });
+});
+echarts.init(document.getElementById('c-heatmap')).setOption({
+  grid:{top:30,right:25,bottom:40,left:80,height:'82%'},
+  tooltip:{position:'top',formatter:p=>stations[p.value[1]]+' / '+tslots[p.value[0]]+'<br/>偏差: '+p.value[2]+'%'},
+  xAxis:{type:'category',data:tslots,axisLabel:{color:'#64748b',fontSize:11}},
+  yAxis:{type:'category',data:stations,axisLabel:{color:'#475569',fontSize:10}},
+  visualMap:{min:-15,max:20,calculable:true,orient:'horizontal',left:'center',bottom:0,
+    inRange:{color:['#1e3a8a','#3b82f6','#dbeafe','#fef3c7','#fb923c','#dc2626']},textStyle:{color:'#475569'}},
+  series:[{name:'偏差%',type:'heatmap',data:heatData,label:{show:false}}]
+});
+
+// 4. Sub-system pie
+echarts.init(document.getElementById('c-pie')).setOption({
+  tooltip:{trigger:'item',formatter:'{b}: {c} MWh ({d}%)'},
+  legend:{bottom:0,textStyle:{color:'#475569'}},
+  series:[{
+    type:'pie',radius:['45%','72%'],center:['50%','45%'],avoidLabelOverlap:false,
+    itemStyle:{borderColor:'#fff',borderWidth:2,borderRadius:6},
+    label:{show:true,formatter:'{b}\n{d}%',color:'#475569',fontSize:11},
+    data:[
+      {name:'环控 (空调/通风)',value:1850,itemStyle:{color:accent}},
+      {name:'动力 (扶梯/电梯/泵)',value:580,itemStyle:{color:accent2}},
+      {name:'照明',value:420,itemStyle:{color:'#86efac'}},
+      {name:'AFC/通信信号',value:230,itemStyle:{color:'#bbf7d0'}},
+      {name:'其它',value:180,itemStyle:{color:'#dcfce7'}}
+    ]
+  }]
+});
+
+// 5. Monthly decomposition (waterfall)
+const decomp=[
+  {name:'基线总量',v:8420,base:0,itemStyle:{color:'#94a3b8'}},
+  {name:'气象 (旱季偏热)',v:120,base:8420,itemStyle:{color:'#fed7aa'}},
+  {name:'客流增长',v:90,base:8540,itemStyle:{color:'#fdba74'}},
+  {name:'设备效率↓',v:155,base:8630,itemStyle:{color:'#dc2626'}},
+  {name:'运行策略 (低谷未切)',v:75,base:8785,itemStyle:{color:'#f59e0b'}},
+  {name:'其它',v:-20,base:8860,itemStyle:{color:'#cbd5e1'}},
+  {name:'实际总量',v:8840,base:0,itemStyle:{color:'#0f172a'}}
+];
+echarts.init(document.getElementById('c-decomp')).setOption({
+  grid:{top:30,right:20,bottom:50,left:60},
+  tooltip:{},
+  xAxis:{type:'category',data:decomp.map(d=>d.name),axisLabel:{color:'#64748b',rotate:25,fontSize:10}},
+  yAxis:{type:'value',name:'MWh',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#f1f5f9'}}},
+  series:[
+    {name:'base',type:'bar',stack:'all',itemStyle:{color:'transparent'},data:decomp.map(d=>d.base),tooltip:{show:false}},
+    {name:'值',type:'bar',stack:'all',data:decomp.map(d=>({value:d.v,itemStyle:d.itemStyle})),
+     label:{show:true,position:'top',formatter:p=>(p.value>0?'+':'')+p.value,color:'#334155',fontSize:10}}
+  ]
+});
+
+window.addEventListener('resize',()=>['c-baseline','c-shap','c-heatmap','c-pie','c-decomp'].forEach(id=>echarts.getInstanceByDom(document.getElementById(id)).resize()));
+</script>
+</body>
+</html>
