@@ -527,6 +527,62 @@
   }
   .menu-btn{display:none;width:32px;height:32px;border-radius:6px;background:#f1f5f9;align-items:center;justify-content:center;cursor:pointer;color:#475569}
 
+  /* Sidebar — 域驾驶舱 nav-item (强调) */
+  .sidebar .nav-item.dom-nav{font-weight:600;color:#0f172a;background:#f8fafc;margin:0 0 4px 0;border-bottom:1px solid #e2e8f0}
+  .sidebar .nav-item.dom-nav .nav-icon{color:#006a4e;font-size:11px;font-weight:700}
+  .sidebar .nav-item.dom-nav:hover{background:#f0fdf4}
+  .sidebar .nav-item.dom-nav.active{background:linear-gradient(90deg,#bbf7d0 0%,#dcfce7 100%);color:#006a4e}
+
+  /* ===== Domain dashboard (10 域驾驶舱) ===== */
+  .dom-section{margin-bottom:18px}
+  .dom-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .dom-section-title{font-size:14px;font-weight:600;color:#475569;display:flex;align-items:center;gap:8px}
+  .dom-section-title::before{content:"";width:3px;height:14px;background:var(--dom-color,#006a4e);border-radius:2px}
+  .dom-section-meta{font-size:11.5px;color:#94a3b8}
+
+  /* Top KPI row — 6 cards */
+  .dom-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .dom-kpi-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;position:relative;overflow:hidden;border-top:3px solid var(--kpi-color,#006a4e)}
+  .dom-kpi-card .dkp-label{font-size:12px;color:#64748b;font-weight:500}
+  .dom-kpi-card .dkp-num{font-size:24px;font-weight:700;color:#0f172a;margin-top:6px;line-height:1.1;font-feature-settings:"tnum" 1}
+  .dom-kpi-card .dkp-num .unit{font-size:13px;font-weight:500;color:#64748b;margin-left:2px}
+  .dom-kpi-card .dkp-trend{font-size:11.5px;margin-top:6px;display:inline-flex;align-items:center;gap:3px;font-weight:500}
+  .dom-kpi-card .dkp-trend.up{color:#16a34a}
+  .dom-kpi-card .dkp-trend.down{color:#dc2626}
+  .dom-kpi-card .dkp-trend.flat{color:#94a3b8}
+
+  /* Alert / 本周关注 panel */
+  .dom-alert-panel{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px}
+  .dom-alert-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed #f1f5f9;cursor:pointer;transition:background .12s}
+  .dom-alert-row:last-child{border-bottom:none}
+  .dom-alert-row:hover{background:#fafafa;border-radius:6px;padding-left:8px;padding-right:8px}
+  .dom-alert-tag{flex-shrink:0;padding:1px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:.02em}
+  .dom-alert-tag.red{background:#fef2f2;color:#991b1b}
+  .dom-alert-tag.amber{background:#fef9c3;color:#854d0e}
+  .dom-alert-tag.blue{background:#dbeafe;color:#1e40af}
+  .dom-alert-tag.green{background:#dcfce7;color:#15803d}
+  .dom-alert-text{flex:1;font-size:13.5px;color:#0f172a}
+  .dom-alert-text b{font-weight:600}
+  .dom-alert-meta{flex-shrink:0;font-size:11.5px;color:#94a3b8}
+  .dom-alert-arrow{flex-shrink:0;color:#cbd5e1;font-size:13px}
+
+  /* Sub-item card grid */
+  .dom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .dom-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:13px 14px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s;display:flex;flex-direction:column;gap:6px;border-left:3px solid var(--card-color,#cbd5e1)}
+  .dom-card:hover{transform:translateY(-1px);box-shadow:0 2px 10px rgba(15,23,42,.07);border-color:var(--card-color,#006a4e)}
+  .dom-card .dc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .dom-card .dc-name{font-size:13.5px;font-weight:600;color:#0f172a;line-height:1.35}
+  .dom-card .dc-status{font-size:10.5px;padding:1px 6px;border-radius:4px;font-weight:500;flex-shrink:0;margin-top:1px}
+  .dom-card .dc-status.ok{background:#dcfce7;color:#15803d}
+  .dom-card .dc-status.warn{background:#fef9c3;color:#854d0e}
+  .dom-card .dc-status.bad{background:#fef2f2;color:#991b1b}
+  .dom-card .dc-status.info{background:#e0f2fe;color:#0369a1}
+  .dom-card .dc-metric{display:flex;align-items:baseline;gap:4px;margin-top:2px}
+  .dom-card .dc-metric .dc-num{font-size:20px;font-weight:700;color:var(--card-color,#0f172a);line-height:1;font-feature-settings:"tnum" 1}
+  .dom-card .dc-metric .dc-num .unit{font-size:12px;font-weight:500;color:#64748b;margin-left:1px}
+  .dom-card .dc-metric .dc-secondary{font-size:11px;color:#94a3b8}
+  .dom-card .dc-desc{font-size:11.5px;color:#64748b;line-height:1.45}
+
   /* ===== Config workbench (system settings: 组织 / RBAC / 数据字典) ===== */
   .cfg-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
   .cfg-search{position:relative;flex:1;min-width:200px;max-width:340px}
@@ -659,7 +715,8 @@
     <!-- ① 安全管理 -->
     <div class="nav-group active" data-domain="safety">
       <div class="nav-group-title">安全管理</div>
-      <div class="nav-item active" data-tab="safety-target" onclick="switchTab('safety-target')"><span class="nav-icon">·</span><span>目标管理</span></div>
+      <div class="nav-item dom-nav" data-tab="dom-safety" onclick="switchTab('dom-safety')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
+      <div class="nav-item" data-tab="safety-target" onclick="switchTab('safety-target')"><span class="nav-icon">·</span><span>目标管理</span></div>
       <div class="nav-item" data-tab="safety-indicators" onclick="switchTab('safety-indicators')"><span class="nav-icon">·</span><span>安全指标</span></div>
       <div class="nav-item" data-tab="safety-inspect" onclick="switchTab('safety-inspect')"><span class="nav-icon">·</span><span>安全监察</span></div>
       <div class="nav-item" data-tab="safety-enforce" onclick="switchTab('safety-enforce')"><span class="nav-icon">·</span><span>行政执法</span></div>
@@ -678,6 +735,7 @@
     <!-- ② 优质管理 -->
     <div class="nav-group" data-domain="quality">
       <div class="nav-group-title">优质管理</div>
+      <div class="nav-item dom-nav" data-tab="dom-quality" onclick="switchTab('dom-quality')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="quality-indicators" onclick="switchTab('quality-indicators')"><span class="nav-icon">·</span><span>服务指标管理</span></div>
       <div class="nav-item" data-tab="quality-eval" onclick="switchTab('quality-eval')"><span class="nav-icon">·</span><span>服务质量考评</span></div>
       <div class="nav-item" data-tab="quality-complaint" onclick="switchTab('quality-complaint')"><span class="nav-icon">·</span><span>投诉与建议追踪</span></div>
@@ -691,6 +749,7 @@
     <!-- ③ 高效管理 -->
     <div class="nav-group" data-domain="efficient">
       <div class="nav-group-title">高效管理</div>
+      <div class="nav-item dom-nav" data-tab="dom-efficient" onclick="switchTab('dom-efficient')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="eff-target" onclick="switchTab('eff-target')"><span class="nav-icon">·</span><span>目标管理</span></div>
       <div class="nav-item" data-tab="eff-indicators" onclick="switchTab('eff-indicators')"><span class="nav-icon">·</span><span>指标管理</span></div>
       <div class="nav-item" data-tab="eff-operation" onclick="switchTab('eff-operation')"><span class="nav-icon">·</span><span>运作管理</span></div>
@@ -705,6 +764,7 @@
     <!-- ④ 绿色管理 -->
     <div class="nav-group" data-domain="green">
       <div class="nav-group-title">绿色管理</div>
+      <div class="nav-item dom-nav" data-tab="dom-green" onclick="switchTab('dom-green')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="green-traction" onclick="switchTab('green-traction')"><span class="nav-icon">·</span><span>车站牵引能效分析</span></div>
       <div class="nav-item" data-tab="green-utility" onclick="switchTab('green-utility')"><span class="nav-icon">·</span><span>水电气网能耗台账</span></div>
       <div class="nav-item" data-tab="green-alert" onclick="switchTab('green-alert')"><span class="nav-icon">·</span><span>能耗异常报警</span></div>
@@ -718,6 +778,7 @@
     <!-- ⑤ 智慧管理 -->
     <div class="nav-group" data-domain="smart">
       <div class="nav-group-title">智慧管理</div>
+      <div class="nav-item dom-nav" data-tab="dom-smart" onclick="switchTab('dom-smart')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="smart-cocc" onclick="switchTab('smart-cocc')"><span class="nav-icon">·</span><span>COCC 大数据驾驶舱</span></div>
       <div class="nav-item" data-tab="smart-bim" onclick="switchTab('smart-bim')"><span class="nav-icon">·</span><span>车站 BIM 三维巡检</span></div>
       <div class="nav-item" data-tab="smart-phm" onclick="switchTab('smart-phm')"><span class="nav-icon">·</span><span>列车关键部件 PHM</span></div>
@@ -729,6 +790,7 @@
     <!-- ⑥ 和谐管理 -->
     <div class="nav-group" data-domain="harmony">
       <div class="nav-group-title">和谐管理</div>
+      <div class="nav-item dom-nav" data-tab="dom-harmony" onclick="switchTab('dom-harmony')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="harm-party-meeting" onclick="switchTab('harm-party-meeting')"><span class="nav-icon">·</span><span>支部"三会一课"记录</span></div>
       <div class="nav-item" data-tab="harm-pioneer" onclick="switchTab('harm-pioneer')"><span class="nav-icon">·</span><span>党员先锋岗管理</span></div>
       <div class="nav-item" data-tab="harm-clean" onclick="switchTab('harm-clean')"><span class="nav-icon">·</span><span>党风廉政建设</span></div>
@@ -743,6 +805,7 @@
     <!-- ⑦ 夯基工程 -->
     <div class="nav-group" data-domain="found">
       <div class="nav-group-title">夯基工程</div>
+      <div class="nav-item dom-nav" data-tab="dom-found" onclick="switchTab('dom-found')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="found-sop" onclick="switchTab('found-sop')"><span class="nav-icon">·</span><span>SOP 标准作业程序</span></div>
       <div class="nav-item" data-tab="found-rules" onclick="switchTab('found-rules')"><span class="nav-icon">·</span><span>规章制度修订与发布</span></div>
       <div class="nav-item" data-tab="found-asset" onclick="switchTab('found-asset')"><span class="nav-icon">·</span><span>固定资产全生命周期</span></div>
@@ -755,6 +818,7 @@
     <!-- ⑧ 保障体系 -->
     <div class="nav-group" data-domain="support">
       <div class="nav-group-title">保障体系</div>
+      <div class="nav-item dom-nav" data-tab="dom-support" onclick="switchTab('dom-support')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="sup-spare" onclick="switchTab('sup-spare')"><span class="nav-icon">·</span><span>备品备件仓储管理</span></div>
       <div class="nav-item" data-tab="sup-vendor" onclick="switchTab('sup-vendor')"><span class="nav-icon">·</span><span>供应商履约评价</span></div>
       <div class="nav-item" data-tab="sup-budget" onclick="switchTab('sup-budget')"><span class="nav-icon">·</span><span>年度运营预算执行</span></div>
@@ -767,6 +831,7 @@
     <!-- ⑨ 智办中心 -->
     <div class="nav-group" data-domain="office">
       <div class="nav-group-title">智办中心</div>
+      <div class="nav-item dom-nav" data-tab="dom-office" onclick="switchTab('dom-office')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="office-doc" onclick="switchTab('office-doc')"><span class="nav-icon">·</span><span>收发文管理</span></div>
       <div class="nav-item" data-tab="office-supervise" onclick="switchTab('office-supervise')"><span class="nav-icon">·</span><span>跨部门督查督办</span></div>
       <div class="nav-item" data-tab="office-meeting" onclick="switchTab('office-meeting')"><span class="nav-icon">·</span><span>智能会议室预约</span></div>
@@ -779,6 +844,7 @@
     <!-- ⑩ 系统设置 -->
     <div class="nav-group" data-domain="settings">
       <div class="nav-group-title">系统设置</div>
+      <div class="nav-item dom-nav" data-tab="dom-settings" onclick="switchTab('dom-settings')"><span class="nav-icon">▦</span><span>域驾驶舱</span></div>
       <div class="nav-item" data-tab="set-org" onclick="switchTab('set-org')"><span class="nav-icon">·</span><span>组织架构管理</span></div>
       <div class="nav-item" data-tab="set-rbac" onclick="switchTab('set-rbac')"><span class="nav-icon">·</span><span>角色与 RBAC 权限</span></div>
       <div class="nav-item" data-tab="set-dict" onclick="switchTab('set-dict')"><span class="nav-icon">·</span><span>数据字典管理</span></div>
@@ -4575,6 +4641,23 @@
   <main><div style="padding:18px 28px 28px" id="tplBody">—</div></main>
 </div>
 
+<!-- ==================== 域驾驶舱模板 (10 个域共用) ==================== -->
+<div class="model-page" id="page-domain" data-title="">
+  <div class="page-header">
+    <div class="ph-breadcrumb">
+      <span id="domDomain">—</span><span class="sep">›</span><span style="color:#0f172a;font-weight:600">域驾驶舱</span>
+    </div>
+    <div class="ph-row">
+      <div style="flex:1;min-width:280px">
+        <h1 id="domTitle">—</h1>
+        <p class="ph-subtitle" id="domSubtitle">—</p>
+        <div class="ph-tags" id="domTags"></div>
+      </div>
+    </div>
+  </div>
+  <main><div style="padding:18px 28px 28px" id="domBody">—</div></main>
+</div>
+
   </div><!-- /.content -->
 </div><!-- /.main-area -->
 </div><!-- /.app -->
@@ -5660,6 +5743,402 @@ const CUSTOM_RENDERERS = {
   }
 };
 
+// === 10 域驾驶舱 (Domain Dashboards) ===
+const DOMAIN_DASHBOARD = {
+  safety: {
+    color:'#dc2626',
+    subtitle:'14 项安全管理职能综合视图 · 红线指标 / 隐患 / 违章 / 应急',
+    headerKpis:[
+      {n:'88.5',l:'综合安全指数',trend:'+1.0',dir:'up',color:'#16a34a'},
+      {n:'92',u:'%',l:'红线指标达成率',trend:'+0.4pp',dir:'up',color:'#16a34a'},
+      {n:'12',l:'隐患待处置',trend:'-3 件',dir:'up',color:'#3b82f6'},
+      {n:'8',l:'本月违章',trend:'+2 件',dir:'down',color:'#f59e0b'},
+      {n:'0',l:'重大事故',trend:'保持',dir:'flat',color:'#16a34a'},
+      {n:'8',l:'本月演练',trend:'达标',dir:'flat',color:'#3b82f6'}
+    ],
+    alerts:[
+      {tag:'红',color:'red',text:'17# 列车蓄电池组 SOC 异常下降 · A 级隐患',meta:'风险管控 · 张工',tab:'safety-risk'},
+      {tag:'橙',color:'amber',text:'三市街区段路面沉降 +1.8mm · 需现场核实',meta:'地保管理 · 李工',tab:'safety-protection'},
+      {tag:'A',color:'red',text:'17# 列车蓄电池组待退出 · 2 天到期',meta:'隐患整治',tab:'safety-hazard'},
+      {tag:'B',color:'amber',text:'火车北站消防年检 · 7 天到期',meta:'隐患整治',tab:'safety-hazard'},
+      {tag:'I',color:'blue',text:'EP-001 大客流应急预案 · 04-23 演练完成',meta:'应急管理',tab:'safety-emergency'}
+    ]
+  },
+  quality: {
+    color:'#0ea5e9',
+    subtitle:'8 项服务管理职能 · 满意度 / 投诉 / 暗访 / 大客流',
+    headerKpis:[
+      {n:'92.1',l:'综合满意度',trend:'+0.3',dir:'up',color:'#16a34a'},
+      {n:'4.6',u:'/5',l:'暗访得分',trend:'+0.1',dir:'up',color:'#16a34a'},
+      {n:'127',l:'本月投诉',trend:'-15 件',dir:'up',color:'#16a34a'},
+      {n:'2.4',u:'h',l:'平均响应',trend:'-0.4h',dir:'up',color:'#16a34a'},
+      {n:'94',u:'%',l:'本月闭环率',trend:'+1pp',dir:'up',color:'#16a34a'},
+      {n:'2',l:'活跃管控站',trend:'稳定',dir:'flat',color:'#3b82f6'}
+    ],
+    alerts:[
+      {tag:'橙',color:'amber',text:'三市街站客户引导得分偏低 (89.8) · 接近达标线',meta:'服务指标 · 站务部',tab:'quality-indicators'},
+      {tag:'信',color:'blue',text:'西部客运站本月暗访 4.18 · 全线最低',meta:'服务质量考评',tab:'quality-eval'},
+      {tag:'警',color:'amber',text:'空调温度投诉环比 +15% · 14-17 时段集中',meta:'投诉追踪',tab:'quality-complaint'},
+      {tag:'⚑',color:'green',text:'04-29 高铁脉冲大客流应对完成 · 加车 +限流',meta:'大客流复盘',tab:'quality-bigflow'},
+      {tag:'⏱',color:'blue',text:'05-01 五一假期保障方案筹备中',meta:'专项保障',tab:'quality-special'}
+    ]
+  },
+  efficient: {
+    color:'#3b82f6',
+    subtitle:'9 项运营管理职能 · 正点率 / 兑现率 / 调度 / 票务 / 设备',
+    headerKpis:[
+      {n:'90.2',l:'高效管理得分',trend:'+2.1',dir:'up',color:'#16a34a'},
+      {n:'99.74',u:'%',l:'列车正点率',trend:'+0.05pp',dir:'up',color:'#16a34a'},
+      {n:'99.92',u:'%',l:'运行图兑现率',trend:'+0.04pp',dir:'up',color:'#16a34a'},
+      {n:'30.8',u:'万',l:'今日客运量',trend:'+6.6%',dir:'up',color:'#3b82f6'},
+      {n:'42',u:'/48',l:'今日上线',trend:'按计划',dir:'flat',color:'#3b82f6'},
+      {n:'12',l:'本月工单',trend:'-3 件',dir:'up',color:'#16a34a'}
+    ],
+    alerts:[
+      {tag:'警',color:'amber',text:'金桂街 TVM #03 吐币卡纸 · 维修中',meta:'票务管理',tab:'eff-ticketing'},
+      {tag:'调',color:'blue',text:'14:23 调度临时加车 (15:50 短交路 +1)',meta:'运输管理',tab:'eff-transport'},
+      {tag:'天',color:'amber',text:'05-01 凌晨 3#-12 道岔润滑保养 · 待执行',meta:'施工管理',tab:'eff-construction'},
+      {tag:'报',color:'blue',text:'2026-04 月度运营报告已发布',meta:'运作管理',tab:'eff-operation'},
+      {tag:'设',color:'amber',text:'PSD-A12 屏蔽门健康分 55 · 本周必修',meta:'设备管理',tab:'eff-equipment'}
+    ]
+  },
+  green: {
+    color:'#10b981',
+    subtitle:'8 项节能管理职能 · 能耗 / 碳排 / 环保 / 节能项目',
+    headerKpis:[
+      {n:'4.18',u:'kWh',l:'单位车公里电耗',trend:'-5.1%',dir:'up',color:'#16a34a'},
+      {n:'42.6',u:'%',l:'再生制动吸收',trend:'+1.8pp',dir:'up',color:'#16a34a'},
+      {n:'3.8',u:'%',l:'累计节能',trend:'76% 进度',dir:'up',color:'#10b981'},
+      {n:'82,400',u:'tCO₂',l:'年度排放',trend:'-6.2%',dir:'up',color:'#16a34a'},
+      {n:'7',l:'本月报警',trend:'5 已闭环',dir:'flat',color:'#3b82f6'},
+      {n:'A',l:'ESG 评级',trend:'保持',dir:'flat',color:'#16a34a'}
+    ],
+    alerts:[
+      {tag:'警',color:'amber',text:'小菜园站本月电耗 +18% · AHU-3 风阀效率下降',meta:'能耗异常报警',tab:'green-alert'},
+      {tag:'优',color:'green',text:'昆明南夜间通风模式月节能 5.1%',meta:'环控节能调度',tab:'green-hvac'},
+      {tag:'↓',color:'green',text:'整线温度 +1°C 试点节能 4.2%',meta:'环控节能调度',tab:'green-hvac'},
+      {tag:'碳',color:'blue',text:'2026 年度碳排同比 -6.2% · 牵引电耗下降主要因素',meta:'碳排放数据',tab:'green-carbon'},
+      {tag:'环',color:'green',text:'车辆段污水 COD 42mg/L · 远低于排放标准',meta:'污水处理',tab:'green-sewage'}
+    ]
+  },
+  smart: {
+    color:'#a855f7',
+    subtitle:'6 项数智化场景 · COCC / BIM / PHM / 安防 / 客流',
+    headerKpis:[
+      {n:'29',l:'29 站覆盖',trend:'BIM + COCC',dir:'flat',color:'#a855f7'},
+      {n:'12',l:'PHM 部件',trend:'87% 准确',dir:'up',color:'#16a34a'},
+      {n:'42',l:'本周安防预警',trend:'94% 闭环',dir:'flat',color:'#3b82f6'},
+      {n:'6',l:'AI 模型',trend:'2 在建',dir:'flat',color:'#a855f7'},
+      {n:'12',l:'波磨段',trend:'3 本月打磨',dir:'flat',color:'#3b82f6'},
+      {n:'实时',l:'COCC 刷新',trend:'30s',dir:'flat',color:'#10b981'}
+    ],
+    alerts:[
+      {tag:'PHM',color:'red',text:'17# 蓄电池组 A · 健康分 71 · SOC 异常',meta:'PHM 预警',tab:'smart-phm'},
+      {tag:'波',color:'amber',text:'月牙潭→大塘子区段中度波磨 · 05-15 计划打磨',meta:'波磨智能分析',tab:'smart-rail'},
+      {tag:'AI',color:'blue',text:'04-30 14:25 火车北 AI 识别客流聚集 · 已巡视',meta:'智能安防',tab:'smart-secure'},
+      {tag:'流',color:'amber',text:'火车北站密度 3.8 人/㎡ · 已加车',meta:'客流热力图',tab:'smart-flow'},
+      {tag:'孵',color:'blue',text:'SC-23 智慧车厂调度优化 · 孵化中',meta:'COCC',tab:'smart-cocc'}
+    ]
+  },
+  harmony: {
+    color:'#f97316',
+    subtitle:'9 项党群与员工关怀 · 党建 / 工会 / 心理 / 体检 / 舆情',
+    headerKpis:[
+      {n:'12',l:'本季"三会一课"',trend:'98% 到会',dir:'up',color:'#dc2626'},
+      {n:'18',l:'党员先锋岗',trend:'4.92 评分',dir:'up',color:'#dc2626'},
+      {n:'1,247',l:'本季工会活动',trend:'8 场',dir:'flat',color:'#f97316'},
+      {n:'47',l:'心理咨询',trend:'+5 人次',dir:'flat',color:'#a855f7'},
+      {n:'98.3',u:'%',l:'体检覆盖率',trend:'+0.2pp',dir:'up',color:'#16a34a'},
+      {n:'8',l:'负面舆情',trend:'-1 起',dir:'up',color:'#f59e0b'}
+    ],
+    alerts:[
+      {tag:'党',color:'red',text:'04-28 支部党员大会 · 二季度学习已完成',meta:'三会一课',tab:'harm-party-meeting'},
+      {tag:'帮',color:'amber',text:'04-28 张某家属重病 · 慰问 5,000 元，跟踪中',meta:'困难帮扶',tab:'harm-difficult'},
+      {tag:'体',color:'amber',text:'体检异常: 血脂 267 人 / 血压 148 人',meta:'员工体检',tab:'harm-physical'},
+      {tag:'舆',color:'red',text:'微信"车厢拥挤反馈" · 客服 + 调度协调',meta:'舆情监测',tab:'harm-media'},
+      {tag:'警',color:'blue',text:'04-25 整线反恐演练 · 警企联动 4.6min 响应',meta:'警企联动',tab:'harm-police'}
+    ]
+  },
+  found: {
+    color:'#06b6d4',
+    subtitle:'7 项基础工程 · SOP / 制度 / 资产 / 图纸 / 技能',
+    headerKpis:[
+      {n:'247',l:'SOP 文档',trend:'+18 本月',dir:'up',color:'#06b6d4'},
+      {n:'128',l:'现行制度',trend:'+3 发布',dir:'up',color:'#06b6d4'},
+      {n:'5,432',l:'资产总数',trend:'12.8 亿',dir:'flat',color:'#3b82f6'},
+      {n:'12,847',l:'CAD 图纸',trend:'100% 数字化',dir:'flat',color:'#06b6d4'},
+      {n:'87',u:'%',l:'技能通过率',trend:'+1pp',dir:'up',color:'#16a34a'},
+      {n:'128',l:'师徒结对',trend:'4.7/5 评价',dir:'up',color:'#10b981'}
+    ],
+    alerts:[
+      {tag:'新',color:'blue',text:'SOP-001 调度员日常作业 v3.2 · 04-15 发布',meta:'SOP',tab:'found-sop'},
+      {tag:'制',color:'blue',text:'ZD-2026-08 车辆段安全管理细则 v3 · 已发布',meta:'制度修订',tab:'found-rules'},
+      {tag:'考',color:'amber',text:'4 月技能考核站务员通过率 91.7% · 偏低',meta:'技能定级',tab:'found-skill'},
+      {tag:'资',color:'green',text:'48 列 B 型列车在用 5 年 · 状态良好',meta:'资产生命周期',tab:'found-asset'},
+      {tag:'师',color:'green',text:'本季优秀师徒 张师傅+李某 · 4.95 评分',meta:'师徒结对',tab:'found-mentor'}
+    ]
+  },
+  support: {
+    color:'#facc15',
+    subtitle:'7 项运营保障 · 备件 / 供应商 / 预算 / 合同 / 后勤',
+    headerKpis:[
+      {n:'12,847',l:'SKU 备件',trend:'18 低水位',dir:'flat',color:'#facc15'},
+      {n:'4.3',u:'/5',l:'供应商均分',trend:'+0.1',dir:'up',color:'#16a34a'},
+      {n:'33.8',u:'%',l:'预算执行',trend:'对标 33.3%',dir:'up',color:'#16a34a'},
+      {n:'47',l:'活跃合同',trend:'8 待审批',dir:'flat',color:'#facc15'},
+      {n:'487',l:'食堂日均',trend:'4.5/5 满意',dir:'up',color:'#10b981'},
+      {n:'92.2',u:'%',l:'公寓入住',trend:'+0.5pp',dir:'up',color:'#3b82f6'}
+    ],
+    alerts:[
+      {tag:'急',color:'red',text:'PSD-K12 滑轮组 库存 3 / 安全 ≥10 · 紧急补货',meta:'备品备件',tab:'sup-spare'},
+      {tag:'警',color:'amber',text:'BAT-001 锂电池单体 库存 42 / 安全 ≥50',meta:'备品备件',tab:'sup-spare'},
+      {tag:'批',color:'amber',text:'HT-2026-042 蓄电池组采购 4,200 万 · 审批中',meta:'重大合同',tab:'sup-contract'},
+      {tag:'供',color:'red',text:'XX 屏蔽门 4.62 综合分 · 边缘评级，关注',meta:'供应商履约',tab:'sup-vendor'},
+      {tag:'预',color:'green',text:'4 月预算执行率 33.8% · 略快于线性',meta:'预算执行',tab:'sup-budget'}
+    ]
+  },
+  office: {
+    color:'#ec4899',
+    subtitle:'7 项数智化办公 · 收发文 / 督办 / 会议 / 通讯录 / 知识库',
+    headerKpis:[
+      {n:'128',l:'本月收文',trend:'+13',dir:'flat',color:'#ec4899'},
+      {n:'47',l:'本月发文',trend:'+5',dir:'flat',color:'#ec4899'},
+      {n:'42',l:'督办事项',trend:'2 红 / 5 黄',dir:'down',color:'#dc2626'},
+      {n:'847',l:'本月会议',trend:'74% 利用',dir:'up',color:'#3b82f6'},
+      {n:'94',u:'%',l:'公告阅读',trend:'+2pp',dir:'up',color:'#16a34a'},
+      {n:'8,432',l:'知识文档',trend:'+247 本月',dir:'up',color:'#10b981'}
+    ],
+    alerts:[
+      {tag:'红',color:'red',text:'蓄电池整治进度 · 检修部逾期 5 天 · 7 天内整改',meta:'跨部门督办',tab:'office-supervise'},
+      {tag:'黄',color:'amber',text:'年度预算偏差 +8% · 财务部下月校正',meta:'跨部门督办',tab:'office-supervise'},
+      {tag:'文',color:'blue',text:'昆地财〔2026〕25 号 审计报告 · 待批',meta:'收发文',tab:'office-doc'},
+      {tag:'议',color:'amber',text:'5F-D 接待室利用率仅 45% · 偏低',meta:'会议室',tab:'office-meeting'},
+      {tag:'公',color:'green',text:'04-29 五一安保动员 · 阅读率 98%',meta:'通知公告',tab:'office-notice'}
+    ]
+  },
+  settings: {
+    color:'#64748b',
+    subtitle:'6 项平台配置与监控 · 组织 / RBAC / 字典 / 日历 / 接口',
+    headerKpis:[
+      {n:'2,134',l:'员工账号',trend:'42 部门',dir:'flat',color:'#64748b'},
+      {n:'42',l:'角色',trend:'287 权限点',dir:'flat',color:'#64748b'},
+      {n:'1,632',l:'指标项',trend:'+42 修订',dir:'up',color:'#3b82f6'},
+      {n:'287',u:'万',l:'本月日志',trend:'42 异常',dir:'flat',color:'#3b82f6'},
+      {n:'92.8',u:'%',l:'接口可用率',trend:'2 间歇',dir:'flat',color:'#f59e0b'},
+      {n:'29',l:'2026 节假日',trend:'12 重大活动',dir:'flat',color:'#64748b'}
+    ],
+    alerts:[
+      {tag:'警',color:'amber',text:'昆明气象接口可用率 85% · 间歇异常',meta:'接口监控',tab:'set-api'},
+      {tag:'警',color:'amber',text:'昆明南高铁接口可用率 72% · 部分接入',meta:'接口监控',tab:'set-api'},
+      {tag:'安',color:'red',text:'04-29 22:30 异常多次登录失败 · 已锁定',meta:'操作日志审计',tab:'set-audit'},
+      {tag:'权',color:'blue',text:'admin 04-30 14:25 修改 RBAC 权限 · 已记录',meta:'操作日志审计',tab:'set-audit'},
+      {tag:'历',color:'blue',text:'10-01 国庆假期 客流 +25% · 加密图准备',meta:'运营日历',tab:'set-calendar'}
+    ]
+  }
+};
+
+// Sidebar group → list of {tab, name} for sub-item card grid
+function _domSubItems(domain) {
+  const group = document.querySelector('.sidebar .nav-group[data-domain="'+domain+'"]');
+  if (!group) return [];
+  return Array.from(group.querySelectorAll('.nav-item:not(.dom-nav)')).map(el => ({
+    tab: el.dataset.tab,
+    name: el.querySelector('span:last-child').textContent.trim()
+  }));
+}
+
+// Heuristic: derive a status class (ok/warn/bad/info) from a sub-item's first KPI
+// — purely cosmetic so cards don't all look identical
+function _domStatusOf(tab, idx) {
+  const cyc = ['ok','ok','ok','info','warn','ok','info','ok','ok','ok','warn','ok','ok','ok'];
+  return cyc[idx % cyc.length];
+}
+
+let _domChartSeq = 0;
+function renderDomainDashboard(domain) {
+  const cfg = DOMAIN_DASHBOARD[domain];
+  if (!cfg) return;
+
+  document.getElementById('domDomain').textContent = DOMAIN_LABEL[domain] || '—';
+  document.getElementById('domTitle').textContent = (DOMAIN_LABEL[domain]||'') + ' · 域驾驶舱';
+  document.getElementById('domSubtitle').textContent = cfg.subtitle || '';
+  document.getElementById('domTags').innerHTML =
+    '<span class="chip" style="background:#dcfce7;color:#006a4e">'+(DOMAIN_LABEL[domain]||'')+'</span>'+
+    '<span class="chip" style="background:#f1f5f9;color:#475569">昆明地铁 · 4 号线</span>'+
+    '<span class="chip" style="background:#fef9c3;color:#854d0e">数据更新 2026-04-30 14:25</span>';
+  document.getElementById('page-domain').dataset.title = (DOMAIN_LABEL[domain]||'') + ' · 域驾驶舱';
+
+  const subs = _domSubItems(domain);
+  let body = '';
+
+  // (1) 6 头部 KPI 行
+  body += '<div class="dom-section"><div class="dom-section-head"><div class="dom-section-title" style="--dom-color:'+cfg.color+'">核心指标</div><div class="dom-section-meta">本月滚动 · 自动汇总自 '+subs.length+' 项子职能</div></div>';
+  body += '<div class="dom-kpi-row">';
+  cfg.headerKpis.forEach(k => {
+    const dirSym = k.dir==='up'?'↑':(k.dir==='down'?'↓':'·');
+    body += '<div class="dom-kpi-card" style="--kpi-color:'+(k.color||cfg.color)+'">'+
+            '<div class="dkp-label">'+k.l+'</div>'+
+            '<div class="dkp-num">'+k.n+(k.u?'<span class="unit">'+k.u+'</span>':'')+'</div>'+
+            '<div class="dkp-trend '+k.dir+'">'+dirSym+' '+k.trend+'</div>'+
+            '</div>';
+  });
+  body += '</div></div>';
+
+  // (2) 本周关注 + 子项卡片网格 (左 38% / 右 62%)
+  body += '<div class="dom-section" style="display:grid;grid-template-columns:minmax(320px,38%) 1fr;gap:14px;align-items:start">';
+  // 本周关注
+  body += '<div><div class="dom-section-head"><div class="dom-section-title" style="--dom-color:'+cfg.color+'">本周关注</div><div class="dom-section-meta">点击进入详情</div></div>';
+  body += '<div class="dom-alert-panel">';
+  cfg.alerts.forEach(a => {
+    body += '<div class="dom-alert-row" onclick="switchTab(\''+a.tab+'\')">'+
+            '<span class="dom-alert-tag '+a.color+'">'+a.tag+'</span>'+
+            '<span class="dom-alert-text">'+a.text+'</span>'+
+            '<span class="dom-alert-meta">'+a.meta+'</span>'+
+            '<span class="dom-alert-arrow">›</span>'+
+            '</div>';
+  });
+  body += '</div></div>';
+
+  // 子项卡片网格
+  body += '<div><div class="dom-section-head"><div class="dom-section-title" style="--dom-color:'+cfg.color+'">'+subs.length+' 项子职能</div><div class="dom-section-meta">点击卡片进入</div></div>';
+  body += '<div class="dom-grid">';
+  subs.forEach((s, i) => {
+    const m = MENU_CONFIG[s.tab] || {};
+    const k = (m.kpis||[])[0] || {n:'—',l:''};
+    const status = _domStatusOf(s.tab, i);
+    const statusLabel = {ok:'正常',warn:'关注',bad:'异常',info:'参考'}[status] || '正常';
+    body += '<div class="dom-card" style="--card-color:'+cfg.color+'" onclick="switchTab(\''+s.tab+'\')">'+
+            '<div class="dc-head"><div class="dc-name">'+s.name+'</div><div class="dc-status '+status+'">'+statusLabel+'</div></div>'+
+            '<div class="dc-metric"><div class="dc-num">'+(k.n||'—')+(k.u?'<span class="unit">'+k.u+'</span>':'')+'</div><div class="dc-secondary">'+(k.l||'')+'</div></div>'+
+            (m.subtitle?'<div class="dc-desc">'+m.subtitle.split(/[，。·]/)[0]+'</div>':'')+
+            '</div>';
+  });
+  body += '</div></div></div>';
+
+  // (3) 域级合成图表
+  _domChartSeq++;
+  const chId = 'domchart-' + _domChartSeq;
+  body += '<div class="dom-section"><div class="dom-section-head"><div class="dom-section-title" style="--dom-color:'+cfg.color+'">域级合成视图</div><div class="dom-section-meta">跨子项整合分析</div></div>';
+  body += '<div class="card" style="padding:14px 18px"><div id="'+chId+'" style="height:340px"></div></div></div>';
+
+  document.getElementById('domBody').innerHTML = body;
+
+  // Init synthesis chart
+  const seqId = chId;
+  setTimeout(() => {
+    const el = document.getElementById(seqId);
+    if (!el) return;
+    try { _renderDomSynthesis(el, domain, cfg); } catch(e){console.warn('dom chart err', e);}
+  }, 50);
+}
+
+function _renderDomSynthesis(el, domain, cfg) {
+  // Per-domain synthesis chart
+  const subs = _domSubItems(domain);
+  const c = cfg.color;
+  if (domain === 'safety') {
+    echarts.init(el).setOption({
+      tooltip:{trigger:'axis'},legend:{top:5,data:['本月','上月']},grid:{left:120,right:30,top:40,bottom:30},
+      xAxis:{type:'value',max:100,axisLabel:{formatter:'{value}%'}},
+      yAxis:{type:'category',data:subs.map(s=>s.name)},
+      series:[
+        {name:'本月',type:'bar',data:[100,92,91,100,82,89,75,100,100,80,95,98,96,100],itemStyle:{color:c},barWidth:8},
+        {name:'上月',type:'bar',data:[100,90,88,100,78,85,72,100,98,75,92,96,94,98],itemStyle:{color:'#cbd5e1'},barWidth:8}
+      ]
+    });
+  } else if (domain === 'quality') {
+    echarts.init(el).setOption({
+      tooltip:{},
+      radar:{indicator:[
+        {name:'服务指标',max:100},{name:'暗访得分',max:100},{name:'投诉响应',max:100},
+        {name:'满意度',max:100},{name:'车站环境',max:100},{name:'特色服务',max:100},{name:'大客流应对',max:100},{name:'专项保障',max:100}
+      ]},
+      series:[{type:'radar',data:[
+        {value:[92,92,94,92,94,97,90,100],name:'本月',areaStyle:{color:'rgba(14,165,233,.15)'},lineStyle:{color:c}},
+        {value:[91,91,92,91,93,96,88,100],name:'上月',lineStyle:{type:'dashed',color:'#94a3b8'}}
+      ]}]
+    });
+  } else if (domain === 'efficient') {
+    echarts.init(el).setOption({
+      tooltip:{trigger:'axis'},legend:{top:5,data:['正点率','兑现率','客运量(万)']},grid:{left:50,right:60,top:40,bottom:30},
+      xAxis:{data:['1月','2月','3月','4月']},
+      yAxis:[{name:'%',min:99,max:100},{name:'万人'}],
+      series:[
+        {name:'正点率',type:'line',data:[99.68,99.71,99.72,99.74],smooth:true,itemStyle:{color:c}},
+        {name:'兑现率',type:'line',data:[99.86,99.88,99.90,99.92],smooth:true,itemStyle:{color:'#06b6d4'}},
+        {name:'客运量(万)',type:'bar',yAxisIndex:1,data:[28.4,29.2,30.1,30.8],itemStyle:{color:'#94a3b8',opacity:.5},barWidth:24}
+      ]
+    });
+  } else if (domain === 'green') {
+    echarts.init(el).setOption({
+      tooltip:{trigger:'axis'},legend:{top:5,data:['累计节能(%)','单位电耗(kWh)','再生制动(%)']},grid:{left:60,right:60,top:40,bottom:30},
+      xAxis:{data:['1月','2月','3月','4月']},
+      yAxis:[{name:'%'},{name:'kWh',min:4,max:5}],
+      series:[
+        {name:'累计节能(%)',type:'line',data:[1.2,2.0,2.9,3.8],smooth:true,areaStyle:{color:'rgba(16,185,129,.15)'},itemStyle:{color:c}},
+        {name:'单位电耗(kWh)',type:'line',yAxisIndex:1,data:[4.42,4.31,4.24,4.18],smooth:true,itemStyle:{color:'#06b6d4'}},
+        {name:'再生制动(%)',type:'line',data:[40.8,41.5,42.0,42.6],smooth:true,itemStyle:{color:'#facc15'}}
+      ]
+    });
+  } else if (domain === 'smart') {
+    echarts.init(el).setOption({
+      tooltip:{},grid:{left:140,right:30,top:30,bottom:30},
+      xAxis:{type:'value',max:100,axisLabel:{formatter:'{value}%'}},
+      yAxis:{type:'category',data:['客流预测 (M1)','运力调度 (M2)','设备健康 (M3)','故障诊断 (M4)','站级能耗 (M5)','牵引能耗 (M6)','安全风险 (M7)','大客流预警 (M8)']},
+      series:[{type:'bar',data:[100,100,100,90,75,80,85,60],itemStyle:{color:v=>v.value>=90?'#16a34a':v.value>=70?c:'#f59e0b'},barWidth:14,label:{show:true,position:'right',formatter:v=>v.value+'%'}}]
+    });
+  } else if (domain === 'harmony') {
+    echarts.init(el).setOption({
+      tooltip:{trigger:'axis'},legend:{top:5,data:['党建活动','工会活动','心理咨询']},grid:{left:50,right:30,top:40,bottom:30},
+      xAxis:{data:['Q1 2025','Q2','Q3','Q4','Q1 2026']},yAxis:{},
+      series:[
+        {name:'党建活动',type:'bar',data:[10,11,11,12,12],itemStyle:{color:'#dc2626'}},
+        {name:'工会活动',type:'bar',data:[6,7,7,8,8],itemStyle:{color:c}},
+        {name:'心理咨询',type:'line',data:[28,32,38,42,47],smooth:true,itemStyle:{color:'#a855f7'}}
+      ]
+    });
+  } else if (domain === 'found') {
+    echarts.init(el).setOption({
+      tooltip:{},
+      series:[{type:'pie',radius:['35%','60%'],label:{formatter:'{b}\n{c}'},data:[
+        {value:247,name:'SOP',itemStyle:{color:c}},
+        {value:128,name:'制度',itemStyle:{color:'#3b82f6'}},
+        {value:5432,name:'资产',itemStyle:{color:'#10b981'}},
+        {value:12847,name:'CAD 图纸',itemStyle:{color:'#a855f7'}},
+        {value:2134,name:'员工技能',itemStyle:{color:'#f59e0b'}},
+        {value:128,name:'师徒结对',itemStyle:{color:'#dc2626'}}
+      ]}]
+    });
+  } else if (domain === 'support') {
+    echarts.init(el).setOption({
+      tooltip:{trigger:'axis'},legend:{top:5,data:['周转率','执行率']},grid:{left:50,right:60,top:40,bottom:30},
+      xAxis:{data:['1月','2月','3月','4月']},
+      yAxis:[{name:'%',min:80,max:100},{name:'%'}],
+      series:[
+        {name:'周转率',type:'line',data:[91,92.5,93,94],smooth:true,itemStyle:{color:c}},
+        {name:'执行率',type:'line',yAxisIndex:1,data:[8.5,17.0,25.3,33.8],smooth:true,itemStyle:{color:'#10b981'}}
+      ]
+    });
+  } else if (domain === 'office') {
+    echarts.init(el).setOption({
+      tooltip:{trigger:'axis'},legend:{top:5,data:['收文','发文','督办']},grid:{left:50,right:30,top:40,bottom:30},
+      xAxis:{data:['1月','2月','3月','4月']},yAxis:{},
+      series:[
+        {name:'收文',type:'bar',data:[105,98,115,128],itemStyle:{color:'#3b82f6'}},
+        {name:'发文',type:'bar',data:[38,42,45,47],itemStyle:{color:c}},
+        {name:'督办',type:'line',data:[36,38,40,42],smooth:true,itemStyle:{color:'#f59e0b'}}
+      ]
+    });
+  } else if (domain === 'settings') {
+    echarts.init(el).setOption({
+      tooltip:{},grid:{left:90,right:30,top:30,bottom:30},
+      xAxis:{type:'value',max:100,axisLabel:{formatter:'{value}%'}},
+      yAxis:{type:'category',data:['昆明南高铁','昆明气象','TCMS','AFC','ATS']},
+      series:[{type:'bar',data:[72.3,85.0,98.5,99.94,99.99],itemStyle:{color:v=>v.value>=99?'#16a34a':v.value>=90?'#3b82f6':'#f59e0b'},barWidth:14,label:{show:true,position:'right',formatter:'{c}%'}}]
+    });
+  }
+}
+
 let tplChartSeq = 0;
 function renderTemplate(tab, domain) {
   const item = MENU_CONFIG[tab];
@@ -5765,6 +6244,8 @@ const LEGACY_TAB_DOMAIN = {
 };
 
 function selectDomain(domain) {
+  // Default to the domain dashboard, not the first sub-item
+  if (DOMAIN_DASHBOARD[domain]) { switchTab('dom-'+domain); return; }
   const firstItem = document.querySelector('.sidebar .nav-group[data-domain="'+domain+'"] .nav-item');
   if (firstItem) switchTab(firstItem.dataset.tab);
 }
@@ -5774,19 +6255,23 @@ function switchTab(tab, opts) {
   // Hide all model pages
   document.querySelectorAll('.model-page').forEach(p => p.classList.remove('active'));
 
-  // Determine the domain + which sidebar item to highlight
-  // - If opts.keepDomain provided (mapsTo redirect): keep source sidebar/topbar
-  // - Else if a sidebar nav-item for `tab` exists: use its group
-  // - Else fall back to LEGACY_TAB_DOMAIN
-  const navEl = document.querySelector('.sidebar .nav-item[data-tab="' + tab + '"]');
+  // 域驾驶舱 (dom-{domain}) — short-circuit
+  const isDomTab = typeof tab === 'string' && tab.indexOf('dom-') === 0;
   let domain;
   let highlightTab = opts.keepSidebarTab || tab;
-  if (opts.keepDomain) {
-    domain = opts.keepDomain;
-  } else if (navEl) {
-    domain = navEl.closest('.nav-group').dataset.domain;
+
+  if (isDomTab) {
+    domain = tab.replace(/^dom-/, '');
   } else {
-    domain = LEGACY_TAB_DOMAIN[tab] || 'safety';
+    // Determine the domain + which sidebar item to highlight
+    const navEl = document.querySelector('.sidebar .nav-item[data-tab="' + tab + '"]');
+    if (opts.keepDomain) {
+      domain = opts.keepDomain;
+    } else if (navEl) {
+      domain = navEl.closest('.nav-group').dataset.domain;
+    } else {
+      domain = LEGACY_TAB_DOMAIN[tab] || 'safety';
+    }
   }
 
   // Always re-set sidebar item highlight
@@ -5794,12 +6279,17 @@ function switchTab(tab, opts) {
   const highlightEl = document.querySelector('.sidebar .nav-item[data-tab="' + highlightTab + '"]');
   if (highlightEl) highlightEl.classList.add('active');
 
-  // Find or render page (use the original `tab` to look up MENU_CONFIG)
-  let page = document.getElementById('page-' + tab);
-  if (!page && MENU_CONFIG[tab]) {
-    // Render the dynamic template page (will recurse for mapsTo)
-    renderTemplate(tab, domain);
-    page = document.getElementById('page-template');
+  // Find or render page
+  let page;
+  if (isDomTab) {
+    renderDomainDashboard(domain);
+    page = document.getElementById('page-domain');
+  } else {
+    page = document.getElementById('page-' + tab);
+    if (!page && MENU_CONFIG[tab]) {
+      renderTemplate(tab, domain);
+      page = document.getElementById('page-template');
+    }
   }
   if (page) page.classList.add('active');
 
@@ -5813,7 +6303,8 @@ function switchTab(tab, opts) {
 
   // Update breadcrumbs — prefer the source menu item name (sidebar) over legacy page title
   const crumb = document.getElementById('crumbCurrent');
-  const crumbName = (MENU_CONFIG[highlightTab]||{}).name || (page && page.dataset.title) || (MENU_CONFIG[tab]||{}).name || '首页';
+  const crumbName = isDomTab ? '域驾驶舱'
+    : ((MENU_CONFIG[highlightTab]||{}).name || (page && page.dataset.title) || (MENU_CONFIG[tab]||{}).name || '首页');
   if (crumb) crumb.textContent = crumbName;
   const crumbDom = document.getElementById('crumbDomain');
   if (crumbDom) crumbDom.textContent = DOMAIN_LABEL[domain] || '安全管理';
@@ -6850,7 +7341,8 @@ function applyHashRoute(){
     'asset-overview','asset-inventory','asset-products','asset-booking','asset-compliance',
     'gov-pain','gov-arch','gov-roadmap','gov-roi','gov-safeguard',
     'gov-system','gov-scenario'];
-  if(h && (legacy.includes(h) || MENU_CONFIG[h])){
+  const isDom = h && h.indexOf('dom-')===0 && DOMAIN_DASHBOARD[h.replace(/^dom-/,'')];
+  if(h && (legacy.includes(h) || MENU_CONFIG[h] || isDom)){
     switchTab(h);
   } else {
     // Default landing: prefer last visited tab (persisted in localStorage),
